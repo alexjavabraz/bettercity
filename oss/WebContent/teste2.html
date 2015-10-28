@@ -1,0 +1,45 @@
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<title>Aprenda AngularJS - Formulário de Pedido</title>
+
+	<link href="http://fonts.googleapis.com/css?family=Cookie|Open+Sans:400,700" rel="stylesheet">
+
+	<!-- Arquivo CSS principal -->
+	<link rel="stylesheet" href="css/style2.css">
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+</head>
+
+<!-- Declare uma nova aplicação AngularJS e associe o controlador -->
+<body ng-app ng-controller="OrderFormController">
+	<form>
+		
+		<h1>Serviços</h1>
+		
+		<ul>
+			<!-- Percorre o array 'services', atribuindo um manipulador click, e defini ou remove a classe css "active" se necessário -->
+			<li ng-repeat="service in services" ng-click="toggleActive(service)" ng-class="{ active:service.active }">
+			
+				<!-- Note o uso do 'current filter', que vai formatar o preço -->
+				{{ service.name }} <span>{{ service.price | currency: "R$ ":0}}</span>
+			</li>
+		</ul>
+
+		<div class="total">
+			<!-- Calcule o preço total de todas as escolhas de serviços. Formate isso como moeda -->
+			Total: <span>{{ total() | currency:"R$ ":0}}</span>
+			
+		</div>
+		<span class="currency-no-fractions">{{total() | currency:"USD$":0}}</span><br/>
+		<span class="currency-no-fractions">{{total() | currency:"R$":4}}</span>
+	</form>
+
+	<!-- Include AngularJS from Google's CDN -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+	<script src="js/teste2.js"></script>
+</body>
+</html>

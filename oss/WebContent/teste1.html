@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<meta charset="utf-8"> 
+		<title>Aprenda AngularJS - Menu de Navegação</title>
+
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+
+		<!-- Arquivo CSS principal -->
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+
+		<!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+
+	<!-- A diretiva ng-app diz ao Angular que o código abaixo deve ser analisado -->
+
+	<body ng-app>
+		
+		<!-- 	O menu de navegação vai pegar o valor da variável "ativa" como uma classe. 
+		 		O $event.preventDefault() previne que a página pule quando um link é clicado -->
+
+		<nav class="{{ ativo }}" ng-click="$event.preventDefault()">
+			
+			<!-- Quando um link no menu é clicado, nós definimos a variável ativa -->
+			<a href="#" class="home" ng-click="ativo='homex'">Home</a>
+			<a href="#" class="projects" ng-click="ativo='projects'">Projetos</a>
+			<a href="#" class="services" ng-click="ativo='services'">Serviços</a>
+			<a href="#" class="contact" ng-click="ativo='contact'">Contato</a>
+
+		</nav>
+
+		<!-- ng-show vai mostrar um elemento se o valor das aspas for verdadeiro, enquanto o ng-hide faz o contrário. Por causa da variável ativa não ser definida inicialmente, fará com que o primeiro parágrafo seka visível -->
+
+		<p ng-hide="ativo">Por favor, click em um item do menu</p>
+		<p ng-show="ativo">Sua Escolha <b>{{ ativo }}</b></p>
+
+		<!-- Incluindo o AngularJS do Google CDN -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.1/angular.min.js"></script>
+
+	</body>
+
+</html>

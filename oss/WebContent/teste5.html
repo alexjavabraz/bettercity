@@ -1,0 +1,40 @@
+<html lang="pt-br">
+
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Aprenda AngularJS - Editor Inline</title>
+
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" />
+
+		<!-- Arquivo CSS principal -->
+		<link href="css/style5.css" rel="stylesheet" />
+
+		<!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+
+	<!-- Observe a Diretiva Controller -->
+	<body ng-app ng-controller="InlineEditorController">
+
+		<!-- Quando este elemento é clicado, esconde o tooltip -->
+		<div id="main" ng-click="hideTooltip()">
+
+			<!-- Este é o tooltip. Ele é mostrado somente quando a variável showtooltip for verdadeira -->
+			<div class="tooltip" ng-click="$event.stopPropagation()" ng-show="showtooltip">
+
+				<!-- ng-model liga os conteúdos do campo de texto com o modelo "value". Qualquer mudança no campo de texto vai automaticamente atualizar o valor, e todas as outras ligações da página que dependam disto  -->
+
+				<input type="text" ng-model="text" />
+			</div>
+
+			<!-- Chamando um método definido em InlineEditorController que alterna a variável showtooltip -->
+			<p ng-click="toggleTooltip($event)">{{text}}</p>
+
+		</div>
+
+		<!-- Incluindo o AngularJS from Google's CDN -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+		<script src="js/script5.js"></script>
+	</body>
+</html>

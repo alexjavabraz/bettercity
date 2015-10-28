@@ -1,0 +1,34 @@
+<html lang="pt-br">
+	<head>
+		<meta charset="UTF-8">
+		<title>Aprenda AngularJS - Busca Instantânea</title>
+
+		<link href="http://fonts.googleapis.com/css?family=Cookie|Open+Sans:400,700" rel="stylesheet">
+
+		<!-- Arquivo CSS principal -->
+		<link rel="stylesheet" type="text/css" href="css/style3.css">
+
+		<!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+
+	<!-- Inicialize uma nova aplicação AngularJS e associe-a com um módulo chamado "instantSearch" -->
+	<body ng-app="instantSearch" ng-controller="InstantSearchController">
+		<div class="bar">
+			<!-- Crie uma ligação entre o modelo searchString e o campo de texto -->
+			<input type="text" ng-model="searchString" placeholder="Digite seu termo de pesquisa">
+		</div>
+
+		<ul>
+			<!-- Renderize um elemento li para cada entrada no array de itens. Note o filtro de busca customizado "searchFor". Ele pega o valor do modelo searchString como um argumento. -->
+			<li ng-repeat="i in tutoriais | searchFor:searchString">
+				<a href="{{ i.url }}"><img ng-src="{{ i.image }}"></a><p>{{ i.title }}</p>
+			</li>
+		</ul>
+
+		<!-- Incluindo o AngularJS - Google's CDN -->
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+		<script src="js/script3.js"></script>
+	</body>
+</html>
