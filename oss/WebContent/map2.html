@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <style>
+      html, body{height: 100%;
+        margin: 0;
+        padding: 0;}
+       #map { 
+       	margin: 0; padding: 0; width: 800px;  height: 800px;background-color: #CCC; 
+       	}
+       #legend {background: white; padding: 10px; }
+        #legend h3 {
+        margin-top: 0;
+      }
+      #legend img {
+        vertical-align: middle;
+      }
+    </style>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?libraries=visualization">
+    </script>
+    <script>
+      var map;
+
+      function initialize() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: new google.maps.LatLng(-23.6057502,-46.9178099),
+          mapTypeId: google.maps.MapTypeId.ROADMAP //google.maps.MapTypeId.TERRAIN
+           
+        });
+        
+
+        // Create a <script> tag and set the USGS URL as the source.
+        var script = document.createElement('script');
+        // (In this example we use a locally stored copy instead.)
+        // script.src = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp';
+        script.src = 'pontos.json';
+        document.getElementsByTagName('head')[0].appendChild(script);
+      }
+
+      var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+      var icons = {
+    	earthquake: {
+          name: 'earthquake',
+          icon: iconBase + 'parking_lot_maps.png'
+        },
+        earthquake2: {
+          name: 'earthquake2',
+          icon: iconBase + 'library_maps.png'
+        },
+        earthquake3: {
+          name: 'earthquake3',
+          icon: iconBase + 'info-i_maps.png'
+        }
+      }; 
+      
+      function criaString(title, description){
+    	  return '<div id="content">'+
+          '<div id="siteNotice">'+
+          '</div>'+
+          '<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
+          '<div id="bodyContent">'+
+          '<p><b>'+description+'</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+          'sandstone rock formation in the southern part of the '+
+          'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+          'south west of the nearest large town, Alice Springs; 450&#160;km '+
+          '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+          'features of the Uluru - Kata Tjuta National Park. Uluru is '+
+          'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
+          'Aboriginal people of the area. It has many springs, waterholes, '+
+          'rock caves and ancient paintings. Uluru is listed as a World '+
+          'Heritage Site.</p>'+
+          '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+          'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
+          '(last visited June 22, 2009).</p>'+
+          '</div>'+
+          '</div>';
+      }
+      
+      // Loop through the results array and place a marker for each
+      // set of coordinates.
+      window.eqfeed_callback = function(results) {
+        for (var i = 0; i < results.features.length; i++) {
+          var coords = results.features[i].geometry.coordinates;
+          var latLng = new google.maps.LatLng(coords[0],coords[1]);
+          var title  = results.features[i].properties['title'];
+          var description = results.features[i].properties['place'];
+          
+          new google.maps.Marker({
+            position: latLng,
+            map: map,
+            title: results.features[i].properties['title'],
+            place: results.features[i].properties['place'],
+            icon: icons[results.features[i].properties['type']].icon,
+            optimized: true,
+            draggable: false
+          }).addListener('click', function() {
+        	  	new google.maps.InfoWindow({
+        		    content: criaString( this.title, this.place)
+        		  }).open(map);
+          });
+          
+        }
+      }
+      google.maps.event.addDomListener(window, 'load', initialize)
+    </script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="legend"> My first legend!</div>
+  </body>
+</html>
