@@ -18,8 +18,121 @@
     <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="js/jquery/jssor.slider.mini.js"></script>
     <!-- use jssor.slider.debug.js instead for release -->
-    
-    
+    <style>
+       #map { 
+       	margin: 0; padding: 0; width: 99%;  height: 545px;background-color: #CCC; 
+       	}
+       #legend {background: white; padding: 5px; width:10%}
+        #legend h3 {
+        margin-top: 0;
+      }
+      #legend img {
+        vertical-align: middle;
+      }
+    </style>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdL1lXGAN3qc3dcbTUxCcIYai5dc5hr6c&sensor=true"></script>
+    <script>
+      var map;
+
+      var iconBase = 'http://localhost:8080/oss/assets/images/icos/';
+      var icons = {
+    	problema: {
+          name: 'Problema',
+          icon: iconBase + 'problem.png'
+        },
+        melhorado: {
+          name: 'Melhorado',
+          icon: iconBase + 'correct-icon.png'
+        },
+        working: {
+            name: 'Serviço em execução',
+            icon: iconBase + 'under_construction.png'
+          },        
+        info: {
+          name: 'Informação',
+          icon: iconBase + 'info.png'
+        }
+      }; 
+      
+      function initialize() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14,
+          center: new google.maps.LatLng(-23.6057502,-46.9178099),
+          mapTypeId: google.maps.MapTypeId.ROADMAP //google.maps.MapTypeId.TERRAIN
+           
+        });
+        
+
+        // Create a <script> tag and set the USGS URL as the source.
+        var script = document.createElement('script');
+        // (In this example we use a locally stored copy instead.)
+        // script.src = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp';
+        script.src = 'pontos.json';
+        document.getElementsByTagName('head')[0].appendChild(script);
+        
+        var legend = document.getElementById('legend');
+        for (var key in icons) {
+          var type = icons[key];
+          var name = type.name;
+          var icon = type.icon;
+          var div = document.createElement('div');
+          div.innerHTML = '<img src="' + icon + '"> ' + name;
+          legend.appendChild(div);
+        }
+
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend); 
+        
+      }
+
+      function criaString(title, description){
+    	  return '<div id="content">'+
+          '<div id="siteNotice">'+
+          '</div>'+
+          '<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
+          '<div id="bodyContent">'+
+          '<p><b>'+description+'</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+          'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+          'south west of the nearest large town, Alice Springs; 450&#160;km '+
+          '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+          'Heritage Site.</p>'+
+          '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+          'https://en.wikipedia.org/w/index.php?title=Uluru</a></p>'+
+          '</div>'+
+          '</div>';
+      }
+      
+      // Loop through the results array and place a marker for each
+      // set of coordinates.
+            window.eqfeed_callback = function(results) {
+        for (var i = 0; i < results.features.length; i++) {
+          var coords = results.features[i].geometry.coordinates;
+          var latLng = new google.maps.LatLng(coords[0],coords[1]);
+          var title  = results.features[i].properties['title'];
+          var label = results.features[i].properties['place'];
+          var zIndex = results.features[i].properties['mag'];
+          
+          new google.maps.Marker({
+            position: latLng,
+            map: map,
+            title: results.features[i].properties['title'],
+            label: results.features[i].properties['place'],
+            icon: icons[results.features[i].properties['type']].icon,
+            zIndex: zIndex,
+            optimized: true,
+            draggable: false
+          }).addListener('click', function() {
+        	  
+        	  	new google.maps.InfoWindow({
+        		    content: criaString( this.title, this.label)
+        		  }).open(map, this);
+          });
+          
+          console.log(results.features[i].properties['place']);
+          
+        }
+      }
+      google.maps.event.addDomListener(window, 'load', initialize)
+    </script>	
   </head>
   <body>
   
@@ -62,7 +175,7 @@
             //responsive code end
         });
     </script>
-	 
+ 	 
     <header>
       <h1 class="float-l">
         Melhorar minha cidade
@@ -145,19 +258,12 @@
     </section>
 
     <section id="mapaProblemas">
-      <img src="assets/images/quico.png" class="float-r" />
-      <p>
-        <strong>Interpretado por:</strong> Carlos Villangrán Eslavan.
-      </p>
-      <p>
-        <strong>Descrição:</strong> É um garoto bobo, mimado e bochechudo. Tem nove anos de idade e é o melhor amigo  do Chaves. Mora na casa número 14 com sua mãe, Dona Florinda. Está sempre esperando por sua bola quadrada.
-      </p>
-      <p>
-        <strong>Frases:</strong> "Cale-se, cale-se, cale-se, você me deixa louco!" / "Gentalha, Gentalha, pruuuuuf!" / "Você Não vai com a minha cara?" / "Você quer? Então compra!" / "Mamãe!" / "Da parte de quem?" / "Que coisa, não?"
-      </p>
-      <p>
-        <strong>Apelidos:</strong> bochechas de mamão macho, bochechas de bulldog belho, mocorongo almofadinha e etc...
-      </p>
+      <div>
+      
+      	 <div id="map"></div>
+   		 <div id="legend">Legenda</div>
+      
+      </div>
     </section>
     
     

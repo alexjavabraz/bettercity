@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map_canvas { height: 100% }
+    </style>
+    <script type="text/javascript"
+      src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdL1lXGAN3qc3dcbTUxCcIYai5dc5hr6c&sensor=true">
+    </script>
+    <script type="text/javascript">
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(-23.620, -46.870),
+          zoom: 14,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"),
+            mapOptions);
+        
+        setMarkers(map, beaches);
+        
+        google.maps.event.addDomListener(window, 'load', initialize);
+        
+      }
+      
+      var beaches = [
+                     ['Bondi Beach', -23.6097194,-46.8770157, 4],
+                     ['Coogee Beach', -23.6077166,-46.8778733, 5],
+                     ['Cronulla Beach', -23.6130379,-46.8737041, 3],
+                     ['Manly Beach', -23.6150079,-46.870512, 2],
+                     ['Maroubra Beach', -23.6153879,-46.8728007, 1]
+	  ];
+      
+      var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h2 id="firstHeading" class="firstHeading">Uluru</h2>'+
+      '<div id="bodyContent">'+
+      '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+      'sandstone rock formation in the southern part of the '+
+      'Northern Territory, central Australia. It lies 335 km (208 mi) '+
+      'south west of the nearest large town, Alice Springs; 450 km '+
+      '(280 mi) by road. Kata Tjuta and Uluru are the two major '+
+      'features of the Uluru - Kata Tjuta National Park. Uluru is '+
+      'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
+      'Aboriginal people of the area. It has many springs, waterholes, '+
+      'rock caves and ancient paintings. Uluru is listed as a World '+
+      'Heritage Site.</p>'+
+      '<p>Attribution: Uluru, <a href="http://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+      'http://en.wikipedia.org/w/index.php?title=Uluru</a> (last visited June 22, 2009).</p>'+
+      '</div>'+
+      '</div>';
+
+  var infowindow = new google.maps.InfoWindow({
+      content: contentString
+  });
+      
+      
+      function setMarkers(map, locations) {
+    	  // Add markers to the map
+
+    	  // Marker sizes are expressed as a Size of X,Y
+    	  // where the origin of the image (0,0) is located
+    	  // in the top left of the image.
+
+    	  // Origins, anchor positions and coordinates of the marker
+    	  // increase in the X direction to the right and in
+    	  // the Y direction down.
+    	  var image = new google.maps.MarkerImage('assets/images/icos/correct.png',
+    	      // This marker is 20 pixels wide by 32 pixels tall.
+    	      new google.maps.Size(37, 32),
+    	      // The origin for this image is 0,0.
+    	      new google.maps.Point(0,0),
+    	      // The anchor for this image is the base of the flagpole at 0,32.
+    	      new google.maps.Point(0, 32));
+    	  var shadow = new google.maps.MarkerImage('/assets/images/icos/correct.png',
+    	      // The shadow image is larger in the horizontal dimension
+    	      // while the position and offset are the same as for the main image.
+    	      new google.maps.Size(40, 35),
+    	      new google.maps.Point(0,0),
+    	      new google.maps.Point(0, 32));
+    	      // Shapes define the clickable region of the icon.
+    	      // The type defines an HTML <area> element 'poly' which
+    	      // traces out a polygon as a series of X,Y points. The final
+    	      // coordinate closes the poly by connecting to the first
+    	      // coordinate.
+    	  var shape = {
+    	      coord: [1, 1, 1, 20, 18, 20, 18 , 1],
+    	      type: 'poly'
+    	  };
+    	  for (var i = 0; i < locations.length; i++) {
+    	    var beach = locations[i];
+    	    var myLatLng = new google.maps.LatLng(beach[1], beach[2]);
+    	    var marker = new google.maps.Marker({
+    	        position: myLatLng,
+    	        map: map,
+    	        shadow: shadow,
+    	        icon: image,
+    	        shape: shape,
+    	        title: beach[0],
+    	        draggable:true,
+                animation: google.maps.Animation.DROP,
+    	        zIndex: beach[3]
+    	    });
+    	    
+    	    
+              google.maps.event.addListener(marker, 'click', function(){
+            	  if (this.getAnimation() != null) {
+              	    this.setAnimation(null);
+              	  } else {
+//               	    this.setAnimation(google.maps.Animation.BOUNCE);
+					this.setAnimation(null);
+              	    infowindow.open(map,this);
+              	  } 	  
+              });
+    	    
+    	    
+    	  }
+    	}
+      
+      function toggleBounce() {
+
+    	  if (marker.getAnimation() != null) {
+    	    marker.setAnimation(null);
+    	  } else {
+    	    marker.setAnimation(google.maps.Animation.BOUNCE);
+    	  }
+    	}
+      
+    </script>
+  </head>
+  <body onload="initialize()">
+    <div id="map_canvas" style="width:100%; height:100%"></div>
+  </body>
+</html>

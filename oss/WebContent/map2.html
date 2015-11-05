@@ -23,55 +23,61 @@
     <script>
       var map;
 
+      var iconBase = 'http://localhost:8080/oss/assets/images/icos/';
+      var icons = {
+    	problema: {
+          name: 'Problema',
+          icon: iconBase + 'problem.png'
+        },
+        melhorado: {
+          name: 'Melhorado',
+          icon: iconBase + 'correct-icon.png'
+        },
+        working: {
+            name: 'Servi&#231;o em execu&#231;&#227;o',
+            icon: iconBase + 'under_construction.png'
+          },        
+        info: {
+          name: 'Informa&#231;&#227;o',
+          icon: iconBase + 'info.png'
+        }
+      }; 
+      
       function initialize() {
         map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
           center: new google.maps.LatLng(-23.6057502,-46.9178099),
           mapTypeId: google.maps.MapTypeId.ROADMAP //google.maps.MapTypeId.TERRAIN
-           
         });
         
 
         // Create a <script> tag and set the USGS URL as the source.
         var script = document.createElement('script');
-        // (In this example we use a locally stored copy instead.)
         // script.src = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp';
         script.src = 'pontos.json';
         document.getElementsByTagName('head')[0].appendChild(script);
+        
+        var legend = document.getElementById('legend');
+        for (var key in icons) {
+          var type = icons[key];
+          var name = type.name;
+          var icon = type.icon;
+          var div = document.createElement('div');
+          div.innerHTML = '<img src="' + icon + '"> ' + name;
+          legend.appendChild(div);
+        }
+
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend); 
+        
       }
 
-      var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-      var icons = {
-    	earthquake: {
-          name: 'earthquake',
-          icon: iconBase + 'parking_lot_maps.png'
-        },
-        earthquake2: {
-          name: 'earthquake2',
-          icon: iconBase + 'library_maps.png'
-        },
-        earthquake3: {
-          name: 'earthquake3',
-          icon: iconBase + 'info-i_maps.png'
-        }
-      }; 
-      
       function criaString(title, description){
     	  return '<div id="content">'+
           '<div id="siteNotice">'+
           '</div>'+
           '<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
           '<div id="bodyContent">'+
-          '<p><b>'+description+'</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-          'sandstone rock formation in the southern part of the '+
-          'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-          'south west of the nearest large town, Alice Springs; 450&#160;km '+
-          '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-          'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-          'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-          'Aboriginal people of the area. It has many springs, waterholes, '+
-          'rock caves and ancient paintings. Uluru is listed as a World '+
-          'Heritage Site.</p>'+
+          '<p><b>'+title+'</b>, '+description+'&#160</p>'+
           '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
           'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
           '(last visited June 22, 2009).</p>'+
@@ -86,21 +92,26 @@
           var coords = results.features[i].geometry.coordinates;
           var latLng = new google.maps.LatLng(coords[0],coords[1]);
           var title  = results.features[i].properties['title'];
-          var description = results.features[i].properties['place'];
+          var label = results.features[i].properties['place'];
+          var zIndex = results.features[i].properties['mag'];
           
           new google.maps.Marker({
             position: latLng,
             map: map,
             title: results.features[i].properties['title'],
-            place: results.features[i].properties['place'],
+            label: results.features[i].properties['place'],
             icon: icons[results.features[i].properties['type']].icon,
+            zIndex: zIndex,
             optimized: true,
             draggable: false
           }).addListener('click', function() {
+        	  
         	  	new google.maps.InfoWindow({
-        		    content: criaString( this.title, this.place)
-        		  }).open(map);
+        		    content: criaString( this.title, this.label)
+        		  }).open(map, this);
           });
+          
+          console.log(results.features[i].properties['place']);
           
         }
       }
@@ -109,6 +120,6 @@
   </head>
   <body>
     <div id="map"></div>
-    <div id="legend"> My first legend!</div>
+    <div id="legend">Legenda</div>
   </body>
 </html>
