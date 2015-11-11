@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Melhorar minha cidade aplicativo social</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    
+    <meta name="description" content="O CotiaMelhor e uma plataforma para que o cidadao mostre os problemas da cidade, solicite melhorias, de sugestoes e concorra a premios. Solu&#231;&#227;o tecnológica para quest&#245;es de relevância p&#250;blica">
+    <meta name="keywords" content="css4html, css+for+html, css 4 html, css4, css4 html, css, css3, html, html5" />
+
+    <meta property="og:image" content="http://palloi.github.io/responsive-header-only-css/assets/images/image-shared.png" />
+    <meta property="og:keywords" content="aplicativo social, cotiamelhor, melhorar minha cidade, " />
+    <meta property="og:description" content="See this example of responsive header without using javascript. Using only html and css. by Palloi Hofmann" />
+	<link href="http://fonts.googleapis.com/css?family=Cookie|Open+Sans:400,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css" />
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/footer.css" />
+    
+    <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery/jssor.slider.mini.js"></script>
+    <!-- use jssor.slider.debug.js instead for release -->
+    <style>
+       #map { 
+       	margin: 0; padding: 0; width: 99%;  height: 595px;background-color: #CCC; 
+       	}
+       #legend {background: white; padding: 5px; width:10%}
+        #legend h3 {
+        margin-top: 0;
+      }
+      #legend img {
+        vertical-align: middle;
+      }
+    </style>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdL1lXGAN3qc3dcbTUxCcIYai5dc5hr6c&sensor=true"></script>
+    <script>
+      var map;
+
+      var iconBase = 'http://localhost:8080/oss/assets/images/icos/';
+      var icons = {
+    	problema: {
+          name: 'Problema',
+          icon: iconBase + 'problem.png'
+        },
+        melhorado: {
+          name: 'Melhorado',
+          icon: iconBase + 'correct-icon.png'
+        },
+        working: {
+            name: 'Servi&#231;o em execu&#231;&#227;o',
+            icon: iconBase + 'under_construction.png'
+          },        
+        info: {
+          name: 'Informa&#231;&#227;o',
+          icon: iconBase + 'info.png'
+        }
+      }; 
+      
+      function initialize() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14,
+          center: new google.maps.LatLng(-23.6057502,-46.9178099),
+          mapTypeId: google.maps.MapTypeId.ROADMAP //google.maps.MapTypeId.TERRAIN
+           
+        });
+        
+
+        // Create a <script> tag and set the USGS URL as the source.
+        var script = document.createElement('script');
+        // (In this example we use a locally stored copy instead.)
+        // script.src = 'http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp';
+        script.src = 'pontos.json';
+        document.getElementsByTagName('head')[0].appendChild(script);
+        
+        var legend = document.getElementById('legend');
+        for (var key in icons) {
+          var type = icons[key];
+          var name = type.name;
+          var icon = type.icon;
+          var div = document.createElement('div');
+          div.innerHTML = '<img src="' + icon + '"> ' + name;
+          legend.appendChild(div);
+        }
+
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend); 
+        
+      }
+
+      function criaString(title, description){
+    	  return '<div id="content">'+
+          '<div id="siteNotice">'+
+          '</div>'+
+          '<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
+          '<div id="bodyContent">'+
+          '<p><b>'+description+'</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+          'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+          'south west of the nearest large town, Alice Springs; 450&#160;km '+
+          '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+          'Heritage Site.</p>'+
+          '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+          'https://en.wikipedia.org/w/index.php?title=Uluru</a></p>'+
+          '</div>'+
+          '</div>';
+      }
+      
+      // Loop through the results array and place a marker for each
+      // set of coordinates.
+      window.eqfeed_callback = function(results) {
+        for (var i = 0; i < results.features.length; i++) {
+          var coords = results.features[i].geometry.coordinates;
+          var latLng = new google.maps.LatLng(coords[0],coords[1]);
+          var title  = results.features[i].properties['title'];
+          var label = results.features[i].properties['place'];
+          var zIndex = results.features[i].properties['mag'];
+          
+          new google.maps.Marker({
+            position: latLng,
+            map: map,
+            title: results.features[i].properties['title'],
+            label: results.features[i].properties['place'],
+            icon: icons[results.features[i].properties['type']].icon,
+            zIndex: zIndex,
+            optimized: true,
+            draggable: false
+          }).addListener('click', function() {
+        	  
+        	  	new google.maps.InfoWindow({
+        		    content: criaString( this.title, this.label)
+        		  }).open(map, this);
+          });
+          
+          console.log(results.features[i].properties['place']);
+          
+        }
+      }
+      google.maps.event.addDomListener(window, 'load', initialize)
+    </script>	
+  </head>
+  <body>
+  
+<script>
+        jQuery(document).ready(function ($) {
+            
+            var jssor_1_options = {
+              $AutoPlay: true,
+              $ArrowNavigatorOptions: {
+                $Class: $JssorArrowNavigator$
+              },
+              $ThumbnailNavigatorOptions: {
+                $Class: $JssorThumbnailNavigator$,
+                $Cols: 4,
+                $SpacingX: 4,
+                $SpacingY: 4,
+                $Orientation: 2,
+                $Align: 0
+              }
+            };
+            
+            var jssor_1_slider = new $JssorSlider$("jssor_1", jssor_1_options);
+            
+            //responsive code begin
+            //you can remove responsive code if you don't want the slider scales while window resizes
+            function ScaleSlider() {
+                var refSize = jssor_1_slider.$Elmt.parentNode.clientWidth;
+                if (refSize) {
+                    refSize = Math.min(refSize, 810);
+                    jssor_1_slider.$ScaleWidth(refSize);
+                }
+                else {
+                    window.setTimeout(ScaleSlider, 30);
+                }
+            }
+            ScaleSlider();
+            $(window).bind("load", ScaleSlider);
+            $(window).bind("resize", ScaleSlider);
+            $(window).bind("orientationchange", ScaleSlider);
+            //responsive code end
+        });
+    </script>
+ 	 
+    <header>
+      <h1 class="float-l">
+        Melhorar minha cidade
+      </h1>
+      
+      <input type="checkbox" id="control-nav" />
+      <label for="control-nav" class="control-nav"></label>
+      <label for="control-nav" class="control-nav-close"></label>
+
+      <nav class="float-r">
+        <ul class="list-auto">
+          <li>
+            <a href="#CotiaMelhor" title="CotiaMelhor">O Cotia Melhor</a>
+          </li>
+          <li>
+            <a href="#Cotia_Melhor_como_funciona" title="Cotia_Melhor_como_funciona">Como funciona?</a>
+          </li>
+          <li>
+            <a href="#Cotia_Melhor_Ja" title="Cotia_Melhor_Ja">Melhore Cotia j&#225;</a>
+          </li>
+          <li>
+            <a href="#mapaProblemas" title="mapaProblemas">Onde precisa melhorar</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <section id="CotiaMelhor">
+      <img src="assets/images/collaboration-all-hands-in.jpg" class="float-r" />
+      <p>
+        <strong>O CotiaMelhor</strong> faz a integra&#231;&#227;o entre os cidad&#227;os e o poder p&#250;blico. Acreditamos que nenhuma mudan&#231;a acontecer&#225;, sem a participa&#231;&#227;o ativa daqueles que no seu dia-a-dia sofrem por problemas no seu bairro, na sua cidade. A popula&#231;&#227;o tem papel fundamental na mudan&#231;a, nosso pa&#237;s é imenso, e nem sempre o poder p&#250;blico consegue chegar no n&#237;vel de detalhe que precisamos, precisamos mostrar os problemas e dar sugest&#245;es de melhoria. Somos uma solu&#231;&#227;o tecnológica para quest&#245;es de relevância p&#250;blica. 
+      </p>
+      <p>
+        <strong>Queremos um pa&#237;s melhor:</strong> Para isso contamos com a sua participa&#231;&#227;o, baixe o aplicativo e comece a mostrar, os problemas do seu bairro.
+      </p>
+      <p>
+        <strong>Solicite melhorias, d&#234; sugest&#245;es, participe e concorra a pr&#234;mios:</strong> Ajude a melhorar a cidade, use o nosso aplicativo, tire fotos do problema e d&#234; sugest&#245;es de melhoria, além de fazer uma CotiaMelhor, voc&#234; concorre &#225; pr&#234;mios.
+      </p>
+      <p>
+        <strong>Pelo mundo todo:</strong> As pessoas est&#227;o se envolvendo na administra&#231;&#227;o da sua cidade, querendo ser ouvidos, e querendo ter mais voz ativa. 
+        <br/>Exerça você também o seu dever de cidadão.
+      </p>      
+    </section>
+
+    <section id="Cotia_Melhor_como_funciona">
+      <img src="assets/images/problemas_da_cidade.jpg" class="float-r" />
+      <p>
+        <strong>Baixe o aplicativo Melhorar Minha Cidade:</strong> No Google Play para Android e PlayStore para Apple. Em breve Windows Phone.
+      </p>
+      <p>
+        <strong>Cadastre-se:</strong> Cadastre-se pelo aplicativo ou pelo site.
+      </p>
+      <p>
+        <strong>Comece a ter uma CotiaMelhor:</strong> Comece a enviar fotos dos problemas que voc&#234; encontra na cidade, no seu bairro. Estes problemas ser&#227;o encaminhados para as autoridades p&#250;blicas.
+      </p>
+      <p>
+        <strong>Veja os problemas sendo resolvidos:</strong> Assim que o órg&#227;o p&#250;blico resolve o problema, voc&#234; fica sabendo e pode avalidar. Sabe quem resolveu e quando.
+      </p>
+      <p>
+        <strong>Concorra &#224; pr&#234;mios:</strong> Voc&#234; concorre &#224; pr&#234;mios exclusivos, quanto mais voc&#234; ajudar a fazer uma CotiaMelhor, mais chances tem de ganhar.
+      </p>      
+    </section>
+
+    <section id="Cotia_Melhor_Ja">
+      <div style="align:center">
+    	  <img src="assets/images/googleplay.jpg" style="width:15%;valign:'center''" class="float-r" />
+	      <img src="assets/images/applestore.png" style="width:15%" class="float-r" />
+      </div>
+      <p>
+        <strong>Comece agora mesmo:</strong> Comece a melhorar sua cidade agora mesmo, baixe o app.
+      </p>
+      <p>
+        <strong>Pelo site voc&#234; acompanha</strong> como est&#225; se a sua solicitação de melhoria foi aprovada, se tem alguma obra em execu&#231;&#227;o, se j&#225; foi concluído. Cada solicitação gera pontos, quanto mais você participar, sua cidade fica melhor e você concorre á prêmios.
+      </p>
+      <p>
+        <strong>Caso você solicite uma melhoria</strong> e esta melhoria seja aceita, você ganha ainda mais pontos, e concorre á prêmios!
+      </p>
+    </section>
+
+    <section id="mapaProblemas">
+      <div>
+      
+      	 <div id="map"></div>
+   		 <div id="legend">Legenda</div>
+      
+      </div>
+    </section>
+    
+    
+		<footer class="footer-distributed">
+
+			<div class="footer-left">
+
+				<h3>Melhorar minha Cidade</h3>
+
+				<p class="footer-links">
+					<a href="#CotiaMelhor">O Cotia Melhor</a>
+					·
+					<a href="#Cotia_Melhor_como_funciona">Como Funciona?</a>
+					·
+					<a href="#Cotia_Melhor_Ja">Melhore a Cidade já</a>
+					·
+					<a href="#mapaProblemas">Onde Precisamos Melhorar</a>
+				</p>
+
+				<div class="footer-icons">
+
+					<a href="#"><i class="fa fa-facebook"></i></a>
+					<a href="#"><i class="fa fa-twitter"></i></a>
+					<a href="#"><i class="fa fa-linkedin"></i></a>
+					<a href="#"><i class="fa fa-github"></i></a>
+
+				</div>
+				<p class="footer-company-name"><a href='www.bjbraz.com.br' style="text-decoration: none;color: aliceblue;">BJBraz Sistemas &copy; 2015</a></p>
+			</div>
+
+			<div class="footer-right">
+
+				<form action="#" method="post">
+
+					<input type="text" name="email" placeholder="Digite seu E-mail" />
+					<textarea name="message" placeholder="Nos diga o que você achou do CotiaMelhor?"></textarea>
+					<button>Enviar</button>
+
+				</form>
+
+			</div>
+
+		</footer>    
+    
+  </body>
+</html>
