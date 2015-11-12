@@ -27,16 +27,7 @@
     <script type="text/javascript" src="js/jquery/jssor.slider.mini.js"></script>
     <!-- use jssor.slider.debug.js instead for release -->
     <style>
-       #map { 
-       	margin: 0; padding: 0; width: 99%;  height: 595px;background-color: #CCC; 
-       	}
-       #legend {background: white; padding: 5px; width:10%}
-        #legend h3 {
-        margin-top: 0;
-      }
-      #legend img {
-        vertical-align: middle;
-      }
+       
     </style>
 <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdL1lXGAN3qc3dcbTUxCcIYai5dc5hr6c&sensor=true"></script>
     <script>
@@ -50,15 +41,15 @@
         },
         melhorado: {
           name: 'Melhorado',
-          icon: iconBase + 'completed.jpg'
+          icon: iconBase + 'completed.png'
         },
         working: {
-            name: 'Servi&#231;o em execu&#231;&#227;o',
-            icon: iconBase + 'under_construction.png'
+            name: 'Atuando',
+            icon: iconBase + 'under_construction2.png'
           },        
         info: {
           name: 'Informa&#231;&#227;o',
-          icon: iconBase + 'info.png'
+          icon: iconBase + 'analyzing.png'
         }
       }; 
       
@@ -196,17 +187,21 @@
       <nav class="float-r">
         <ul class="list-auto">
           <li>
-            <a href="#CotiaMelhor" title="CotiaMelhor">O Cotia Melhor</a>
+            <a href="#CotiaMelhor" title="Cidade Melhor, Cotia Melhor">O Cotia Melhor</a>
           </li>
           <li>
-            <a href="#Cotia_Melhor_como_funciona" title="Cotia_Melhor_como_funciona">Como funciona?</a>
+            <a href="#Cotia_Melhor_como_funciona" title="Como funciona o Cidade Melhor">Como funciona?</a>
           </li>
           <li>
-            <a href="#Cotia_Melhor_Ja" title="Cotia_Melhor_Ja">Melhore Cotia j&#225;</a>
+            <a href="#Cotia_Melhor_Ja" title="Comece a melhorar a cidade Já">Melhore Cotia j&#225;</a>
           </li>
           <li>
-            <a href="#mapaProblemas" title="mapaProblemas">Onde precisa melhorar</a>
+            <a href="#mapaProblemas" title="Confira no mapa">Onde precisa melhorar</a>
           </li>
+          
+          <li>
+            <a href="#contato" title="Entre em contato">Contato</a>
+          </li>          
         </ul>
       </nav>
     </header>
@@ -239,8 +234,14 @@
       <p>
         <strong>Comece a ter uma CotiaMelhor:</strong> Comece a enviar fotos dos problemas que voc&#234; encontra na cidade, no seu bairro. Estes problemas ser&#227;o encaminhados para as autoridades p&#250;blicas.
       </p>
+      <div class="conteinerDesc">
+        <img src="assets/images/icos/problem.png"             class="imagemDesc"/> <p class="textDesc">Assim irá aparecer sua sugestão / reclamação, este ícone significa que alguém apontou um problema para ser corrigido.</p><br/>
+        <img src="assets/images/icos/analyzing.png"           class="imagemDesc"/> <p class="textDesc">Sua solicitação está em análise pelos órgãos competentes.</p><br/>
+        <img src="assets/images/icos/under_construction2.png" class="imagemDesc"/> <p class="textDesc">Ótimo o responsável por corrigir o problema já analizou e está atuando no local, você ganhou pontos.</p><br/>
+        <img src="assets/images/icos/completed.png"           class="imagemDesc"/> <p class="textDesc">Uhulll ficamos felizes! O problema foi corrigido! Compartilhe nas redes sociais que você melhorou a cidade!</p><br/>
+      </div>
       <p>
-        <strong>Veja os problemas sendo resolvidos:</strong> Assim que o órg&#227;o p&#250;blico resolve o problema, voc&#234; fica sabendo e pode avalidar. Sabe quem resolveu e quando.
+        <strong>Veja os problemas sendo resolvidos:</strong> Assim que o órg&#227;o p&#250;blico resolve o problema, voc&#234; fica sabendo e pode avalidar.
       </p>
       <p>
         <strong>Concorra &#224; pr&#234;mios:</strong> Voc&#234; concorre &#224; pr&#234;mios exclusivos, quanto mais voc&#234; ajudar a fazer uma CotiaMelhor, mais chances tem de ganhar.
@@ -273,7 +274,7 @@
     </section>
     
     
-		<footer class="footer-distributed">
+		<footer id="contato" class="footer-distributed">
 
 			<div class="footer-left">
 
