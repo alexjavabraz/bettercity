@@ -7,6 +7,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import br.com.bjbraz.pojo.MapJson;
+
 @Path("/map")
 public class MapResource {
 

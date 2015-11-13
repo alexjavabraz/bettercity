@@ -25,22 +25,22 @@
 
       var iconBase = 'http://localhost:8080/oss/assets/images/icos/';
       var icons = {
-    	problema: {
-          name: 'Problema',
-          icon: iconBase + 'problem.png'
-        },
-        melhorado: {
-          name: 'Melhorado',
-          icon: iconBase + 'correct-icon.png'
-        },
-        working: {
-            name: 'Servi&#231;o em execu&#231;&#227;o',
-            icon: iconBase + 'under_construction.png'
-          },        
-        info: {
-          name: 'Informa&#231;&#227;o',
-          icon: iconBase + 'info.png'
-        }
+    		  problema: {
+    	          name: 'Problema',
+    	          icon: iconBase + 'problem.png'
+    	        },
+    	        melhorado: {
+    	          name: 'Melhorado',
+    	          icon: iconBase + 'completed.png'
+    	        },
+    	        working: {
+    	            name: 'Atuando',
+    	            icon: iconBase + 'under_construction2.png'
+    	          },        
+    	        info: {
+    	          name: 'Informa&#231;&#227;o',
+    	          icon: iconBase + 'analyzing.png'
+    	        }
       }; 
       
       function initialize() {
@@ -54,7 +54,7 @@
         // Create a <script> tag and set the USGS URL as the source.
         var script = document.createElement('script');
         script.src = 'http://localhost:8080/oss/rest/map';
-//         script.src = 'pontos3.json';
+// 		script.src = 'pontos3.json';
         document.getElementsByTagName('head')[0].appendChild(script);
         
         var legend = document.getElementById('legend');
