@@ -478,7 +478,7 @@ input[id*="modal_"]:checked + div.modal .modal-content {
         
         
 		#map { 
-       	margin: 0; padding: 0; width: 99%;  height: 595px;background-color: #CCC; 
+       	margin: 75px 0px 0px 0px; padding: 0; width: 99%;  height: 595px;background-color: #CCC; 
        	}
        #legend {background: white; padding: 5px; width:10%}
         #legend h3 {
