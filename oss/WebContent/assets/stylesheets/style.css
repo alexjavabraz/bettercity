@@ -95,7 +95,7 @@ input#control-nav {
 
 /* content */
 section {
-  padding: 5px 20px 5px;
+  padding: 80px 20px 50px;
   border-top: 1px solid #ccc;
   font-size: 20px;
   line-height: 24px;
@@ -113,7 +113,7 @@ section img {
 }
 
 section p {
-  padding: 0 0 20px;
+  padding: 10px 0 20px;
 }
 
 .highlights {
