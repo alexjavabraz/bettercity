@@ -26,10 +26,51 @@
     <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="js/jquery/jssor.slider.mini.js"></script>
     <!-- use jssor.slider.debug.js instead for release -->
-    <style>
-       
+<style>
+.controls {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 300px;
+}
+
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+
+.pac-container {
+  font-family: Roboto;
+}
+
+#type-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
     </style>
-<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdL1lXGAN3qc3dcbTUxCcIYai5dc5hr6c&sensor=true"></script>
+<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdL1lXGAN3qc3dcbTUxCcIYai5dc5hr6c&libraries=places"></script>
     <script>
       var map;
 
@@ -50,7 +91,7 @@
         info: {
           name: 'Informa&#231;&#227;o',
           icon: iconBase + 'analyzing.png'
-        }
+        }          
       }; 
       
       function initialize() {
@@ -60,7 +101,6 @@
           mapTypeId: google.maps.MapTypeId.ROADMAP //google.maps.MapTypeId.TERRAIN
            
         });
-        
 
         // Create a <script> tag and set the USGS URL as the source.
         var script = document.createElement('script');
@@ -81,7 +121,120 @@
 
         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend); 
         
+        new google.maps.Marker({
+            position: {lat: -23.6057502, lng: -46.9178099},
+            map: map,
+            title: 'Você está aqui',
+            label: 'Você está aqui',
+            zIndex: 1,
+            optimized: true,
+            draggable: false
+          });
+        
+        //SEARCH
+     // Create the search box and link it to the UI element.
+  	  var input = document.getElementById('pac-input');
+  	  var searchBox = new google.maps.places.SearchBox(input);
+  	  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+  	  // Bias the SearchBox results towards current map's viewport.
+  	  map.addListener('bounds_changed', function() {
+  	    searchBox.setBounds(map.getBounds());
+  	  });
+
+  	  var markers = [];
+  	  // [START region_getplaces]
+  	  // Listen for the event fired when the user selects a prediction and retrieve
+  	  // more details for that place.
+  	  searchBox.addListener('places_changed', function() {
+  	    var places = searchBox.getPlaces();
+
+  	    if (places.length == 0) {
+  	      return;
+  	    }
+
+  	    // Clear out the old markers.
+  	    markers.forEach(function(marker) {
+  	      marker.setMap(null);
+  	    });
+  	    markers = [];
+
+  	    // For each place, get the icon, name and location.
+  	    var bounds = new google.maps.LatLngBounds();
+  	    places.forEach(function(place) {
+  	      var icon = {
+  	        url: place.icon,
+  	        size: new google.maps.Size(71, 71),
+  	        origin: new google.maps.Point(0, 0),
+  	        anchor: new google.maps.Point(17, 34),
+  	        scaledSize: new google.maps.Size(25, 25)
+  	      };
+
+  	      // Create a marker for each place.
+  	      markers.push(new google.maps.Marker({
+  	        map: map,
+  	        icon: icon,
+  	        title: place.name,
+  	        position: place.geometry.location
+  	      }));
+
+  	      if (place.geometry.viewport) {
+  	        // Only geocodes have viewport.
+  	        bounds.union(place.geometry.viewport);
+  	      } else {
+  	        bounds.extend(place.geometry.location);
+  	      }
+  	    });
+  	    map.fitBounds(bounds);
+  	  });        
+        
+       //END SEARCH
+       
+       // MAP MARKER
+  		var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  		var labelIndex = 0;
+  		// This event listener calls addMarker() when the map is clicked.
+	    google.maps.event.addListener(map, 'click', function(event) {
+	    	addDinamicMarker(event.latLng, map);
+	    });
+	 
+	 	// Adds a marker to the map.
+	    function addDinamicMarker(alocation, amap) {
+	      // Add the marker at the clicked location, and add the next-available label
+	      // from the array of alphabetical characters.
+	      
+	      var amarker = new google.maps.Marker({
+			        position: alocation,
+			        label: labels[labelIndex++ % labels.length],
+			        map: amap
+		  });
+	      
+	      amarker.setMap(null);
+	      amarker.setMap(amap);
+	      
+	      if(amap.getZoom() < 18){
+	      	amap.setZoom(18);
+	      	amarker.setMap(null);
+	      }else{
+	    	  var info =  new google.maps.InfoWindow({
+      		    content: criaString( 'ola', 'teste')
+    		  });
+	    	  
+	    	  amarker.addListener('click', function() {
+	        	  
+	    		  info.open(amap, amarker);
+	          });
+	    	  
+	    	  info.open(amap, amarker);
+	    	  
+	      }
+	      
+
+	 	}
+      	//END MAP MARKER
+       
       }
+      
 
       function criaString(title, description){
     	  return '<div id="content">'+
@@ -130,11 +283,12 @@
           
         }
       }
-      google.maps.event.addDomListener(window, 'load', initialize)
+      google.maps.event.addDomListener(window, 'load', initialize);
+      
     </script>	
   </head>
   <body>
- 	 
+ 	 <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <header>
       <h1 class="float-l">
         Melhorar minha cidade
@@ -226,7 +380,7 @@
 
     <section id="mapaProblemas">
       <div>
-      
+      	 
       	 <div id="map"></div>
    		 <div id="legend">Legenda</div>
       
