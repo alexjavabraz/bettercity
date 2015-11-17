@@ -1,0 +1,53 @@
+<!doctype html>
+<html ng-app>
+<head>
+	<meta charset="UTF-8">
+	<title>Aprenda AngularJS - Formulário de Pedido</title>
+
+	<link href="http://fonts.googleapis.com/css?family=Cookie|Open+Sans:400,700" rel="stylesheet">
+
+	<!-- Arquivo CSS principal -->
+	<link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css" />
+
+	<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+</head>
+
+<!-- Declare uma nova aplicação AngularJS e associe o controlador -->
+<body>
+	 <div ng-controller="Note">
+		<div class="form"  ng-repeat="item in items">
+						<nav class="{{ ativo }}" ng-click="$event.preventDefault()">
+							<a href="#mapaProblemas" class="home" ng-click="ativo='home'">Home</a>
+							<a href="#mapaProblemas" class="projects" ng-click="ativo='projects'">Projetos</a>
+							<a href="#mapaProblemas" class="services" ng-click="ativo='services'">Serviços</a>
+							<a href="#mapaProblemas" class="contact" ng-click="ativo='contact'">Contato</a>
+						</nav>
+						<p ng-hide="ativo">Por favor, click em um item do menu</p>
+						<p ng-show="ativo">Sua Escolha <b>{{ ativo }}</b></p>
+		</div>	
+		<button ng-click="add()">New Item</button>	
+	</div>
+	<!-- Include AngularJS from Google's CDN -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+	
+    <script type="text/javascript">
+
+      var Note = function($scope){
+        $scope.items = [];
+
+        $scope.add = function () {
+          $scope.items.push({ 
+            inlineChecked: false,
+            question: "",
+            questionPlaceholder: "foo",
+            text: ""
+          });
+        };
+      }
+
+
+    </script>	
+</body>
+</html>

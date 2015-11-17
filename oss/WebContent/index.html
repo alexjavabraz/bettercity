@@ -23,6 +23,10 @@
     <link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css" />
     <link rel="stylesheet" type="text/css" href="assets/stylesheets/footer.css" />
     
+    <!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+    
     <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
     <script type="text/javascript" src="js/jquery/jssor.slider.mini.js"></script>
     <!-- use jssor.slider.debug.js instead for release -->
@@ -217,7 +221,7 @@
 	      	amarker.setMap(null);
 	      }else{
 	    	  var info =  new google.maps.InfoWindow({
-      		    content: criaString( 'ola', 'teste')
+      		    content: addPoint( 'ola', 'teste')
     		  });
 	    	  
 	    	  amarker.addListener('click', function() {
@@ -253,6 +257,14 @@
           '</div>';
       }
       
+      function addPoint(title, description){
+    	  var div       = document.createElement('div');
+          div.innerHTML = document.getElementById('formInsert').innerHTML;
+    	  
+    	  return div.innerHTML;
+    	  
+      }      
+      
       // Loop through the results array and place a marker for each
       // set of coordinates.
       window.eqfeed_callback = function(results) {
@@ -287,7 +299,7 @@
       
     </script>	
   </head>
-  <body>
+  <body ng-app>
  	 <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <header>
       <h1 class="float-l">
@@ -426,8 +438,23 @@
 				</form>
 
 			</div>
+			
+			<div id="formInsert" style="display:none">
+				<div id="form">
+					<nav class="{{ ativo }}" ng-click="$event.preventDefault()">
+						<!-- Quando um link no menu é clicado, nós definimos a variável ativa -->
+						<a href="#mapaProblemas" class="home" ng-click="ativo='home'">Home</a>
+						<a href="#mapaProblemas" class="projects" ng-click="ativo='projects'">Projetos</a>
+						<a href="#mapaProblemas" class="services" ng-click="ativo='services'">Serviços</a>
+						<a href="#mapaProblemas" class="contact" ng-click="ativo='contact'">Contato</a>
+					</nav>
+					<p ng-hide="ativo">Por favor, click em um item do menu</p>
+					<p ng-show="ativo">Sua Escolha <b>{{ ativo }}</b></p>
+				</div>
+			</div>
 
 		</footer>    
-    
+    	<!-- Incluindo o AngularJS do Google CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.1/angular.min.js"></script>
   </body>
 </html>

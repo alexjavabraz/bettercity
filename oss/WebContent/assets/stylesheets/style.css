@@ -35,6 +35,7 @@ html{
 
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /*font-family: 'Cookie', cursive;*/
   /*font:14px/1.5 Arial, Helvetica, sans-serif;*/
   color: #333;
   text-shadow: 0 1px 0 #fff;
@@ -449,34 +450,6 @@ input[id*="modal_"]:checked + div.modal .modal-content {
   }
 }
 
-      /* jssor slider arrow navigator skin 02 css */
-        /*
-        .jssora02l                  (normal)
-        .jssora02r                  (normal)
-        .jssora02l:hover            (normal mouseover)
-        .jssora02r:hover            (normal mouseover)
-        .jssora02l.jssora02ldn      (mousedown)
-        .jssora02r.jssora02rdn      (mousedown)
-        */
-        .jssora02l, .jssora02r {
-            display: block;
-            position: absolute;
-            /* size of arrow element */
-            width: 55px;
-            height: 55px;
-            cursor: pointer;
-            background: url('../images/slider/a02.png') no-repeat;
-            overflow: hidden;
-        }
-        .jssora02l { background-position: -3px -33px; }
-        .jssora02r { background-position: -63px -33px; }
-        .jssora02l:hover { background-position: -123px -33px; }
-        .jssora02r:hover { background-position: -183px -33px; }
-        .jssora02l.jssora02ldn { background-position: -3px -33px; }
-        .jssora02r.jssora02rdn { background-position: -63px -33px; }
-/* jssor slider thumbnail navigator skin 11 css *//*.jssort11 .p            (normal).jssort11 .p:hover      (normal mouseover).jssort11 .pav          (active).jssort11 .pav:hover    (active mouseover).jssort11 .pdn          (mousedown)*/.jssort11 .p {    position: absolute;    top: 0;    left: 0;    width: 200px;    height: 69px;    background: #ff0000;}.jssort11 .tp {    position: absolute;    top: 0;    left: 0;    width: 90%;    height: 100%;    border: none;}.jssort11 .i, .jssort11 .pav:hover .i {    position: absolute;    top: 3px;    left: 3px;    width: 60px;    height: 30px;    border: white 1px dashed;}* html .jssort11 .i {    width /**/: 62px;    height /**/: 32px;}.jssort11 .pav .i {    border: white 1px solid;}.jssort11 .t, .jssort11 .pav:hover .t {    position: absolute;    top: 3px;    left: 68px;    width: 129px;    height: 32px;    line-height: 32px;    text-align: center;    color: #fc9835;    font-size: 13px;    font-weight: 700;}.jssort11 .pav .t, .jssort11 .p:hover .t {    color: #fff;}.jssort11 .c, .jssort11 .pav:hover .c {    position: absolute;    top: 38px;    left: 3px;    width: 197px;    height: 31px;    line-height: 31px;    color: #fff;    font-size: 11px;    font-weight: 400;    overflow: hidden;}.jssort11 .pav .c, .jssort11 .p:hover .c {    color: #fc9835;}.jssort11 .t, .jssort11 .c {    transition: color 2s;    -moz-transition: color 2s;    -webkit-transition: color 2s;    -o-transition: color 2s;}.jssort11 .p:hover .t, .jssort11 .pav:hover .t, .jssort11 .p:hover .c, .jssort11 .pav:hover .c {    transition: none;    -moz-transition: none;    -webkit-transition: none;    -o-transition: none;}.jssort11 .p:hover, .jssort11 .pav:hover {    background: #333;}.jssort11 .pav, .jssort11 .p.pdn {    background: #462300;}
-        
-        
 		#map { 
        	margin: 75px 0px 0px 0px; padding: 0; width: 99%;  height: 595px;background-color: #CCC; 
        	}
@@ -499,3 +472,109 @@ input[id*="modal_"]:checked + div.modal .modal-content {
       	margin: 15px 0px 0px 15px;
       }
   
+
+.form nav {
+  display: inline-block;
+  margin: 0px auto 45px;
+  background-color: #5597B4;
+  box-shadow: 0 1px 1px #CCC;
+  border-radius: 2px;
+}
+
+.form a {
+  display: inline-block;
+  padding: 18px 30px;
+  color: #FFF !important;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none !important;
+  line-height: 1;
+  text-transform: uppercase;
+  background-color: transparent;
+  -webkit-webkit-transition: background-color 0.25s;
+  -moz-webkit-transition: background-color 0.25s;
+  -ms-webkit-transition: background-color 0.25s;
+  -o-webkit-transition: background-color 0.25s;
+  transition: background-color 0.25s;
+}
+
+.form nav a:first-child {
+  border-radius: 2px 0 0 2px;
+}
+
+.form navnav a:last-child {
+  border-radius: 0 2px 2px 0;
+}
+.form nav.home .home,
+.form  nav.projects .projects,
+.form  nav.services .services,
+.form  nav.contact .contact {
+  background-color: #E35885;
+}
+
+.form p {
+  font-size: 22px;
+  font-weight: bold;
+  color: #7D9098;
+}
+
+.form p b {
+  color: #FFF;
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #C4D7E0;
+  border-radius: 2px;
+  text-transform: uppercase;
+  font-size: 18px;
+}
+
+.formulario{
+	margin: -40px 0px 0px 0px;
+}
+
+.formulario_input{
+    padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    width: 95%;
+    border-radius:7px;
+    -moz-border-radius:7px;
+    -webkit-border-radius:7px;
+	box-shadow: 1px 1px 2px #333333;
+    -moz-box-shadow: 1px 1px 2px #333333;
+    -webkit-box-shadow: 1px 1px 2px #333333;  
+    
+	border: 5px solid white; 
+    -webkit-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    -moz-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    padding: 6px;
+    background: rgba(255,255,255,0.5);
+    margin: 0 0 10px 0;      
+}
+
+.formulario_textarea{
+	padding: 6px;
+	margin: 0px 0px 0px 0px;
+	width:95%;
+	border-radius:4px;
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+	border: 5px solid white; 
+    -webkit-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    -moz-box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    box-shadow: 
+      inset 0 0 8px  rgba(0,0,0,0.1),
+            0 0 16px rgba(0,0,0,0.1); 
+    background: rgba(255,255,255,0.5);
+    margin: 0 0 10px 0;         
+}

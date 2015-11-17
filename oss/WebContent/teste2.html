@@ -11,12 +11,25 @@
 	<!--[if lt IE 9]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
+    <script>
+      
 
+     
+      
+      function addPoint(title, description){
+    	  var div       = document.createElement('div');
+          div.innerHTML = document.getElementById('form').innerHTML;
+          var body = document.body.innerHTML += div.innerHTML;
+      }
+      
+   
+      
+    </script>
 </head>
 
 <!-- Declare uma nova aplicação AngularJS e associe o controlador -->
 <body ng-app ng-controller="OrderFormController">
-	<form>
+	<form id="form">
 		
 		<h1>Serviços</h1>
 		
@@ -41,5 +54,8 @@
 	<!-- Include AngularJS from Google's CDN -->
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
 	<script src="js/teste2.js"></script>
+	
+	
+	<button onClick="addPoint('','')" >Click</button>
 </body>
 </html>
