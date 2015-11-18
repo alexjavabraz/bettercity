@@ -472,6 +472,9 @@ input[id*="modal_"]:checked + div.modal .modal-content {
       	margin: 15px 0px 0px 15px;
       }
   
+.form{
+	    overflow: hidden;
+}
 
 .form nav {
   display: inline-block;
@@ -577,4 +580,43 @@ input[id*="modal_"]:checked + div.modal .modal-content {
             0 0 16px rgba(0,0,0,0.1); 
     background: rgba(255,255,255,0.5);
     margin: 0 0 10px 0;         
+}
+
+.btn {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 16px;
+  background: #61A1BC;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #3cb0fd;
+  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
+  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
+  text-decoration: none;
+}
+
+.formulario_div_btn{
+    position: relative;
+    left: 37%;
+    margin-right: -50%;
+}
+
+.formulario_imagem{
+	width: 40px;
+}
+
+.formulario_div_imagem{
+	position: relative;
+    margin: 5px 4px -54px 0px;
+    padding: 0px 0px 0px 0px;
+    left: -4%;
 }

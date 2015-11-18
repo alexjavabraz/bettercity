@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import br.com.bjbraz.entity.HSQLDao;
+
 @XmlRootElement
 public class MapJson {
 
@@ -23,40 +25,18 @@ public class MapJson {
 	public MapJson(){
 		pontosDoMapa = new ArrayList<Ponto>();
 		
-		Ponto a = new Ponto();
-		a.setDetalhe("Rua alga marinha,  problema na cal&ccedil;ada. Existe um enorme buraco na cal&ccedil;ada na altura do n&#250;mero 100");
-		a.setTitle("Buraco na cal&ccedil;ada");
-		a.setzIndex("1");
-		a.setType("melhorado");
-		a.setCoordenada(new Coordenada(-23.6069171, -46.9195135));
+		HSQLDao dao = new HSQLDao();
+		pontosDoMapa = dao.listarDemandas();
 		
-		Ponto b = new Ponto();
-		b.setDetalhe("Falta de ilumina&#231;&#227;o");
-		b.setTitle("Problema na ilumina&ccedil;&#227;o");
-		b.setzIndex("2");
-		b.setType("working");
-		b.setCoordenada(new Coordenada(-23.6034014, -46.9222468));
+		if(pontosDoMapa.size() == 0){
+			Ponto a = new Ponto();
+			a.setDetalhe("Rua alga marinha,  problema na cal&ccedil;ada. Existe um enorme buraco na cal&ccedil;ada na altura do n&#250;mero 100");
+			a.setTitle("Buraco na cal&ccedil;ada");
+			a.setzIndex("1");
+			a.setType("melhorado");
+			a.setCoordenada(new Coordenada(-23.6069171, -46.9195135));
+		}
 		
-		
-		Ponto c = new Ponto();
-		c.setDetalhe("A falta de uma lombada est&#225; causando alguns acidentes");
-		c.setTitle("Falta lombada");
-		c.setzIndex("3");
-		c.setType("info");
-		c.setCoordenada(new Coordenada(-23.6033787, -46.9231427));
-		
-		Ponto d = new Ponto();
-		d.setDetalhe("&#201; necess&#225;rio uma lombada no trevo sentido centro");
-		d.setTitle("Falta lombada");
-		d.setzIndex("4");
-		d.setType("problema");
-		d.setCoordenada(new Coordenada(-23.6057502, -46.9178099));
-		
-		
-		pontosDoMapa.add(a);
-		pontosDoMapa.add(b);
-		pontosDoMapa.add(c);
-		pontosDoMapa.add(d);
 	}
 
 	public String getType() {

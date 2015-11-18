@@ -1,5 +1,8 @@
 package br.com.bjbraz.entity;
 
+import br.com.bjbraz.pojo.Coordenada;
+import br.com.bjbraz.pojo.Ponto;
+
 public class Demanda {
 	
 	//ID IDENTITY,
@@ -19,6 +22,9 @@ public class Demanda {
 	
 	//LONGITUDE VARCHAR(500)
 	private String longitude;
+	
+	//TIPO VARCHAR(500)
+	private String tipo = "problema";
 
 	public Integer getId() {
 		return id;
@@ -67,7 +73,23 @@ public class Demanda {
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
-	
-	
 
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+	
+	public Ponto toPonto(){
+		Ponto p = new Ponto();
+		p.setCoordenada(new Coordenada(Double.parseDouble(getLatitude()), Double.parseDouble(getLongitude())));
+		p.setDetalhe(getDescricao());
+		p.setPlace(getEndereco());
+		p.setTitle(getTitulo());
+		p.setType(getTipo());
+		return p;
+	}
+	
 }

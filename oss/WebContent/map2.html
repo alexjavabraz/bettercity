@@ -106,7 +106,7 @@
         				var accuracy = position.coords.accuracy;
         				var timestamp = position.timestamp;
         				
-        				if(accuracy < 500){
+        				if(accuracy < 50000){ //especified in meters
         					console.log(latitude);
         					console.log(longitude);
         					console.log(accuracy);
@@ -124,6 +124,8 @@
         			          });
         					
         					
+        				}else{
+        					console.log('Accuracy exced limit ' + accuracy);
         				}
         				
         				
@@ -246,20 +248,21 @@
     	  
     	  var id = Math.random();
     	  
-    	  codeLatLng(lat, lng, 'formulario_input'+id);
+    	  codeLatLng(lat, lng, 'formulario_endereco'+id);
     	  
-    	  return '	<div class="form">'+
+    	  return '	<div id='+id+' class="form">'+
 				'	<nav class="" id='+id+'>'+
-				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'home\'"     class="home"     ng-click="ativo=\'home\'">Problema</a>'+
-				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'projects\'" class="projects" ng-click="ativo=\'projects\'">Informação</a>'+
-				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'services\'" class="services" ng-click="ativo=\'services\'">Sugestão</a>'+
-				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'contact\'"  class="contact"  ng-click="ativo=\'contact\'">Outro</a>'+
+				'	<a href="'+id+'" onClick="document.getElementById('+id+').className=\'home\'"     class="home"     ng-click="ativo=\'home\'">Problema</a>'+
+				'	<a href="#'+id+'" onClick="document.getElementById('+id+').className=\'projects\'" class="projects" ng-click="ativo=\'projects\'">Informação</a>'+
+				'	<a href="#'+id+'" onClick="document.getElementById('+id+').className=\'services\'" class="services" ng-click="ativo=\'services\'">Sugestão</a>'+
+				'	<a href="#'+id+'" onClick="document.getElementById('+id+').className=\'contact\'"  class="contact"  ng-click="ativo=\'contact\'">Outro</a>'+
 				'	</nav>'+
-				'	<div class="formulario">'+
-				'	<div><input type="text" class="formulario_input" name="titulo" required placeholder="Qual o problema?" /></div>'+
-				'	<div><textarea name="descricao" class="formulario_textarea" maxlength="500" cols="50" rows="4" placeholder="Descreva o problema, com o máximo de detalhes"></textarea></div>'+
-				'	<div><input type="text" id="formulario_input'+id+'" class="formulario_input" name="endereco" /></div>'+
-				'	<div><button onClick="insertDemanda('+id+')" class="formulario_button"/>Enviar</div>'+
+				'	<div class="formulario"><input type="hidden" id="formulario_lat'+id+'" value="'+lat+'"><input type="hidden" id="formulario_long'+id+'" value="'+lng+'">'+
+				'	<div><input type="text" class="formulario_input" id="formulario_titulo'+id+'" required placeholder="Qual o problema?" /></div>'+
+				'	<div><textarea id="formulario_descricao'+id+'" class="formulario_textarea" maxlength="500" cols="50" rows="4" placeholder="Descreva o problema, com o máximo de detalhes"></textarea></div>'+
+				'	<div><input type="text" id="formulario_endereco'+id+'" class="formulario_input" name="endereco" /></div>'+
+				'	<div class="formulario_div_imagem"><img src="assets/images/icos/photo.png" class="formulario_imagem" id="formulario_imagem_'+id+'" onClick="insertDemanda('+id+')" class="formulario_button"/></div>'+
+				'	<div class="formulario_div_btn"><button class="btn" onClick="insertDemanda('+id+')" class="formulario_button"/>Melhorar a cidade</div>'+
 				'	</div>';
       }
       
@@ -315,24 +318,33 @@
       
       google.maps.event.addDomListener(window, 'load', initialize);
       
-      
       var myJSONData = '{"data":{"mode" : "subscribe","technologyareas":[1],"assettypes":["podcast","documents"]}}';
-      var url = 'res/demanda/ins';
+      var url        = 'res/demanda/ins';
       
-		function insertDemanda(titulo, descricao, latitude, longitude, endereco) {
-		  var url = "http://localhost:8080/oss/rest/demanda/ins";
-		  $.post( url, { titulo: titulo, descricao: descricao })
-		  .done(function( data ) {
-		    alert( "Data Loaded: " + data );
-		  });
-		  
+		function insertDemanda(id) {
+			var titulo    = document.getElementById('formulario_titulo'+id).value;
+			var descricao = document.getElementById('formulario_descricao'+id).value;
+			var endereco  = document.getElementById('formulario_endereco'+id).value;
+    		var latitude  = document.getElementById('formulario_lat'+id).value;
+    		var longitude = document.getElementById('formulario_long'+id).value;
+			
+			var url = "http://localhost:8080/oss/rest/demanda/ins";
+		    $.post( url, { titulo: titulo, descricao: descricao, endereco: endereco, latitude: latitude, longitude: longitude }, 
+		    		function(result){
+		    			if('ok' == result){
+		    				document.getElementById(id).innerHTML = document.getElementById('parabens').innerHTML;
+		    			}
+		    	
+		    
+		    		},"text");
+
 		}
       
     </script>	
   </head>
   <body>
  	 <input id="pac-input" class="controls" type="text" placeholder="Buscar pelo endereço">
-    <header>
+    <header style="display:none">
       <h1 class="float-l">
         Melhorar minha cidade
       </h1>
@@ -470,7 +482,10 @@
 
 			</div>
 			
-		</footer>    
+		</footer>
+		<div id="parabens" style="display:none">
+			<h3>Parabéns você ajudou a melhorar a sua cidade!</h3>
+		</div>    
     	<!-- Incluindo o AngularJS do Google CDN -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.1/angular.min.js"></script>
   </body>
