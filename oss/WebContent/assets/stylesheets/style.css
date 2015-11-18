@@ -620,3 +620,56 @@ input[id*="modal_"]:checked + div.modal .modal-content {
     padding: 0px 0px 0px 0px;
     left: -4%;
 }
+
+#sw-content {
+    height: 295px;
+}
+
+#pw-mask{
+    background: url("http://www.estadao.com.br/paywall/img-tpl/overlay-preto.png") repeat;
+    display: none;
+    height: 100%;
+    left: 0;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2147483647;
+}
+
+#signwall {
+    width: 550px;
+    background: url('http://www.estadao.com.br/paywall/img-tpl/sw-topo.jpg') no-repeat #fff;
+    border: 1px solid #ddd;
+    z-index: 9999999999;
+    height: 490px;
+    font-size: 12px;
+}
+
+#signwall .half-left {
+    border-right: 1px solid #ccc;
+}
+.half-left {
+    float: left;
+    width: 47%;
+    margin-left: 3%;
+}
+
+#signwall a img:hover {
+    opacity: 0.5;
+    filter: alpha(opacity = 50);
+}
+
+#signwall a, #pw-wrap a {
+    text-decoration: underline;
+}
+#signwall a, #signwall p, #signwall b {
+    color: #909291;
+    margin: 0;
+    font-family: arial;
+}
+
+#signwall .half-left span, #signwall .half-right span {
+    display: block;
+    margin: 6px 0;
+}
