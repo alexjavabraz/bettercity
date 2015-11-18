@@ -1,60 +1,90 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <style>
-      html, body{height: 100%;
-        margin: 0;
-        padding: 0;}
-       #map { 
-       	margin: 0; padding: 0; width: 800px;  height: 800px;background-color: #CCC; 
-       	}
-       #legend {background: white; padding: 10px; }
-        #legend h3 {
-        margin-top: 0;
-      }
-      #legend img {
-        vertical-align: middle;
-      }
-    </style>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?libraries=visualization">
-    </script>
+    <title>Cotia Melhor aplicativo social</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    
+    <meta name="description" content="O CotiaMelhor e uma plataforma para que o cidadao mostre os problemas da cidade, solicite melhorias, de sugestoes e concorra a premios. Solu&#231;&#227;o tecnológica para quest&#245;es de relevância p&#250;blica">
+    <meta name="keywords" content="css4html, css+for+html, css 4 html, css4, css4 html, css, css3, html, html5" />
+
+	<meta property="og:title" content="Faça sua cidade melhor, exerça a cidadania" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://www.cotiamelhor.com.br" />
+	<meta property="og:site_name" content="CotiaMelhor" />
+	<meta property="og:locale" content="pt_br" />
+    <meta property="og:image" content="http://palloi.github.io/responsive-header-only-css/assets/images/image-shared.png" />
+    <meta property="og:keywords" content="aplicativo social, cotiamelhor, melhorar minha cidade, " />
+    <meta property="og:description" content="Mostre o que você quer melhorar no seu bairro, na sua cidade!" />
+    
+    <link href="assets/images/icos/favicon.ico" rel="shortcut icon">
+	<link href="http://fonts.googleapis.com/css?family=Cookie|Open+Sans:400,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css" />
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/footer.css" />
+    
+    <!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+    
+    <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery/jssor.slider.mini.js"></script>
+
+	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdL1lXGAN3qc3dcbTUxCcIYai5dc5hr6c&libraries=places"></script>
     <script>
       var map;
-
+      var address = '';
       var iconBase = 'http://localhost:8080/oss/assets/images/icos/';
       var icons = {
-    		  problema: {
-    	          name: 'Problema',
-    	          icon: iconBase + 'problem.png'
-    	        },
-    	        melhorado: {
-    	          name: 'Melhorado',
-    	          icon: iconBase + 'completed.png'
-    	        },
-    	        working: {
-    	            name: 'Atuando',
-    	            icon: iconBase + 'under_construction2.png'
-    	          },        
-    	        info: {
-    	          name: 'Informa&#231;&#227;o',
-    	          icon: iconBase + 'analyzing.png'
-    	        }
+    	problema: {
+          name: 'Problema',
+          icon: iconBase + 'problem.png'
+        },
+        melhorado: {
+          name: 'Melhorado',
+          icon: iconBase + 'completed.png'
+        },
+        working: {
+            name: 'Atuando',
+            icon: iconBase + 'under_construction2.png'
+          },        
+        info: {
+          name: 'Informa&#231;&#227;o',
+          icon: iconBase + 'analyzing.png'
+        }          
       }; 
+      
+      
+      function criaString(title, description){
+    	  return '<div id="content">'+
+          '<div id="siteNotice">'+
+          '</div>'+
+          '<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
+          '<div id="bodyContent">'+
+          '<p><b>'+description+'</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+          'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+          'south west of the nearest large town, Alice Springs; 450&#160;km '+
+          '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+          'Heritage Site.</p>'+
+          '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+          'https://en.wikipedia.org/w/index.php?title=Uluru</a></p>'+
+          '</div>'+
+          '</div>';
+      }
       
       function initialize() {
         map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
+          zoom: 14,
           center: new google.maps.LatLng(-23.6057502,-46.9178099),
           mapTypeId: google.maps.MapTypeId.ROADMAP //google.maps.MapTypeId.TERRAIN
+           
         });
-        
 
         // Create a <script> tag and set the USGS URL as the source.
         var script = document.createElement('script');
+        // (In this example we use a locally stored copy instead.)
         script.src = 'http://localhost:8080/oss/rest/map';
-// 		script.src = 'pontos3.json';
+//         script.src = 'pontos.json';
         document.getElementsByTagName('head')[0].appendChild(script);
         
         var legend = document.getElementById('legend');
@@ -69,21 +99,161 @@
 
         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend); 
         
-      }
+        new google.maps.Marker({
+            position: {lat: -23.6057502, lng: -46.9178099},
+            map: map,
+            title: 'Você está aqui',
+            label: 'Você está aqui',
+            zIndex: 1,
+            optimized: true,
+            draggable: false
+          });
+        
+        //SEARCH
+     // Create the search box and link it to the UI element.
+  	  var input = document.getElementById('pac-input');
+  	  var searchBox = new google.maps.places.SearchBox(input);
+  	  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 
-      function criaString(title, description){
-    	  return '<div id="content">'+
-          '<div id="siteNotice">'+
-          '</div>'+
-          '<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
-          '<div id="bodyContent">'+
-          '<p><b>'+title+'</b>, '+description+'&#160</p>'+
-          '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-          'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-          '(last visited June 22, 2009).</p>'+
-          '</div>'+
-          '</div>';
+  	  // Bias the SearchBox results towards current map's viewport.
+  	  map.addListener('bounds_changed', function() {
+  	    searchBox.setBounds(map.getBounds());
+  	  });
+
+  	  var markers = [];
+  	  // [START region_getplaces]
+  	  // Listen for the event fired when the user selects a prediction and retrieve
+  	  // more details for that place.
+  	  searchBox.addListener('places_changed', function() {
+  	    var places = searchBox.getPlaces();
+
+  	    if (places.length == 0) {
+  	      return;
+  	    }
+
+  	    // Clear out the old markers.
+  	    markers.forEach(function(marker) {
+  	      marker.setMap(null);
+  	    });
+  	    markers = [];
+
+  	    // For each place, get the icon, name and location.
+  	    var bounds = new google.maps.LatLngBounds();
+  	    places.forEach(function(place) {
+  	      var icon = {
+  	        url: place.icon,
+  	        size: new google.maps.Size(71, 71),
+  	        origin: new google.maps.Point(0, 0),
+  	        anchor: new google.maps.Point(17, 34),
+  	        scaledSize: new google.maps.Size(25, 25)
+  	      };
+
+  	      // Create a marker for each place.
+  	      markers.push(new google.maps.Marker({
+  	        map: map,
+  	        icon: icon,
+  	        title: place.name,
+  	        position: place.geometry.location
+  	      }));
+
+  	      if (place.geometry.viewport) {
+  	        // Only geocodes have viewport.
+  	        bounds.union(place.geometry.viewport);
+  	      } else {
+  	        bounds.extend(place.geometry.location);
+  	      }
+  	    });
+  	    map.fitBounds(bounds);
+  	  });        
+        
+       //END SEARCH
+       
+       // MAP MARKER
+  		var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  		var labelIndex = 0;
+  		// This event listener calls addMarker() when the map is clicked.
+	    google.maps.event.addListener(map, 'click', function(event) {
+	    	addDinamicMarker(event.latLng, map);
+	    });
+	 
+	 	// Adds a marker to the map.
+	    function addDinamicMarker(alocation, amap) {
+	      // Add the marker at the clicked location, and add the next-available label
+	      // from the array of alphabetical characters.
+	      
+	      var amarker = new google.maps.Marker({
+			        position: alocation,
+			        label: labels[labelIndex++ % labels.length],
+			        map: amap
+		  });
+	      
+	      amarker.setMap(null);
+	      amarker.setMap(amap);
+	      
+	      if(amap.getZoom() < 18){
+	      	amap.setZoom(18);
+	      	amarker.setMap(null);
+	      }else{
+	    	  var info =  new google.maps.InfoWindow({
+      		    content: addPoint( amarker.position.lat(),  amarker.position.lng())
+    		  });
+	    	  
+	    	  amarker.addListener('click', function() {
+	        	  
+	    		  info.open(amap, amarker);
+	          });
+	    	  
+	    	  info.open(amap, amarker);
+	    	  
+	      }
+	      
+
+	 	}
+      	//END MAP MARKER
+       
       }
+      
+      function addPoint(lat, lng){
+    	  
+    	  var id = Math.random();
+    	  
+    	  codeLatLng(lat, lng, 'formulario_input'+id);
+    	  
+    	  return '	<div class="form">'+
+				'	<nav class="" id='+id+'>'+
+				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'home\'"     class="home"     ng-click="ativo=\'home\'">Home</a>'+
+				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'projects\'" class="projects" ng-click="ativo=\'projects\'">Projetos</a>'+
+				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'services\'" class="services" ng-click="ativo=\'services\'">Serviços</a>'+
+				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'contact\'"  class="contact"  ng-click="ativo=\'contact\'">Contato</a>'+
+				'	</nav>'+
+				'	<div class="formulario">'+
+				'	<div><input type="text" class="formulario_input" name="titulo" required placeholder="Qual o problema?" /></div>'+
+				'	<div><textarea name="descricao" class="formulario_textarea" maxlength="500" cols="50" rows="4" placeholder="Descreva o problema, com o máximo de detalhes"></textarea></div>'+
+				'	<div><input type="text" id="formulario_input'+id+'" class="formulario_input" name="endereco" /></div>'+
+				'	<div><button onClick="insertDemanda('+id+')" class="formulario_button"/>Enviar</div>'+
+				'	</div>';
+      }
+      
+      function codeLatLng(lat, lng, address) {
+    	  var geocoder = new google.maps.Geocoder();
+    	  
+    	  var latlng = new google.maps.LatLng(lat, lng);
+    	  geocoder.geocode({
+    	    'latLng': latlng
+    	  }, function (results, status) {
+    	    if (status === google.maps.GeocoderStatus.OK) {
+    	      if (results[1]) {
+    	        document.getElementById(address).value=results[0].formatted_address;
+    	        console.log(results[0].formatted_address);
+    	      } else {
+    	        console.log('No results found');
+    	      }
+    	    } else {
+    	      console.log('Geocoder failed due to: ' + status);
+    	    }
+    	  });
+    	}
+            
       
       // Loop through the results array and place a marker for each
       // set of coordinates.
@@ -111,15 +281,168 @@
         		  }).open(map, this);
           });
           
-          console.log(results.features[i].properties['place']);
-          
         }
       }
-      google.maps.event.addDomListener(window, 'load', initialize)
-    </script>
+      
+      google.maps.event.addDomListener(window, 'load', initialize);
+      
+      
+      var myJSONData = '{"data":{"mode" : "subscribe","technologyareas":[1],"assettypes":["podcast","documents"]}}';
+      var url = 'res/demanda/ins';
+      
+		function insertDemanda(titulo, descricao, latitude, longitude, endereco) {
+		  var url = "http://localhost:8080/oss/rest/demanda/ins";
+		  $.post( url, { titulo: titulo, descricao: descricao })
+		  .done(function( data ) {
+		    alert( "Data Loaded: " + data );
+		  });
+		  
+		}
+      
+    </script>	
   </head>
   <body>
-    <div id="map"></div>
-    <div id="legend">Legenda</div>
+ 	 <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+    <header>
+      <h1 class="float-l">
+        Melhorar minha cidade
+      </h1>
+      
+      <input type="checkbox" id="control-nav" />
+      <label for="control-nav" class="control-nav"></label>
+      <label for="control-nav" class="control-nav-close"></label>
+
+      <nav class="float-r">
+        <ul class="list-auto">
+          <li>
+            <a href="#CotiaMelhor" title="Cidade Melhor, Cotia Melhor">O Cotia Melhor</a>
+          </li>
+          <li>
+            <a href="#Cotia_Melhor_como_funciona" title="Como funciona o Cidade Melhor">Como funciona?</a>
+          </li>
+          <li>
+            <a href="#Cotia_Melhor_Ja" title="Comece a melhorar a cidade Já">Melhore Cotia j&#225;</a>
+          </li>
+          <li>
+            <a href="#mapaProblemas" title="Confira no mapa">Onde precisa melhorar</a>
+          </li>
+          
+          <li>
+            <a href="#contato" title="Entre em contato">Contato</a>
+          </li>          
+        </ul>
+      </nav>
+    </header>
+
+    <section id="CotiaMelhor">
+      <img src="assets/images/collaboration-all-hands-in.jpg" class="float-r" />
+      <p>
+        <strong>O CotiaMelhor</strong> faz a integra&#231;&#227;o entre os cidad&#227;os e o poder p&#250;blico. Acreditamos que nenhuma mudan&#231;a acontecer&#225;, sem a participa&#231;&#227;o ativa daqueles que no seu dia-a-dia sofrem por problemas no seu bairro, na sua cidade. A popula&#231;&#227;o tem papel fundamental na mudan&#231;a, nosso pa&#237;s é imenso, e nem sempre o poder p&#250;blico consegue chegar no n&#237;vel de detalhe que precisamos, precisamos mostrar os problemas e dar sugest&#245;es de melhoria. Somos uma solu&#231;&#227;o tecnológica para quest&#245;es de relevância p&#250;blica. 
+      </p>
+      <p>
+        <strong>Queremos um pa&#237;s melhor:</strong> Para isso contamos com a sua participa&#231;&#227;o, baixe o aplicativo e comece a mostrar, os problemas do seu bairro.
+      </p>
+      <p>
+        <strong>Solicite melhorias, d&#234; sugest&#245;es, participe e concorra a pr&#234;mios:</strong> Ajude a melhorar a cidade, use o nosso aplicativo, tire fotos do problema e d&#234; sugest&#245;es de melhoria, além de fazer uma CotiaMelhor, voc&#234; concorre &#225; pr&#234;mios.
+      </p>
+      <p>
+        <strong>Pelo mundo todo:</strong> As pessoas est&#227;o se envolvendo na administra&#231;&#227;o da sua cidade, querendo ser ouvidos, e querendo ter mais voz ativa. 
+        <br/>Exerça você também o seu dever de cidadão.
+      </p>      
+    </section>
+
+    <section id="Cotia_Melhor_como_funciona">
+      <img src="assets/images/problemas_da_cidade.jpg" class="float-r" />
+      <p>
+        <strong>Baixe o aplicativo Melhorar Minha Cidade:</strong> No Google Play para Android e PlayStore para Apple. Em breve Windows Phone.
+      </p>
+      <p>
+        <strong>Cadastre-se:</strong> Cadastre-se pelo aplicativo ou pelo site.
+      </p>
+      <p>
+        <strong>Comece a ter uma CotiaMelhor:</strong> Comece a enviar fotos dos problemas que voc&#234; encontra na cidade, no seu bairro. Estes problemas ser&#227;o encaminhados para as autoridades p&#250;blicas.
+      </p>
+      <div class="conteinerDesc">
+        <img src="assets/images/icos/problem.png"             class="imagemDesc"/> <p class="textDesc">Assim irá aparecer sua sugestão / reclamação, este ícone significa que alguém apontou um problema para ser corrigido.</p><br/>
+        <img src="assets/images/icos/analyzing.png"           class="imagemDesc"/> <p class="textDesc">Sua solicitação está em análise pelos órgãos competentes.</p><br/>
+        <img src="assets/images/icos/under_construction2.png" class="imagemDesc"/> <p class="textDesc">Ótimo o responsável por corrigir o problema já analizou e está atuando no local, você ganhou pontos.</p><br/>
+        <img src="assets/images/icos/completed.png"           class="imagemDesc"/> <p class="textDesc">Uhulll ficamos felizes! O problema foi corrigido! Compartilhe nas redes sociais que você melhorou a cidade!</p><br/>
+      </div>
+      <p>
+        <strong>Veja os problemas sendo resolvidos:</strong> Assim que o órg&#227;o p&#250;blico resolve o problema, voc&#234; fica sabendo e pode avalidar.
+      </p>
+      <p>
+        <strong>Concorra &#224; pr&#234;mios:</strong> Voc&#234; concorre &#224; pr&#234;mios exclusivos, quanto mais voc&#234; ajudar a fazer uma CotiaMelhor, mais chances tem de ganhar.
+      </p>      
+    </section>
+
+    <section id="Cotia_Melhor_Ja">
+      <div style="align:center">
+    	  <img src="assets/images/googleplay.jpg" style="width:15%;valign:'center''" class="float-r" />
+	      <img src="assets/images/applestore.png" style="width:15%" class="float-r" />
+      </div>
+      <p>
+        <strong>Comece agora mesmo:</strong> Comece a melhorar sua cidade agora mesmo, baixe o app.
+      </p>
+      <p>
+        <strong>Pelo site voc&#234; acompanha</strong> como est&#225; se a sua solicitação de melhoria foi aprovada, se tem alguma obra em execu&#231;&#227;o, se j&#225; foi concluído. Cada solicitação gera pontos, quanto mais você participar, sua cidade fica melhor e você concorre á prêmios.
+      </p>
+      <p>
+        <strong>Caso você solicite uma melhoria</strong> e esta melhoria seja aceita, você ganha ainda mais pontos, e concorre á prêmios!
+      </p>
+    </section>
+
+    <section id="mapaProblemas">
+      <div>
+      	 
+      	 <div id="map"></div>
+   		 <div id="legend">Legenda</div>
+      
+      </div>
+    </section>
+    
+    
+		<footer id="contato" class="footer-distributed">
+
+			<div class="footer-left">
+
+				<h3>Melhorar minha Cidade</h3>
+
+				<p class="footer-links">
+					<a href="#CotiaMelhor">O Cotia Melhor</a>
+					·
+					<a href="#Cotia_Melhor_como_funciona">Como Funciona?</a>
+					·
+					<a href="#Cotia_Melhor_Ja">Melhore a Cidade já</a>
+					·
+					<a href="#mapaProblemas">Onde Precisamos Melhorar</a>
+				</p>
+
+				<div class="footer-icons">
+
+					<a href="#"><i class="fa fa-facebook"></i></a>
+					<a href="#"><i class="fa fa-twitter"></i></a>
+					<a href="#"><i class="fa fa-linkedin"></i></a>
+					<a href="#"><i class="fa fa-github"></i></a>
+
+				</div>
+				<p class="footer-company-name"><a href='www.bjbraz.com.br' style="text-decoration: none;color: aliceblue;">BJBraz Sistemas &copy; 2015</a></p>
+			</div>
+
+			<div class="footer-right">
+
+				<form action="#" method="post">
+
+					<input type="text" name="email" placeholder="Digite seu E-mail" />
+					<textarea name="message" placeholder="Nos diga o que você achou do CotiaMelhor?"></textarea>
+					<button>Enviar</button>
+
+				</form>
+
+			</div>
+			
+		</footer>    
+    	<!-- Incluindo o AngularJS do Google CDN -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.1/angular.min.js"></script>
   </body>
 </html>
