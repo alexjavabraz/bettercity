@@ -56,6 +56,10 @@ public class HSQLDao {
 		try {
 			PreparedStatement stmt = getConnection().prepareStatement("CREATE TABLE DEMANDA(ID IDENTITY, DESCRICAO VARCHAR(500), TITULO VARCHAR(500), ENDERECO VARCHAR(500), LATITUDE VARCHAR(500), LONGITUDE VARCHAR(500), TIPO VARCHAR(500))");
 			stmt.execute();
+			
+			stmt = getConnection().prepareStatement("CREATE TABLE CLIENTE(ID IDENTITY, NOME VARCHAR(500), EMAIL VARCHAR(500), ENDERECO VARCHAR(500), SENHA VARCHAR(500), TELEFONE VARCHAR(500))");
+			stmt.execute();
+			
 		} catch (SQLException e) {
 			LOGGER.error(e.getMessage());
 		}
@@ -108,6 +112,24 @@ public class HSQLDao {
 		}
 		
 	}
+	
+	public void adicionaCliente(Cliente c) {
+		PreparedStatement stmt;
+		try {
+			stmt = getConnection().prepareStatement("INSERT INTO CLIENTE(NOME, EMAIL, ENDERECO, SENHA, TELEFONE) "
+					+ "VALUES (?, ?, ?, ?, ?)");
+			stmt.setString(1, c.getNome());
+			stmt.setString(2, c.getEmail());
+			stmt.setString(3, c.getEndereco());
+			stmt.setString(4, c.getSenha());
+			stmt.setString(5, c.getTelefone());
+			stmt.execute();
+			
+		} catch (SQLException e) {
+			LOGGER.error(e.getMessage());
+		}
+		
+	}	
 	 
 
 }
