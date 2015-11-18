@@ -51,7 +51,7 @@
         info: {
           name: 'Informa&#231;&#227;o',
           icon: iconBase + 'analyzing.png'
-        }          
+        }         
       }; 
       
       
@@ -80,11 +80,8 @@
            
         });
 
-        // Create a <script> tag and set the USGS URL as the source.
         var script = document.createElement('script');
-        // (In this example we use a locally stored copy instead.)
         script.src = 'http://localhost:8080/oss/rest/map';
-//         script.src = 'pontos.json';
         document.getElementsByTagName('head')[0].appendChild(script);
         
         var legend = document.getElementById('legend');
@@ -99,15 +96,45 @@
 
         map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend); 
         
-        new google.maps.Marker({
-            position: {lat: -23.6057502, lng: -46.9178099},
-            map: map,
-            title: 'Você está aqui',
-            label: 'Você está aqui',
-            zIndex: 1,
-            optimized: true,
-            draggable: false
-          });
+        if(navigator.geolocation){
+        
+        	navigator.geolocation.getCurrentPosition(
+
+        			function(position){
+        				var latitude = position.coords.latitude;
+        				var longitude = position.coords.longitude;
+        				var accuracy = position.coords.accuracy;
+        				var timestamp = position.timestamp;
+        				
+        				if(accuracy < 500){
+        					console.log(latitude);
+        					console.log(longitude);
+        					console.log(accuracy);
+        					console.log(new Date(timestamp));
+        					
+        					new google.maps.Marker({
+        			            position: {lat: latitude, lng: longitude},
+        			            map: map,
+        			            icon: iconBase + 'you.jpg',
+        			            title: 'Você está aqui',
+        			            label: 'Você está aqui',
+        			            zIndex: 10,
+        			            optimized: true,
+        			            draggable: false
+        			          });
+        					
+        					
+        				}
+        				
+        				
+        			}, 
+        			function(error){
+        					alert(error);
+        			},
+        			
+        			{timeout:10000}, {maximumAge:20000});
+        	
+        }
         
         //SEARCH
      // Create the search box and link it to the UI element.
@@ -187,6 +214,8 @@
 			        map: amap
 		  });
 	      
+	      amap.setCenter(alocation);
+	      
 	      amarker.setMap(null);
 	      amarker.setMap(amap);
 	      
@@ -221,10 +250,10 @@
     	  
     	  return '	<div class="form">'+
 				'	<nav class="" id='+id+'>'+
-				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'home\'"     class="home"     ng-click="ativo=\'home\'">Home</a>'+
-				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'projects\'" class="projects" ng-click="ativo=\'projects\'">Projetos</a>'+
-				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'services\'" class="services" ng-click="ativo=\'services\'">Serviços</a>'+
-				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'contact\'"  class="contact"  ng-click="ativo=\'contact\'">Contato</a>'+
+				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'home\'"     class="home"     ng-click="ativo=\'home\'">Problema</a>'+
+				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'projects\'" class="projects" ng-click="ativo=\'projects\'">Informação</a>'+
+				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'services\'" class="services" ng-click="ativo=\'services\'">Sugestão</a>'+
+				'	<a href="#mapaProblemas" onClick="document.getElementById('+id+').className=\'contact\'"  class="contact"  ng-click="ativo=\'contact\'">Outro</a>'+
 				'	</nav>'+
 				'	<div class="formulario">'+
 				'	<div><input type="text" class="formulario_input" name="titulo" required placeholder="Qual o problema?" /></div>'+
@@ -302,7 +331,7 @@
     </script>	
   </head>
   <body>
- 	 <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+ 	 <input id="pac-input" class="controls" type="text" placeholder="Buscar pelo endereço">
     <header>
       <h1 class="float-l">
         Melhorar minha cidade
