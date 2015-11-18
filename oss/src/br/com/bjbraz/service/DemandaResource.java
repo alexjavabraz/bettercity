@@ -1,10 +1,13 @@
 package br.com.bjbraz.service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import br.com.bjbraz.entity.Demanda;
@@ -13,6 +16,9 @@ import br.com.bjbraz.entity.HSQLDao;
 
 @Path("/demanda/ins")
 public class DemandaResource {
+	
+	@Context
+	private HttpServletRequest request;	
 	
 	@POST
 	@Produces(MediaType.TEXT_PLAIN)
@@ -35,6 +41,9 @@ public class DemandaResource {
 		
 		
 		dao.adicionaDemanda(d);
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("teste", "teste");
 		
         return "ok";
     }
