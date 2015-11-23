@@ -639,10 +639,10 @@ input[id*="modal_"]:checked + div.modal .modal-content {
 
 #signwall {
     width: 550px;
-    background: url('http://www.estadao.com.br/paywall/img-tpl/sw-topo.jpg') no-repeat #fff;
+    background: url('http://localhost:8080/oss/assets/images/icos/city.jpg') no-repeat #fff;
     border: 1px solid #ddd;
     z-index: 9999999999;
-    height: 490px;
+    height: 439px;
     font-size: 12px;
 }
 
