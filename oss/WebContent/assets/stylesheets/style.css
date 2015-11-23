@@ -24,7 +24,6 @@ html{
 .float-l { 
 	float: left; 
 	color: #FFF;
-	font-size: 64px;
 	font-family: 'Cookie', cursive;
 	font-weight: normal;
 	line-height: 1;
@@ -220,7 +219,6 @@ section p {
   -webkit-transform: translate(-50%, 0);
   -ms-transform: translate(-50%, 0);
   transform: translate(-50%, 0);
-  
   -webkit-transition: all 0.5s ease-in-out;
   transition: all 0.5s ease-in-out;
 }
@@ -285,7 +283,38 @@ input[id*="modal_"]:checked + div.modal .modal-content {
   transition-delay: 0.5s;
 }
 
+
+@media screen and (min-width: 768px) and (max-width: 5000px){
+	header h1{
+		font-size: 64px;
+	}
+
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 800px){
+	header h1{
+		font-size: 45px;
+	}
+	
+	header li a {
+	    display: block;
+	    padding: 16px 4px 13px 4px;
+	    color: #F5EFEF;
+	    font-size: 11px;
+	    line-height: 0px;
+	    text-decoration: none;
+	    -webkit-transition: all 300ms ease;
+	    transition: all 300ms ease;
+	}
+
+}
+
 @media screen and (max-width: 767px) {
+	header h1{
+		font-size: 70px;
+	}
+		
   header nav {
     position: fixed;
     top: 0;
@@ -449,6 +478,15 @@ input[id*="modal_"]:checked + div.modal .modal-content {
     line-height: 40px;
   }
 }
+
+
+
+
+
+
+
+
+
 
 		#map { 
        	margin: 75px 0px 0px 0px; padding: 0; width: 99%;  height: 595px;background-color: #CCC; 
@@ -672,4 +710,54 @@ input[id*="modal_"]:checked + div.modal .modal-content {
 #signwall .half-left span, #signwall .half-right span {
     display: block;
     margin: 6px 0;
+}
+
+.signwall_formulario input{
+	padding: 20px 30px;
+	background-color: #E35885;
+	margin-bottom: 8px;
+	box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+	cursor: pointer;
+}
+
+.signwall_formulario input :-webkit-input-placeholder{color: red;}
+.signwall_formulario input :-moz-placeholder{color: red;}
+.signwall_formulario input ::-moz-placeholder{color: red;}
+.signwall_formulario input :-ms-input-placeholder{color: red;}
+
+
+.signwall_formulario h1 {
+	color: #FFF;
+	font-size: 64px;
+	font-family: 'Cookie', cursive;
+	font-weight: normal;
+	line-height: 1;
+	text-shadow: 0 3px 0 rgba(0,0,0,0.1);
+}
+
+.signwall_formulario{
+	background-color: #61A1BC;
+	border-radius: 2px;
+	box-shadow: 0 1px 1px #CCC;
+	width: 400px;
+	padding: 35px 60px;
+	margin: 80px auto; 
+}
+
+
+.signwall_formulario ul {
+	list-style: none;
+	color: #FFF;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: left;
+	margin: 20px 0 15px;
+}
+
+.signwall_formulario ul li span {
+	float: right;
+}
+
+.signwall_formulario ul li.active {
+	background-color: #8EC16D;
 }
