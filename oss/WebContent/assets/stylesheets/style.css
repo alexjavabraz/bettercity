@@ -667,13 +667,13 @@ input[id*="modal_"]:checked + div.modal .modal-content {
 #pw-mask{
     background: url("http://www.estadao.com.br/paywall/img-tpl/overlay-preto.png") repeat;
     display: none;
-    height: 100%;
     left: 0;
     min-height: 100%;
     position: absolute;
     top: 0;
-    width: 100%;
     z-index: 2147483647;
+    width: 100%;
+    height: 100%;
 }
 
 #signwall {
@@ -776,3 +776,12 @@ input[id*="modal_"]:checked + div.modal .modal-content {
 .signwall_formulario_plogin{
     padding: 6px 0px 6px 0px;
 }
+
+
+
+
+
+
+
+
+
