@@ -28,11 +28,11 @@
 	<![endif]-->
     
     <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="js/jquery/jssor.slider.mini.js"></script>
 
 	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdL1lXGAN3qc3dcbTUxCcIYai5dc5hr6c&libraries=places"></script>
     <script>
       var map;
+      var websocket = new WebSocket("ws://" + document.location.host+ "/oss/MyWebSocketServlet?username=mapa");
       var address = '';
       var iconBase = 'http://localhost:8080/oss/assets/images/icos/';
       var icons = {
@@ -81,7 +81,7 @@
         });
 
         var script = document.createElement('script');
-        script.src = 'http://localhost:8080/oss/rest/map';
+        script.src = document.location.host+'/oss/rest/map';
         document.getElementsByTagName('head')[0].appendChild(script);
         
         var legend = document.getElementById('legend');
@@ -328,16 +328,16 @@
     		var latitude  = document.getElementById('formulario_lat'+id).value;
     		var longitude = document.getElementById('formulario_long'+id).value;
 			
-			var url = "http://localhost:8080/oss/rest/demanda/ins";
+			var url = document.location.host+"/oss/rest/demanda/ins";
+			
+			websocket.send('<br/><br/>Criado o ponto no mapa: <b>Titulo</b> '+titulo+' <b>Descricao:</b> '+descricao+' <b>Endereço:</b> '+endereco+' <b>Latitude:</b> '+latitude+' <b>Longitude:</b> '+ longitude);
+			
 		    $.post( url, { titulo: titulo, descricao: descricao, endereco: endereco, latitude: latitude, longitude: longitude }, 
 		    		function(result){
 		    			if('ok' == result){
 		    				document.getElementById(id).innerHTML = document.getElementById('parabens').innerHTML;
 		    			}
-		    	
-		    
 		    		},"text");
-
 		}
       
     </script>	
