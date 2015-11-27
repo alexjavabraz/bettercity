@@ -661,7 +661,7 @@ input[id*="modal_"]:checked + div.modal .modal-content {
 }
 
 #sw-content {
-    height: 295px;
+    height: 249px;
 }
 
 #pw-mask{
@@ -677,11 +677,11 @@ input[id*="modal_"]:checked + div.modal .modal-content {
 }
 
 #signwall {
-    width: 550px;
+    width: 460px;
     background: url('http://localhost:8080/oss/assets/images/icos/city.jpg') no-repeat #fff;
     border: 1px solid #ddd;
     z-index: 9999999999;
-    height: 439px;
+    height: 454px;
     font-size: 12px;
 }
 
@@ -690,8 +690,9 @@ input[id*="modal_"]:checked + div.modal .modal-content {
 }
 .half-left {
     float: left;
-    width: 47%;
+    width: 50%;
     margin-left: 3%;
+    margin-right: 3%;
 }
 
 #signwall a img:hover {
@@ -761,4 +762,17 @@ input[id*="modal_"]:checked + div.modal .modal-content {
 
 .signwall_formulario ul li.active {
 	background-color: #8EC16D;
+}
+
+.signwall_formulario_botao{
+    padding: 5px 5px 5px 5px;
+}
+
+.signwall_formulario_input{
+    padding: 8px 9px 8px 8px;
+    margin: 5px 0px 5px 0px;
+}
+
+.signwall_formulario_plogin{
+    padding: 6px 0px 6px 0px;
 }

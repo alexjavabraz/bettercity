@@ -28,6 +28,14 @@
 	<![endif]-->
     
     <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
+    <script>
+    
+    function hideme(obj){
+    	document.getElementById('pw-mask').style.visibility = 'hidden';
+    	document.getElementById('signwall').style.visibility = 'hidden';
+    }
+    
+    </script>
   </head>
   <body ng-app>
  	 <input id="pac-input" class="controls" type="text" placeholder="Search Box">
@@ -62,31 +70,34 @@
       </nav>
     </header>
 
-   <div id="pw-mask" style="display:block"></div>
+   <div id="pw-mask" style="display:block" onclick="hideme();"></div>
 
-	<div id="signwall" class="shadow js-center-fixed"
-		style="position: absolute; margin: 0px; top: 0px; left: 395px;">
+	<div id="signwall" class="shadow js-center-fixed" style="position: absolute; margin: 0px; top: 0px; left: 395px;">
 		<div class="big-header">
 			<div class="homebutton">
-				<a href="/"
-					class="adtm-noticia-6-voltar-para-home">
-					<img src="assets/images/botoes/voltar-home.png"></a>
+				<a href="/" class="adtm-noticia-6-voltar-para-home"><img src="assets/images/botoes/voltar-home.png"></a>
 			</div>
 		</div>
 		<div id="sw-content">
 		
 		</div>
 		<div class="half-left">
-			<a href="login.jsp"
-				class="js-pw-link-cadastro adtm-noticia-6-cadastre-se"><img
-				src="assets/images/botoes/cadastrar.png"></a><br>
-			<span><b>Já é cadastrado? </b><a
-				href="login.jsp"
-				class="js-pw-link-login adtm-noticia-6-fazer-login">Faça
-					seu login.</a> </span> <span><b>Não desejo me cadastrar.</b><a
-				href="/"
-				class="adtm-noticia-6-voltar-para-home">Voltar
-					para home.</a> </span>
+		
+			<p class="signwall_formulario_plogin">
+				<label for="email">E-mail:</label>
+				<input type="email" placeholder="Digite seu E-mail" class="signwall_formulario_input" id="email" required/>
+				<label for="password">Senha:</label>
+				<input type="password" placeholder="Digite sua Senha" class="signwall_formulario_input" id="password" required/>				
+			</p>
+			<p align="center">
+				<a href="login.jsp"	class="js-pw-link-cadastro adtm-noticia-6-cadastre-se">
+					<button class="signwall_formulario_botao">Melhorar Minha Cidade</button>
+				</a>
+			</p>
+			<br>
+			
+		</div>
+		<div class="half-right">
 			<div id="social-links">
 				<a id="js-pw-login-fb"
 					href="/login/autenticar?provider=Facebook&amp;r=http://www.cotiamelhor.com.br"><img
@@ -96,92 +107,7 @@
 					src="http://www.estadao.com.br/paywall/img-tpl/google.png"></a>
 			</div>
 		</div>
-		<div class="half-right">
-			<a
-				href="login.jsp"
-				class="adtm-noticia-6-assine"><img
-				src="assets/images/botoes/assine-agora.png"></a>
-
-			<div class="wrap">
-				<span><b>Dúvidas? </b><a
-					href="index.html#CotiaMelhor"
-					class="adtm-noticia-6-duvidas-tutorial">Veja
-						como funciona o Cotia Melhor</a> </span>
-				<p>
-					
-				</p>
-			</div>
-		</div>
 	</div>
 
-	<form id="form">
-			
-			<h1>Login</h1>
-			
-			<ul>
-				<li class="style">
-					<input type="email" placeholder="Seu e-mail" name="email" required  />
-				</li>
-				<li class="style">
-					<input type="password" placeholder="Sua senha" name="password" required  />
-				</li>			
-			</ul>
-			
-	</form>    
-    
-		<footer id="contato" class="footer-distributed">
-
-			<div class="footer-left">
-
-				<h3>Melhorar minha Cidade</h3>
-
-				<p class="footer-links">
-					<a href="#CotiaMelhor">O Cotia Melhor</a>
-					�
-					<a href="#Cotia_Melhor_como_funciona">Como Funciona?</a>
-					�
-					<a href="#Cotia_Melhor_Ja">Melhore a Cidade j�</a>
-					�
-					<a href="#mapaProblemas">Onde Precisamos Melhorar</a>
-				</p>
-
-				<div class="footer-icons">
-
-					<a href="#"><i class="fa fa-facebook"></i></a>
-					<a href="#"><i class="fa fa-twitter"></i></a>
-					<a href="#"><i class="fa fa-linkedin"></i></a>
-					<a href="#"><i class="fa fa-github"></i></a>
-
-				</div>
-				<p class="footer-company-name"><a href='www.bjbraz.com.br' style="text-decoration: none;color: aliceblue;">BJBraz Sistemas &copy; 2015</a></p>
-			</div>
-
-			<div class="footer-right">
-
-				<form action="#" method="post">
-
-					<input type="text" name="email" placeholder="Digite seu E-mail" />
-					<textarea name="message" placeholder="Nos diga o que voc� achou do CotiaMelhor?"></textarea>
-					<button>Enviar</button>
-
-				</form>
-
-			</div>
-			
-			<div id="formInsert" style="display:none">
-				<div id="form">
-					<nav class="{{ ativo }}" ng-click="$event.preventDefault()">
-						<!-- Quando um link no menu � clicado, n�s definimos a vari�vel ativa -->
-						<a href="#mapaProblemas" class="home" ng-click="ativo='home'">Home</a>
-						<a href="#mapaProblemas" class="projects" ng-click="ativo='projects'">Projetos</a>
-						<a href="#mapaProblemas" class="services" ng-click="ativo='services'">Servi�os</a>
-						<a href="#mapaProblemas" class="contact" ng-click="ativo='contact'">Contato</a>
-					</nav>
-					<p ng-hide="ativo">Por favor, click em um item do menu</p>
-					<p ng-show="ativo">Sua Escolha <b>{{ ativo }}</b></p>
-				</div>
-			</div>
-
-		</footer>    
   </body>
 </html>
