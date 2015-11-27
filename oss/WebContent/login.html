@@ -29,15 +29,25 @@
     
     <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
     <script>
-    
-    function hideme(obj){
-    	document.getElementById('pw-mask').style.visibility = 'hidden';
-    	document.getElementById('signwall').style.visibility = 'hidden';
-    }
-    
+    $(document).ready(function () {
+    	
+    	var timeout = 1000;
+    	
+    	$("#pw-mask").click(function(){
+    				$('#pw-mask').hide(timeout)
+	    			$('#signwall').hide(timeout);
+	    		}
+	    );
+	    
+	    $("#login").click(function(){
+	    			$("#pw-mask").show(timeout)
+	    	    	$("#signwall").show(timeout);
+	    		}
+	    );
+    });
     </script>
   </head>
-  <body ng-app>
+  <body>
  	 <input id="pac-input" class="controls" type="text" placeholder="Search Box">
     <header>
       <h1 class="float-l">
@@ -64,13 +74,13 @@
           </li>
           
           <li>
-            <a href="#contato" title="Entre em contato">Contato</a>
+            <a href="#" id="login" title="Comece agora mesmo a melhorar a Cidade">Acessar</a>
           </li>          
         </ul>
       </nav>
     </header>
 
-   <div id="pw-mask" style="display:block" onclick="hideme();"></div>
+   <div id="pw-mask" style="display:block"></div>
 
 	<div id="signwall" class="shadow js-center-fixed" style="position: absolute; margin: 0px; top: 0px; left: 395px;">
 		<div class="big-header">
@@ -91,7 +101,7 @@
 			</p>
 			<p align="center">
 				<a href="login.jsp"	class="js-pw-link-cadastro adtm-noticia-6-cadastre-se">
-					<button class="signwall_formulario_botao">Melhorar Minha Cidade</button>
+					<button class="btn signwall_formulario_botao">Melhorar Minha Cidade</button>
 				</a>
 			</p>
 			<br>

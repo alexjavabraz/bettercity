@@ -340,6 +340,24 @@
 		    		},"text");
 		}
       
+		
+	    $(document).ready(function () {
+	    	
+	    	var timeout = 1000;
+	    	
+	    	$("#pw-mask").click(function(){
+	    				$('#pw-mask').hide(timeout)
+		    			$('#signwall').hide(timeout);
+		    		}
+		    );
+		    
+		    $("#login").click(function(){
+		    			$("#pw-mask").show(timeout)
+		    	    	$("#signwall").show(timeout);
+		    		}
+		    );
+	    });
+		
     </script>	
   </head>
   <body>
@@ -369,7 +387,7 @@
           </li>
           
           <li>
-            <a href="#contato" title="Entre em contato">Contato</a>
+            <a href="#" id="login" title="Comece agora mesmo a melhorar a Cidade">Acessar</a>
           </li>          
         </ul>
       </nav>
@@ -486,7 +504,48 @@
 		<div id="parabens" style="display:none">
 			<h3>Parabéns você ajudou a melhorar a sua cidade!</h3>
 		</div>    
-    	<!-- Incluindo o AngularJS do Google CDN -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.1/angular.min.js"></script>
+
+		<div id="pw-mask" style="display:none"></div>
+	
+		<div id="signwall" class="shadow js-center-fixed" style="display:none;position: absolute; margin: 0px; top: 0px; left: 395px;">
+			<div class="big-header">
+				<div class="homebutton">
+					<a href="/" class="adtm-noticia-6-voltar-para-home"><img src="assets/images/botoes/voltar-home.png"></a>
+				</div>
+			</div>
+			<div id="sw-content">
+			
+			</div>
+			<div class="half-left">
+			
+				<p class="signwall_formulario_plogin">
+					<label for="email">E-mail:</label>
+					<input type="email" placeholder="Digite seu E-mail" class="signwall_formulario_input" id="email" required/>
+					<label for="password">Senha:</label>
+					<input type="password" placeholder="Digite sua Senha" class="signwall_formulario_input" id="password" required/>				
+				</p>
+				<p align="center">
+					<a href="login.jsp"	class="js-pw-link-cadastro adtm-noticia-6-cadastre-se">
+						<button class="btn signwall_formulario_botao">Melhorar Minha Cidade</button>
+					</a>
+				</p>
+				<br>
+				
+			</div>
+			<div class="half-right">
+				<div id="social-links">
+					<a id="js-pw-login-fb"
+						href="/login/autenticar?provider=Facebook&amp;r=http://www.cotiamelhor.com.br"><img
+						src="http://www.estadao.com.br/paywall/img-tpl/fb.png"></a> <a
+						id="js-pw-login-google"
+						href="/login/autenticar?provider=Google&amp;r=http://www.cotiamelhor.com.br,1798343"><img
+						src="http://www.estadao.com.br/paywall/img-tpl/google.png"></a>
+				</div>
+			</div>
+		</div>
+
+
+
+
   </body>
 </html>
