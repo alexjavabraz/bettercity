@@ -12,18 +12,16 @@ import br.com.bjbraz.pojo.MapJson;
 @Path("/map")
 public class MapResource {
 
-	@GET
-    // The Java method will produce content identified by the MIME Media
-    // type "text/plain"
-	@Produces(MediaType.TEXT_PLAIN)
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
     public String getClichedMessage() {
-        return  new MapJson().toString();
+        return new MapJson().toString();
     }
-	
-	@POST
-	@Consumes("text/plain")
-	public void postClichedMessage(String message) {
-	    // Store the message
-	}
-	
+
+    @POST
+    @Consumes("text/plain")
+    public void postClichedMessage(String message) {
+        // Store the message
+    }
+
 }

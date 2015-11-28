@@ -36,4 +36,9 @@ public class Teste extends HttpServlet {
 		// TODO Auto-generated method stub
 	}
 
+	
+	public static void main(String[] args) {
+		
+	}
+	
 }
