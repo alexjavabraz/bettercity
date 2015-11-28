@@ -1,0 +1,344 @@
+      var map;
+      var pictureUser = '';
+      var userLogged = '';
+      var marcacaoDoUsuarioNaoLogado = '';
+      var websocket = new WebSocket("ws://" + document.location.host+ "/oss/MyWebSocketServlet?username=mapa");
+      var address = '';
+      var iconBase = 'http://'+document.location.host+'/oss/assets/images/icos/';
+      var localizacaoUsuario = '';
+      var icons = {
+    	problema: {
+          name: 'Problema',
+          icon: iconBase + 'problem.png'
+        },
+        melhorado: {
+          name: 'Melhorado',
+          icon: iconBase + 'completed.png'
+        },
+        working: {
+            name: 'Atuando',
+            icon: iconBase + 'under_construction2.png'
+          },        
+        info: {
+          name: 'Informa&#231;&#227;o',
+          icon: iconBase + 'analyzing.png'
+        }         
+      }; 
+      
+      
+      function criaString(title, description){
+    	  return '<div id="content">'+
+          '<div id="siteNotice">'+
+          '</div>'+
+          '<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
+          '<div id="bodyContent">'+
+          '<p><b>'+description+'</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
+          'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
+          'south west of the nearest large town, Alice Springs; 450&#160;km '+
+          '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
+          'Heritage Site.</p>'+
+          '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+          'https://en.wikipedia.org/w/index.php?title=Uluru</a></p>'+
+          '</div>'+
+          '</div>';
+      }
+      
+      function initialize() {
+    	  
+    	  FB.getLoginStatus();
+    	  
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14,
+          center: new google.maps.LatLng(-23.6057502,-46.9178099),
+          mapTypeId: google.maps.MapTypeId.ROADMAP //google.maps.MapTypeId.TERRAIN
+           
+        });
+
+        var script = document.createElement('script');
+        script.src = 'http://'+document.location.host+'/oss/rest/map';
+        document.getElementsByTagName('head')[0].appendChild(script);
+        
+        var legend = document.getElementById('legend');
+        for (var key in icons) {
+          var type = icons[key];
+          var name = type.name;
+          var icon = type.icon;
+          var div = document.createElement('div');
+          div.innerHTML = '<img src="' + icon + '"> ' + name;
+          legend.appendChild(div);
+        }
+
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend); 
+        
+        if(navigator.geolocation){
+        
+        	navigator.geolocation.getCurrentPosition(
+
+        			function(position){
+        				var latitude  = position.coords.latitude;
+        				var longitude = position.coords.longitude;
+        				var accuracy  = position.coords.accuracy;
+        				var timestamp = position.timestamp;
+        				
+        				if(accuracy < 50000){ //especified in meters
+        					console.log(latitude);
+        					console.log(longitude);
+        					console.log(accuracy);
+
+        					localizacaoUsuario = new google.maps.Marker({
+        			            position: {lat: latitude, lng: longitude},
+        			            map: map,
+        			            icon: pictureUser,
+        			            title: 'Você está aqui',
+        			            label: 'Você está aqui',
+        			            zIndex: 10,
+        			            optimized: true,
+        			            draggable: false
+        			          });
+        					
+        					
+        				}else{
+        					console.log('Accuracy exced limit ' + accuracy);
+        				}
+        				
+        				
+        			}, 
+        			function(error){
+        					alert(error);
+        			},
+        			
+        			{timeout:10000}, {maximumAge:20000});
+        	
+        }
+        
+        //SEARCH
+     // Create the search box and link it to the UI element.
+  	  var input = document.getElementById('pac-input');
+  	  var searchBox = new google.maps.places.SearchBox(input);
+  	  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+  	  // Bias the SearchBox results towards current map's viewport.
+  	  map.addListener('bounds_changed', function() {
+  	    searchBox.setBounds(map.getBounds());
+  	  });
+
+  	  var markers = [];
+  	  // [START region_getplaces]
+  	  // Listen for the event fired when the user selects a prediction and retrieve
+  	  // more details for that place.
+  	  searchBox.addListener('places_changed', function() {
+  	    var places = searchBox.getPlaces();
+
+  	    if (places.length == 0) {
+  	      return;
+  	    }
+
+  	    // Clear out the old markers.
+  	    markers.forEach(function(marker) {
+  	      marker.setMap(null);
+  	    });
+  	    markers = [];
+
+  	    // For each place, get the icon, name and location.
+  	    var bounds = new google.maps.LatLngBounds();
+  	    places.forEach(function(place) {
+  	      var icon = {
+  	        url: place.icon,
+  	        size: new google.maps.Size(71, 71),
+  	        origin: new google.maps.Point(0, 0),
+  	        anchor: new google.maps.Point(17, 34),
+  	        scaledSize: new google.maps.Size(25, 25)
+  	      };
+
+  	      // Create a marker for each place.
+  	      markers.push(new google.maps.Marker({
+  	        map: map,
+  	        icon: icon,
+  	        title: place.name,
+  	        position: place.geometry.location
+  	      }));
+
+  	      if (place.geometry.viewport) {
+  	        // Only geocodes have viewport.
+  	        bounds.union(place.geometry.viewport);
+  	      } else {
+  	        bounds.extend(place.geometry.location);
+  	      }
+  	    });
+  	    map.fitBounds(bounds);
+  	  });        
+        
+       //END SEARCH
+       
+       // MAP MARKER
+  		var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  		var labelIndex = 0;
+  		// This event listener calls addMarker() when the map is clicked.
+	    google.maps.event.addListener(map, 'click', function(event) {
+	    	addDinamicMarker(event.latLng, map);
+	    });
+	 
+	 	// Adds a marker to the map.
+	    function addDinamicMarker(alocation, amap) {
+	      // Add the marker at the clicked location, and add the next-available label
+	      // from the array of alphabetical characters.
+	      
+	      var amarker = new google.maps.Marker({
+			        position: alocation,
+			        label: labels[labelIndex++ % labels.length],
+			        map: amap
+		  });
+	      
+	      amap.setCenter(alocation);
+	      
+	      amarker.setMap(null);
+	      amarker.setMap(amap);
+	      
+	      var conteudo = '';
+	      
+		  if(userLogged == ''){
+			  conteudo = addPointNaoLogado();
+		  }else{
+			  conteudo =  addPoint( amarker.position.lat(),  amarker.position.lng());
+		  }
+	      
+	      if(amap.getZoom() < 18){
+	      	amap.setZoom(18);
+	      	amarker.setMap(null);
+	      }else{
+	    	  marcacaoDoUsuarioNaoLogado =  new google.maps.InfoWindow({
+      		    content: conteudo
+    		  });
+	    	  
+	    	  amarker.addListener('click', function() {
+	    		  info.open(amap, amarker);
+	          });
+	    	  
+	    	  info.open(amap, amarker);
+	      }
+	 	}
+      	//END MAP MARKER
+      }
+      
+      function addPointNaoLogado(){
+    	  return document.getElementById('facaLogin').innerHTML;
+      }
+      
+      function addPoint(lat, lng){
+    	  
+    	  var id = Math.random();
+    	  
+    	  codeLatLng(lat, lng, 'formulario_endereco'+id);
+    	  
+    	  return '	<div id='+id+' class="form">'+
+				'	<nav class="" id='+id+'>'+
+				'	<a href="'+id+'" onClick="document.getElementById('+id+').className=\'home\'"     class="home"     ng-click="ativo=\'home\'">Problema</a>'+
+				'	<a href="#'+id+'" onClick="document.getElementById('+id+').className=\'projects\'" class="projects" ng-click="ativo=\'projects\'">Informação</a>'+
+				'	<a href="#'+id+'" onClick="document.getElementById('+id+').className=\'services\'" class="services" ng-click="ativo=\'services\'">Sugestão</a>'+
+				'	<a href="#'+id+'" onClick="document.getElementById('+id+').className=\'contact\'"  class="contact"  ng-click="ativo=\'contact\'">Outro</a>'+
+				'	</nav>'+
+				'	<div class="formulario"><input type="hidden" id="formulario_lat'+id+'" value="'+lat+'"><input type="hidden" id="formulario_long'+id+'" value="'+lng+'">'+
+				'	<div><input type="text" class="formulario_input" id="formulario_titulo'+id+'" required placeholder="Qual o problema?" /></div>'+
+				'	<div><textarea id="formulario_descricao'+id+'" class="formulario_textarea" maxlength="500" cols="50" rows="4" placeholder="Descreva o problema, com o máximo de detalhes"></textarea></div>'+
+				'	<div><input type="text" id="formulario_endereco'+id+'" class="formulario_input" name="endereco" /></div>'+
+				'	<div class="formulario_div_imagem"><img src="assets/images/icos/photo.png" class="formulario_imagem" id="formulario_imagem_'+id+'" onClick="insertDemanda('+id+')" class="formulario_button"/></div>'+
+				'	<div class="formulario_div_btn"><button class="btn" onClick="insertDemanda('+id+')" class="formulario_button"/>Melhorar a cidade</div>'+
+				'	</div>';
+      }
+      
+      function codeLatLng(lat, lng, address) {
+    	  var geocoder = new google.maps.Geocoder();
+    	  
+    	  var latlng = new google.maps.LatLng(lat, lng);
+    	  geocoder.geocode({
+    	    'latLng': latlng
+    	  }, function (results, status) {
+    	    if (status === google.maps.GeocoderStatus.OK) {
+    	      if (results[1]) {
+    	        document.getElementById(address).value=results[0].formatted_address;
+    	        console.log(results[0].formatted_address);
+    	      } else {
+    	        console.log('No results found');
+    	      }
+    	    } else {
+    	      console.log('Geocoder failed due to: ' + status);
+    	    }
+    	  });
+    	}
+            
+      
+      // Loop through the results array and place a marker for each
+      // set of coordinates.
+      window.eqfeed_callback = function(results) {
+        for (var i = 0; i < results.features.length; i++) {
+          var coords = results.features[i].geometry.coordinates;
+          var latLng = new google.maps.LatLng(coords[0],coords[1]);
+          var title  = results.features[i].properties['title'];
+          var label = results.features[i].properties['place'];
+          var zIndex = results.features[i].properties['mag'];
+          
+          new google.maps.Marker({
+            position: latLng,
+            map: map,
+            title: results.features[i].properties['title'],
+            label: results.features[i].properties['place'],
+            icon: icons[results.features[i].properties['type']].icon,
+            zIndex: zIndex,
+            optimized: true,
+            draggable: false
+          }).addListener('click', function() {
+        	  
+        	  	new google.maps.InfoWindow({
+        		    content: criaString( this.title, this.label)
+        		  }).open(map, this);
+          });
+          
+        }
+      }
+      
+      var myJSONData = '{"data":{"mode" : "subscribe","technologyareas":[1],"assettypes":["podcast","documents"]}}';
+      var url        = 'res/demanda/ins';
+      
+		function insertDemanda(id) {
+			var titulo    = document.getElementById('formulario_titulo'+id).value;
+			var descricao = document.getElementById('formulario_descricao'+id).value;
+			var endereco  = document.getElementById('formulario_endereco'+id).value;
+    		var latitude  = document.getElementById('formulario_lat'+id).value;
+    		var longitude = document.getElementById('formulario_long'+id).value;
+			
+			var url = 'http://'+document.location.host+"/oss/rest/demanda/ins";
+			
+			websocket.send('<br/><br/>Criado o ponto no mapa: <b>Titulo</b> '+titulo+' <b>Descricao:</b> '+descricao+' <b>Endereço:</b> '+endereco+' <b>Latitude:</b> '+latitude+' <b>Longitude:</b> '+ longitude);
+			
+		    $.post( url, { titulo: titulo, descricao: descricao, endereco: endereco, latitude: latitude, longitude: longitude }, 
+		    		function(result){
+		    			if('ok' == result){
+		    				document.getElementById(id).innerHTML = document.getElementById('parabens').innerHTML;
+		    			}
+		    		},"text");
+		}
+      
+		
+	    $(document).ready(function () {
+	    	
+	    	var timeout = 1000;
+	    	
+	    	$("#pw-mask").click(function(){
+	    					$('#pw-mask').hide(timeout)
+			    			$('#signwall').hide(timeout);
+		    		}
+		    );
+		    
+		    $("#login").click(function(){
+		    			console.log($("#login").html());
+		    			
+				    	if($("#login").html() == 'Acessar'){
+				    			$("#pw-mask").show(timeout)
+				    	    	$("#signwall").show(timeout);
+				    	}else{
+				    		
+				    	}
+		    		}
+		    );
+	    });
+		

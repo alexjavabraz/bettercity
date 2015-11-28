@@ -2,6 +2,7 @@
     <wb-module deploy-name="oss">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src2"/>
         <property name="context-root" value="oss"/>
         <property name="java-output-path" value="/oss/build/classes"/>
     </wb-module>

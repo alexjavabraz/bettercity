@@ -28,339 +28,118 @@
 	<![endif]-->
     
     <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
-
+    <script type="text/javascript" src="js/98712903879087123987912873091872391872093871.js"></script>
 	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdL1lXGAN3qc3dcbTUxCcIYai5dc5hr6c&libraries=places"></script>
-    <script>
-      var map;
-      var websocket = new WebSocket("ws://" + document.location.host+ "/oss/MyWebSocketServlet?username=mapa");
-      var address = '';
-      var iconBase = 'http://localhost:8080/oss/assets/images/icos/';
-      var icons = {
-    	problema: {
-          name: 'Problema',
-          icon: iconBase + 'problem.png'
-        },
-        melhorado: {
-          name: 'Melhorado',
-          icon: iconBase + 'completed.png'
-        },
-        working: {
-            name: 'Atuando',
-            icon: iconBase + 'under_construction2.png'
-          },        
-        info: {
-          name: 'Informa&#231;&#227;o',
-          icon: iconBase + 'analyzing.png'
-        }         
-      }; 
-      
-      
-      function criaString(title, description){
-    	  return '<div id="content">'+
-          '<div id="siteNotice">'+
-          '</div>'+
-          '<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
-          '<div id="bodyContent">'+
-          '<p><b>'+description+'</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-          'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-          'south west of the nearest large town, Alice Springs; 450&#160;km '+
-          '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-          'Heritage Site.</p>'+
-          '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-          'https://en.wikipedia.org/w/index.php?title=Uluru</a></p>'+
-          '</div>'+
-          '</div>';
-      }
-      
-      function initialize() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 14,
-          center: new google.maps.LatLng(-23.6057502,-46.9178099),
-          mapTypeId: google.maps.MapTypeId.ROADMAP //google.maps.MapTypeId.TERRAIN
-           
-        });
-
-        var script = document.createElement('script');
-        script.src = document.location.host+'/oss/rest/map';
-        document.getElementsByTagName('head')[0].appendChild(script);
-        
-        var legend = document.getElementById('legend');
-        for (var key in icons) {
-          var type = icons[key];
-          var name = type.name;
-          var icon = type.icon;
-          var div = document.createElement('div');
-          div.innerHTML = '<img src="' + icon + '"> ' + name;
-          legend.appendChild(div);
-        }
-
-        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legend); 
-        
-        if(navigator.geolocation){
-        
-        	navigator.geolocation.getCurrentPosition(
-
-        			function(position){
-        				var latitude = position.coords.latitude;
-        				var longitude = position.coords.longitude;
-        				var accuracy = position.coords.accuracy;
-        				var timestamp = position.timestamp;
-        				
-        				if(accuracy < 50000){ //especified in meters
-        					console.log(latitude);
-        					console.log(longitude);
-        					console.log(accuracy);
-        					console.log(new Date(timestamp));
-        					
-        					new google.maps.Marker({
-        			            position: {lat: latitude, lng: longitude},
-        			            map: map,
-        			            icon: iconBase + 'you.jpg',
-        			            title: 'Você está aqui',
-        			            label: 'Você está aqui',
-        			            zIndex: 10,
-        			            optimized: true,
-        			            draggable: false
-        			          });
-        					
-        					
-        				}else{
-        					console.log('Accuracy exced limit ' + accuracy);
-        				}
-        				
-        				
-        			}, 
-        			function(error){
-        					alert(error);
-        			},
-        			
-        			{timeout:10000}, {maximumAge:20000});
-        	
-        }
-        
-        //SEARCH
-     // Create the search box and link it to the UI element.
-  	  var input = document.getElementById('pac-input');
-  	  var searchBox = new google.maps.places.SearchBox(input);
-  	  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
-  	  // Bias the SearchBox results towards current map's viewport.
-  	  map.addListener('bounds_changed', function() {
-  	    searchBox.setBounds(map.getBounds());
-  	  });
-
-  	  var markers = [];
-  	  // [START region_getplaces]
-  	  // Listen for the event fired when the user selects a prediction and retrieve
-  	  // more details for that place.
-  	  searchBox.addListener('places_changed', function() {
-  	    var places = searchBox.getPlaces();
-
-  	    if (places.length == 0) {
-  	      return;
-  	    }
-
-  	    // Clear out the old markers.
-  	    markers.forEach(function(marker) {
-  	      marker.setMap(null);
-  	    });
-  	    markers = [];
-
-  	    // For each place, get the icon, name and location.
-  	    var bounds = new google.maps.LatLngBounds();
-  	    places.forEach(function(place) {
-  	      var icon = {
-  	        url: place.icon,
-  	        size: new google.maps.Size(71, 71),
-  	        origin: new google.maps.Point(0, 0),
-  	        anchor: new google.maps.Point(17, 34),
-  	        scaledSize: new google.maps.Size(25, 25)
-  	      };
-
-  	      // Create a marker for each place.
-  	      markers.push(new google.maps.Marker({
-  	        map: map,
-  	        icon: icon,
-  	        title: place.name,
-  	        position: place.geometry.location
-  	      }));
-
-  	      if (place.geometry.viewport) {
-  	        // Only geocodes have viewport.
-  	        bounds.union(place.geometry.viewport);
-  	      } else {
-  	        bounds.extend(place.geometry.location);
-  	      }
-  	    });
-  	    map.fitBounds(bounds);
-  	  });        
-        
-       //END SEARCH
-       
-       // MAP MARKER
-  		var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  		var labelIndex = 0;
-  		// This event listener calls addMarker() when the map is clicked.
-	    google.maps.event.addListener(map, 'click', function(event) {
-	    	addDinamicMarker(event.latLng, map);
-	    });
+    
+	<script>
+	
+	google.maps.event.addDomListener(window, 'load', initialize);
+	
+	 // This is called with the results from from FB.getLoginStatus().
 	 
-	 	// Adds a marker to the map.
-	    function addDinamicMarker(alocation, amap) {
-	      // Add the marker at the clicked location, and add the next-available label
-	      // from the array of alphabetical characters.
+	  function statusChangeCallback(response) {
+	    console.log('statusChangeCallback');
+	    console.log(response);
+	    // The response object is returned with a status field that lets the
+	    // app know the current login status of the person.
+	    // Full docs on the response object can be found in the documentation
+	    // for FB.getLoginStatus().
+	    if (response.status === 'connected') {
+	      // Logged into your app and Facebook.
+	      testAPI();
+	    } else if (response.status === 'not_authorized') {
+	    } else {
+	    }
+	  }
+
+	  // This function is called when someone finishes with the Login
+	  // Button.  See the onlogin handler attached to it in the sample
+	  // code below.
+	  function checkLoginState() {
+	    FB.getLoginStatus(function(response) {
+	      statusChangeCallback(response);
+	    });
+	  }
+
+	  window.fbAsyncInit = function() {
+	  FB.init({
+	    appId      : '1641774959428289',
+	    cookie     : true,  // enable cookies to allow the server to access 
+	                        // the session
+	    xfbml      : true,  // parse social plugins on this page
+	    version    : 'v2.2' // use version 2.2
+	  });
+
+	  // Now that we've initialized the JavaScript SDK, we call 
+	  // FB.getLoginStatus().  This function gets the state of the
+	  // person visiting this page and can return one of three states to
+	  // the callback you provide.  They can be:
+	  //
+	  // 1. Logged into your app ('connected')
+	  // 2. Logged into Facebook, but not your app ('not_authorized')
+	  // 3. Not logged into Facebook and can't tell if they are logged into
+	  //    your app or not.
+	  //
+	  // These three cases are handled in the callback function.
+
+	  FB.getLoginStatus(function(response) {
+	    statusChangeCallback(response);
+	  });
+
+	  };
+
+	  // Load the SDK asynchronously
+	  (function(d, s, id) {
+	    var js, fjs = d.getElementsByTagName(s)[0];
+	    if (d.getElementById(id)) return;
+	    js = d.createElement(s); js.id = id;
+	    js.src = "//connect.facebook.net/en_US/sdk.js";
+	    fjs.parentNode.insertBefore(js, fjs);
+	  }(document, 'script', 'facebook-jssdk'));
+
+	  // Here we run a very simple test of the Graph API after login is
+	  // successful.  See statusChangeCallback() for when this call is made.
+	  function testAPI() {
+	    console.log('Welcome!  Fetching your information.... ');
+	    FB.api('/me?fields=name,first_name,last_name,email,picture,id', function(response) {
+	      console.log('Successful login for: ' + response.name);
+	      console.log('Good to see you, ' + response.name + '.');
+	      console.log('Good to see you, ' + response.email + '.');
+	      console.log('Good to see you, ' + response.first_name + '.');
+	      console.log('Good to see you, ' + response.last_name + '.');
+	      console.log('Good to see you, ' + response.picture.data.url + '.');
 	      
-	      var amarker = new google.maps.Marker({
-			        position: alocation,
-			        label: labels[labelIndex++ % labels.length],
-			        map: amap
-		  });
+	      pictureUser = response.picture.data.url;
+    	  userLogged = response;
 	      
-	      amap.setCenter(alocation);
-	      
-	      amarker.setMap(null);
-	      amarker.setMap(amap);
-	      
-	      if(amap.getZoom() < 18){
-	      	amap.setZoom(18);
-	      	amarker.setMap(null);
+	      if('undefined' == pictureUser){
+	    	  pictureUser = iconBase + 'voce-esta-aqui.png';
 	      }else{
-	    	  var info =  new google.maps.InfoWindow({
-      		    content: addPoint( amarker.position.lat(),  amarker.position.lng())
-    		  });
-	    	  
-	    	  amarker.addListener('click', function() {
-	        	  
-	    		  info.open(amap, amarker);
-	          });
-	    	  
-	    	  info.open(amap, amarker);
-	    	  
+	    	  localizacaoUsuario.setIcon(pictureUser);
 	      }
 	      
-
-	 	}
-      	//END MAP MARKER
-       
-      }
-      
-      function addPoint(lat, lng){
-    	  
-    	  var id = Math.random();
-    	  
-    	  codeLatLng(lat, lng, 'formulario_endereco'+id);
-    	  
-    	  return '	<div id='+id+' class="form">'+
-				'	<nav class="" id='+id+'>'+
-				'	<a href="'+id+'" onClick="document.getElementById('+id+').className=\'home\'"     class="home"     ng-click="ativo=\'home\'">Problema</a>'+
-				'	<a href="#'+id+'" onClick="document.getElementById('+id+').className=\'projects\'" class="projects" ng-click="ativo=\'projects\'">Informação</a>'+
-				'	<a href="#'+id+'" onClick="document.getElementById('+id+').className=\'services\'" class="services" ng-click="ativo=\'services\'">Sugestão</a>'+
-				'	<a href="#'+id+'" onClick="document.getElementById('+id+').className=\'contact\'"  class="contact"  ng-click="ativo=\'contact\'">Outro</a>'+
-				'	</nav>'+
-				'	<div class="formulario"><input type="hidden" id="formulario_lat'+id+'" value="'+lat+'"><input type="hidden" id="formulario_long'+id+'" value="'+lng+'">'+
-				'	<div><input type="text" class="formulario_input" id="formulario_titulo'+id+'" required placeholder="Qual o problema?" /></div>'+
-				'	<div><textarea id="formulario_descricao'+id+'" class="formulario_textarea" maxlength="500" cols="50" rows="4" placeholder="Descreva o problema, com o máximo de detalhes"></textarea></div>'+
-				'	<div><input type="text" id="formulario_endereco'+id+'" class="formulario_input" name="endereco" /></div>'+
-				'	<div class="formulario_div_imagem"><img src="assets/images/icos/photo.png" class="formulario_imagem" id="formulario_imagem_'+id+'" onClick="insertDemanda('+id+')" class="formulario_button"/></div>'+
-				'	<div class="formulario_div_btn"><button class="btn" onClick="insertDemanda('+id+')" class="formulario_button"/>Melhorar a cidade</div>'+
-				'	</div>';
-      }
-      
-      function codeLatLng(lat, lng, address) {
-    	  var geocoder = new google.maps.Geocoder();
-    	  
-    	  var latlng = new google.maps.LatLng(lat, lng);
-    	  geocoder.geocode({
-    	    'latLng': latlng
-    	  }, function (results, status) {
-    	    if (status === google.maps.GeocoderStatus.OK) {
-    	      if (results[1]) {
-    	        document.getElementById(address).value=results[0].formatted_address;
-    	        console.log(results[0].formatted_address);
-    	      } else {
-    	        console.log('No results found');
-    	      }
-    	    } else {
-    	      console.log('Geocoder failed due to: ' + status);
-    	    }
-    	  });
-    	}
-            
-      
-      // Loop through the results array and place a marker for each
-      // set of coordinates.
-      window.eqfeed_callback = function(results) {
-        for (var i = 0; i < results.features.length; i++) {
-          var coords = results.features[i].geometry.coordinates;
-          var latLng = new google.maps.LatLng(coords[0],coords[1]);
-          var title  = results.features[i].properties['title'];
-          var label = results.features[i].properties['place'];
-          var zIndex = results.features[i].properties['mag'];
-          
-          new google.maps.Marker({
-            position: latLng,
-            map: map,
-            title: results.features[i].properties['title'],
-            label: results.features[i].properties['place'],
-            icon: icons[results.features[i].properties['type']].icon,
-            zIndex: zIndex,
-            optimized: true,
-            draggable: false
-          }).addListener('click', function() {
-        	  
-        	  	new google.maps.InfoWindow({
-        		    content: criaString( this.title, this.label)
-        		  }).open(map, this);
-          });
-          
-        }
-      }
-      
-      google.maps.event.addDomListener(window, 'load', initialize);
-      
-      var myJSONData = '{"data":{"mode" : "subscribe","technologyareas":[1],"assettypes":["podcast","documents"]}}';
-      var url        = 'res/demanda/ins';
-      
-		function insertDemanda(id) {
-			var titulo    = document.getElementById('formulario_titulo'+id).value;
-			var descricao = document.getElementById('formulario_descricao'+id).value;
-			var endereco  = document.getElementById('formulario_endereco'+id).value;
-    		var latitude  = document.getElementById('formulario_lat'+id).value;
-    		var longitude = document.getElementById('formulario_long'+id).value;
-			
-			var url = document.location.host+"/oss/rest/demanda/ins";
-			
-			websocket.send('<br/><br/>Criado o ponto no mapa: <b>Titulo</b> '+titulo+' <b>Descricao:</b> '+descricao+' <b>Endereço:</b> '+endereco+' <b>Latitude:</b> '+latitude+' <b>Longitude:</b> '+ longitude);
-			
-		    $.post( url, { titulo: titulo, descricao: descricao, endereco: endereco, latitude: latitude, longitude: longitude }, 
-		    		function(result){
-		    			if('ok' == result){
-		    				document.getElementById(id).innerHTML = document.getElementById('parabens').innerHTML;
-		    			}
-		    		},"text");
-		}
-      
-		
-	    $(document).ready(function () {
-	    	
-	    	var timeout = 1000;
-	    	
-	    	$("#pw-mask").click(function(){
-	    				$('#pw-mask').hide(timeout)
-		    			$('#signwall').hide(timeout);
-		    		}
-		    );
-		    
-		    $("#login").click(function(){
-		    			$("#pw-mask").show(timeout)
-		    	    	$("#signwall").show(timeout);
-		    		}
-		    );
+	      document.getElementById('pw-mask').style.display='none';
+	      document.getElementById('signwall').style.display='none';
+	      document.getElementById('login').innerHTML = response.name;
+	      
+	      if(marcacaoDoUsuarioNaoLogado != ''){
+	    	  marcacaoDoUsuarioNaoLogado.setMap(null);
+	      }
+	      
 	    });
-		
-    </script>	
+	  }
+	</script>
+        
   </head>
   <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.5&appId=1641774959428289";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>  
  	 <input id="pac-input" class="controls" type="text" placeholder="Buscar pelo endereço">
     <header>
       <h1 class="float-l">
@@ -453,7 +232,12 @@
 
     <section id="mapaProblemas">
       <div>
-      	 
+	      	 <div
+			  class="fb-like"
+			  data-share="true"
+			  data-width="450"
+			  data-show-faces="true">
+			</div>
       	 <div id="map"></div>
    		 <div id="legend">Legenda</div>
       
@@ -465,7 +249,7 @@
 
 			<div class="footer-left">
 
-				<h3>Melhorar minha Cidade</h3>
+				<h3>Melhorar minha Cidade</h3><div class="fb-like" data-action="like"></div>
 
 				<p class="footer-links">
 					<a href="#CotiaMelhor">O Cotia Melhor</a>
@@ -479,10 +263,10 @@
 
 				<div class="footer-icons">
 
-					<a href="#"><i class="fa fa-facebook"></i></a>
-					<a href="#"><i class="fa fa-twitter"></i></a>
-					<a href="#"><i class="fa fa-linkedin"></i></a>
-					<a href="#"><i class="fa fa-github"></i></a>
+					<a href="#" class="fa-facebook"></a>
+					<a href="#" class="fa-google"></a>
+					<a href="#" class="fa-linkedin"></a>
+					<a href="#" class="fa-github"></a>
 
 				</div>
 				<p class="footer-company-name"><a href='www.bjbraz.com.br' style="text-decoration: none;color: aliceblue;">BJBraz Sistemas &copy; 2015</a></p>
@@ -503,46 +287,35 @@
 		</footer>
 		<div id="parabens" style="display:none">
 			<h3>Parabéns você ajudou a melhorar a sua cidade!</h3>
-		</div>    
+		</div>
+		
+		<div id="facaLogin" style="display:none">
+			<h3>Faça Login e comece a melhorar a cidade.</h3><br/>
+			<p align='center'><fb:login-button scope="public_profile,email,user_photos" onlogin="checkLoginState();" data-show-faces="false" login_text="Acesse com o Facebook" data-auto-logout-link="true"></fb:login-button></p>
+		</div>
 
-		<div id="pw-mask" style="display:none"></div>
-	
-		<div id="signwall" class="shadow js-center-fixed" style="display:none;position: absolute; margin: 0px; top: 0px; left: 395px;">
-			<div class="big-header">
-				<div class="homebutton">
-					<a href="/" class="adtm-noticia-6-voltar-para-home"><img src="assets/images/botoes/voltar-home.png"></a>
-				</div>
-			</div>
-			<div id="sw-content">
-			
-			</div>
-			<div class="half-left">
-			
-				<p class="signwall_formulario_plogin">
-					<label for="email">E-mail:</label>
-					<input type="email" placeholder="Digite seu E-mail" class="signwall_formulario_input" id="email" required/>
-					<label for="password">Senha:</label>
-					<input type="password" placeholder="Digite sua Senha" class="signwall_formulario_input" id="password" required/>				
-				</p>
-				<p align="center">
-					<a href="login.jsp"	class="js-pw-link-cadastro adtm-noticia-6-cadastre-se">
-						<button class="btn signwall_formulario_botao">Melhorar Minha Cidade</button>
-					</a>
-				</p>
-				<br>
-				
-			</div>
-			<div class="half-right">
-				<div id="social-links">
-					<a id="js-pw-login-fb"
-						href="/login/autenticar?provider=Facebook&amp;r=http://www.cotiamelhor.com.br"><img
-						src="http://www.estadao.com.br/paywall/img-tpl/fb.png"></a> <a
-						id="js-pw-login-google"
-						href="/login/autenticar?provider=Google&amp;r=http://www.cotiamelhor.com.br,1798343"><img
-						src="http://www.estadao.com.br/paywall/img-tpl/google.png"></a>
-				</div>
+		<div id="pw-mask" style="display:block"></div>
+
+	<div id="signwall" class="shadow js-center-fixed" style="position: absolute; margin: 0px; top: 0px; left: 395px;">
+		<div class="big-header">
+			<div class="homebutton">
+				<a href="/" class="adtm-noticia-6-voltar-para-home"><img src="assets/images/botoes/voltar-home.png"></a>
 			</div>
 		</div>
+		<div id="sw-content">
+		
+		</div>
+		<div class="half-left">
+		
+			<span><b>Acesse com o facebook</b></span> 
+			<span><b>Não desejo me cadastrar.</b><br/><a href="/" class="adtm-noticia-6-voltar-para-home">Voltar para home.</a> </span>
+		</div>
+		<div class="half-right">
+			<div id="social-links">
+				<fb:login-button scope="public_profile,email,user_photos" onlogin="checkLoginState();" data-show-faces="false" login_text="Acesse com o Facebook" data-auto-logout-link="true"></fb:login-button>
+			</div>
+		</div>
+	</div>
 
 
 

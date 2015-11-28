@@ -28,24 +28,103 @@
 	<![endif]-->
     
     <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
-    <script>
-    $(document).ready(function () {
-    	
-    	var timeout = 1000;
-    	
-    	$("#pw-mask").click(function(){
-    				$('#pw-mask').hide(timeout)
-	    			$('#signwall').hide(timeout);
-	    		}
-	    );
-	    
-	    $("#login").click(function(){
-	    			$("#pw-mask").show(timeout)
-	    	    	$("#signwall").show(timeout);
-	    		}
-	    );
-    });
-    </script>
+
+    <script type="text/javascript" src="js/98712903879087123987912873091872391872093871.js"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdL1lXGAN3qc3dcbTUxCcIYai5dc5hr6c&libraries=places"></script>
+    
+	<script>
+	 // This is called with the results from from FB.getLoginStatus().
+	 
+	 var pictureUser = '';
+	 
+	  function statusChangeCallback(response) {
+	    console.log('statusChangeCallback');
+	    console.log(response);
+	    // The response object is returned with a status field that lets the
+	    // app know the current login status of the person.
+	    // Full docs on the response object can be found in the documentation
+	    // for FB.getLoginStatus().
+	    if (response.status === 'connected') {
+	      // Logged into your app and Facebook.
+	      testAPI();
+	    } else if (response.status === 'not_authorized') {
+	    } else {
+	    }
+	  }
+
+	  // This function is called when someone finishes with the Login
+	  // Button.  See the onlogin handler attached to it in the sample
+	  // code below.
+	  function checkLoginState() {
+	    FB.getLoginStatus(function(response) {
+	      statusChangeCallback(response);
+	    });
+	  }
+
+	  window.fbAsyncInit = function() {
+	  FB.init({
+	    appId      : '1641774959428289',
+	    cookie     : true,  // enable cookies to allow the server to access 
+	                        // the session
+	    xfbml      : true,  // parse social plugins on this page
+	    version    : 'v2.2' // use version 2.2
+	  });
+
+	  // Now that we've initialized the JavaScript SDK, we call 
+	  // FB.getLoginStatus().  This function gets the state of the
+	  // person visiting this page and can return one of three states to
+	  // the callback you provide.  They can be:
+	  //
+	  // 1. Logged into your app ('connected')
+	  // 2. Logged into Facebook, but not your app ('not_authorized')
+	  // 3. Not logged into Facebook and can't tell if they are logged into
+	  //    your app or not.
+	  //
+	  // These three cases are handled in the callback function.
+
+	  FB.getLoginStatus(function(response) {
+	    statusChangeCallback(response);
+	  });
+
+	  };
+
+	  // Load the SDK asynchronously
+	  (function(d, s, id) {
+	    var js, fjs = d.getElementsByTagName(s)[0];
+	    if (d.getElementById(id)) return;
+	    js = d.createElement(s); js.id = id;
+	    js.src = "//connect.facebook.net/en_US/sdk.js";
+	    fjs.parentNode.insertBefore(js, fjs);
+	  }(document, 'script', 'facebook-jssdk'));
+
+	  // Here we run a very simple test of the Graph API after login is
+	  // successful.  See statusChangeCallback() for when this call is made.
+	  function testAPI() {
+	    console.log('Welcome!  Fetching your information.... ');
+	    FB.api('/me?fields=name,first_name,last_name,email,picture,id', function(response) {
+	      console.log('Successful login for: ' + response.name);
+	      console.log('Good to see you, ' + response.name + '.');
+	      console.log('Good to see you, ' + response.email + '.');
+	      console.log('Good to see you, ' + response.first_name + '.');
+	      console.log('Good to see you, ' + response.last_name + '.');
+	      console.log('Good to see you, ' + response.picture.data.url + '.');
+	      
+	      pictureUser = response.picture.data.url;
+	      
+	      if('undefined' == pictureUser){
+	    	  pictureUser = iconBase + 'voce-esta-aqui.png';
+	      }
+	      
+	      document.getElementById('pw-mask').style.display='none';
+	      document.getElementById('signwall').style.display='none';
+	      
+	      document.getElementById('login').innerHTML = response.name;
+	      
+	    });
+	  }
+	  
+	</script>
+
   </head>
   <body>
  	 <input id="pac-input" class="controls" type="text" placeholder="Search Box">
@@ -93,28 +172,12 @@
 		</div>
 		<div class="half-left">
 		
-			<p class="signwall_formulario_plogin">
-				<label for="email">E-mail:</label>
-				<input type="email" placeholder="Digite seu E-mail" class="signwall_formulario_input" id="email" required/>
-				<label for="password">Senha:</label>
-				<input type="password" placeholder="Digite sua Senha" class="signwall_formulario_input" id="password" required/>				
-			</p>
-			<p align="center">
-				<a href="login.jsp"	class="js-pw-link-cadastro adtm-noticia-6-cadastre-se">
-					<button class="btn signwall_formulario_botao">Melhorar Minha Cidade</button>
-				</a>
-			</p>
-			<br>
-			
+			<span><b>Acesse com o facebook</b></span> 
+			<span><b>Não desejo me cadastrar.</b><br/><a href="/" class="adtm-noticia-6-voltar-para-home">Voltar para home.</a> </span>
 		</div>
 		<div class="half-right">
 			<div id="social-links">
-				<a id="js-pw-login-fb"
-					href="/login/autenticar?provider=Facebook&amp;r=http://www.cotiamelhor.com.br"><img
-					src="http://www.estadao.com.br/paywall/img-tpl/fb.png"></a> <a
-					id="js-pw-login-google"
-					href="/login/autenticar?provider=Google&amp;r=http://www.cotiamelhor.com.br,1798343"><img
-					src="http://www.estadao.com.br/paywall/img-tpl/google.png"></a>
+				<fb:login-button scope="public_profile,email,user_photos" onlogin="checkLoginState();" data-show-faces="false" login_text="Acesse com o Facebook" data-auto-logout-link="true"></fb:login-button>
 			</div>
 		</div>
 	</div>

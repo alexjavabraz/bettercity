@@ -77,7 +77,7 @@ footer{
 	width: 35px;
 	height: 35px;
 	cursor: pointer;
-	background-color:  #33383b;
+	/*background-color:  #33383b;*/
 	border-radius: 2px;
 
 	font-size: 20px;
@@ -212,5 +212,30 @@ footer{
 	.footer-distributed form button{
 		float: none;
 	}
+	
+}
+
+.fa-facebook{
+	background: url("http://localhost:8080/oss/assets/images/icos/fb.png") no-repeat;
+}
+
+.fa-google{
+	background: url("http://localhost:8080/oss/assets/images/icos/google.png") no-repeat;
+}
+
+.fa-linkedin{
+	background: url("http://localhost:8080/oss/assets/images/icos/linkedin.png") no-repeat;
+}
+
+.fa-github{
+	background: url("http://localhost:8080/oss/assets/images/icos/git.png") no-repeat;
+}
+
+.fa-firebase{
+	background: url("http://localhost:8080/oss/assets/images/icos/firebase.png") no-repeat;
+}
+
+.fa-twitter{
+	background: url("http://localhost:8080/oss/assets/images/icos/twitter.png") no-repeat;
 }
 
