@@ -121,7 +121,7 @@ footer{
 	font: inherit;
 	font-size: 14px;
 	font-weight: normal;
-	color:  #d1d2d2;
+	color:  #61A1BC;
 
 	width: 400px;
 	padding: 18px;
@@ -154,7 +154,7 @@ footer{
 .footer-distributed form button{
 	border-radius: 3px;
 	background-color:  #ffffff;
-	color: #33383b;
+	color: #61A1BC;
 	border: 0;
 	padding: 15px 50px;
 	font-weight: bold;
