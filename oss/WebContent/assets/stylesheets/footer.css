@@ -1,6 +1,3 @@
-@import url('http://fonts.googleapis.com/css?family=Open+Sans:400,700');
-
-
 
 /* In our demo, the footers are fixed to the bottom of the page */
 
@@ -40,9 +37,6 @@ footer{
 	margin: 0 0 10px;
 }
 
-.footer-distributed h3 span{
-	color:  #5383d3;
-}
 
 /* Footer links */
 
@@ -93,13 +87,6 @@ footer{
 
 .footer-distributed .footer-right{
 	float: right;
-}
-
-.footer-distributed .footer-right p{
-	display: inline-block;
-	vertical-align: top;
-	margin: 15px 42px 0 0;
-	color: #ffffff;
 }
 
 /* The contact form */
@@ -229,13 +216,5 @@ footer{
 
 .fa-github{
 	background: url("http://localhost:8080/oss/assets/images/icos/git.png") no-repeat;
-}
-
-.fa-firebase{
-	background: url("http://localhost:8080/oss/assets/images/icos/firebase.png") no-repeat;
-}
-
-.fa-twitter{
-	background: url("http://localhost:8080/oss/assets/images/icos/twitter.png") no-repeat;
 }
 
