@@ -1,27 +1,28 @@
       var map;
       var pictureUser = '';
+      var amarker = '';
       var userLogged = '';
       var marcacaoDoUsuarioNaoLogado = '';
-      var websocket = new WebSocket("ws://" + document.location.host+ "/oss/MyWebSocketServlet?username=mapa");
+      var websocket = new WebSocket("ws://" + document.location.host+ "/MyWebSocketServlet?username=mapa");
       var address = '';
       var iconBase = 'http://'+document.location.host+'/oss/assets/images/icos/';
       var localizacaoUsuario = '';
       var icons = {
     	problema: {
           name: 'Problema',
-          icon: iconBase + 'problem.png'
+          icon: iconBase + 'problema.png'
         },
         melhorado: {
           name: 'Melhorado',
-          icon: iconBase + 'completed.png'
+          icon: iconBase + 'problema-corrigido.png'
         },
         working: {
             name: 'Atuando',
-            icon: iconBase + 'under_construction2.png'
+            icon: iconBase + 'obra-em-andamento.png'
           },        
         info: {
           name: 'Informa&#231;&#227;o',
-          icon: iconBase + 'analyzing.png'
+          icon: iconBase + 'poder-publico-analisando.png'
         }         
       }; 
       
@@ -50,12 +51,12 @@
         map = new google.maps.Map(document.getElementById('map'), {
           zoom: 14,
           center: new google.maps.LatLng(-23.6057502,-46.9178099),
-          mapTypeId: google.maps.MapTypeId.ROADMAP //google.maps.MapTypeId.TERRAIN
+          mapTypeId: google.maps.MapTypeId.ROADMAP
            
         });
 
         var script = document.createElement('script');
-        script.src = 'http://'+document.location.host+'/oss/rest/map';
+        script.src = 'http://'+document.location.host+':8181/rest/map';
         document.getElementsByTagName('head')[0].appendChild(script);
         
         var legend = document.getElementById('legend');
@@ -64,7 +65,7 @@
           var name = type.name;
           var icon = type.icon;
           var div = document.createElement('div');
-          div.innerHTML = '<img src="' + icon + '"> ' + name;
+          div.innerHTML = '<img src="' + icon + '" width=\"30px\" height=\"30px\"> ' + name;
           legend.appendChild(div);
         }
 
@@ -183,7 +184,7 @@
 	      // Add the marker at the clicked location, and add the next-available label
 	      // from the array of alphabetical characters.
 	      
-	      var amarker = new google.maps.Marker({
+	      amarker = new google.maps.Marker({
 			        position: alocation,
 			        label: labels[labelIndex++ % labels.length],
 			        map: amap
@@ -211,10 +212,10 @@
     		  });
 	    	  
 	    	  amarker.addListener('click', function() {
-	    		  info.open(amap, amarker);
+	    		  marcacaoDoUsuarioNaoLogado.open(amap, amarker);
 	          });
 	    	  
-	    	  info.open(amap, amarker);
+	    	  marcacaoDoUsuarioNaoLogado.open(amap, amarker);
 	      }
 	 	}
       	//END MAP MARKER
@@ -306,7 +307,7 @@
     		var latitude  = document.getElementById('formulario_lat'+id).value;
     		var longitude = document.getElementById('formulario_long'+id).value;
 			
-			var url = 'http://'+document.location.host+"/oss/rest/demanda/ins";
+			var url = 'http://'+document.location.host+"/rest/demanda/ins";
 			
 			websocket.send('<br/><br/>Criado o ponto no mapa: <b>Titulo</b> '+titulo+' <b>Descricao:</b> '+descricao+' <b>Endereço:</b> '+endereco+' <b>Latitude:</b> '+latitude+' <b>Longitude:</b> '+ longitude);
 			
