@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <!DOCTYPE urlrewrite
+    PUBLIC "-//tuckey.org//DTD UrlRewrite 2.6//EN"
+    "http://www.tuckey.org/res/dtds/urlrewrite2.6.dtd">
+
+    <urlrewrite>
+    
+	<rule>
+		<from>^.*\.(js|css|gif|jpg|png)$</from>
+		<set type="expires">1 day</set>
+	</rule>
+	
+	<rule>
+		<from>.*</from>
+		<set type="response-header" name="Cache-Control">max-age=3600, must-revalidate
+		</set>
+	</rule>  
+
+</urlrewrite>

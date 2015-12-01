@@ -3,7 +3,7 @@
       var amarker = '';
       var userLogged = '';
       var marcacaoDoUsuarioNaoLogado = '';
-      var websocket = new WebSocket("ws://" + document.location.host+ "/MyWebSocketServlet?username=mapa");
+      var websocket = new WebSocket("ws://" + document.location.host+ "/oss/MyWebSocketServlet?username=mapa");
       var address = '';
       var iconBase = 'http://'+document.location.host+'/oss/assets/images/icos/';
       var localizacaoUsuario = '';
@@ -46,7 +46,7 @@
       
       function initialize() {
     	  
-    	  FB.getLoginStatus();
+    	  /*FB.getLoginStatus();*/
     	  
         map = new google.maps.Map(document.getElementById('map'), {
           zoom: 14,
@@ -56,7 +56,7 @@
         });
 
         var script = document.createElement('script');
-        script.src = 'http://'+document.location.host+':8181/rest/map';
+        script.src = 'http://'+document.location.host+'/rest/map';
         document.getElementsByTagName('head')[0].appendChild(script);
         
         var legend = document.getElementById('legend');
