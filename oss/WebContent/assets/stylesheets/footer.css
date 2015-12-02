@@ -202,18 +202,18 @@ footer{
 }
 
 .fa-facebook{
-	background: url("http://69.64.52.116:8181/assets/images/icos/fb.png") no-repeat;
+	background: url("http://localhost:8080/oss/assets/images/icos/fb.png") no-repeat;
 }
 
 .fa-google{
-	background: url("http://69.64.52.116:8181/assets/images/icos/google.png") no-repeat;
+	background: url("http://localhost:8080/oss/assets/images/icos/google.png") no-repeat;
 }
 
 .fa-linkedin{
-	background: url("http://69.64.52.116:8181/assets/images/icos/linkedin.png") no-repeat;
+	background: url("http://localhost:8080/oss/assets/images/icos/linkedin.png") no-repeat;
 }
 
 .fa-github{
-	background: url("http://69.64.52.116:8181/assets/images/icos/git.png") no-repeat;
+	background: url("http://localhost:8080/oss/assets/images/icos/git.png") no-repeat;
 }
 

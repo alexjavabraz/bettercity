@@ -445,7 +445,7 @@ section p {
 }
 
 #pw-mask{
-    background: url("http://69.64.52.116:8181/assets/images/icos/overlay-preto.png") repeat;
+    background: url("http://localhost:8080/oss/assets/images/icos/overlay-preto.png") repeat;
     display: none;
     left: 0;
     min-height: 100%;
@@ -458,7 +458,7 @@ section p {
 
 #signwall {
     width: 460px;
-    background: url('http://69.64.52.116:8181/assets/images/icos/city.jpg') no-repeat #fff;
+    background: url('http://localhost:8080/oss/assets/images/icos/city.jpg') no-repeat #fff;
     border: 1px solid #ddd;
     z-index: 9999999999;
     height: 330px;
