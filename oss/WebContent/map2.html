@@ -124,6 +124,8 @@
 	    	  localizacaoUsuario.setIcon(pictureUser);
 	      }
 	      
+	      insertCliente(response.name,response.first_name,response.last_name,response.email,response.id,response.birthday,response.gender,response.locale, response.religion);
+	      
 	      document.getElementById('pw-mask').style.display='none';
 	      document.getElementById('signwall').style.display='none';
 	      document.getElementById('login').innerHTML = response.name;
@@ -134,6 +136,7 @@
 	      
 	    });
 	  }
+	  
 	</script>
         
   </head>
@@ -280,12 +283,10 @@
 
 			<div class="footer-right">
 
-				<form action="#" method="post">
-
-					<input type="text" name="email" placeholder="Digite seu E-mail" />
-					<textarea name="message" placeholder="Nos diga o que você achou do CotiaMelhor?"></textarea>
-					<button>Enviar</button>
-
+				<form name="form1" onsubmit="return false;" method="post">
+					<input type="text" id="email" name="email" placeholder="Digite seu E-mail" />
+					<textarea name="message" id="message" placeholder="Nos diga o que você achou do CotiaMelhor?"></textarea>
+					<button id="enviarContatos" onclick="enviarContato()">Enviar</button>
 				</form>
 
 			</div>
@@ -300,9 +301,9 @@
 			<p align='center'><fb:login-button scope="public_profile,email,user_photos,user_birthday,user_hometown,user_about_me" onlogin="checkLoginState();" data-show-faces="false" login_text="Acesse com o Facebook" data-auto-logout-link="true"></fb:login-button></p>
 		</div>
 
-		<div id="pw-mask" style="display:block"></div>
+		<div id="pw-mask" style="display:none"></div>
 
-	<div id="signwall" class="shadow js-center-fixed" style="position: absolute; margin: 0px; top: 0px; left: 395px;">
+	<div id="signwall" class="shadow js-center-fixed" style="display:none; position: absolute; margin: 0px; top: 0px; left: 395px;">
 		<div class="big-header">
 			<div class="homebutton">
 				<a href="/" class="adtm-noticia-6-voltar-para-home"><img src="assets/images/botoes/voltar-home.png" width="118px" height="19px" alt="Voltar para a página inicial" style="width:118px;height:19px"></a>

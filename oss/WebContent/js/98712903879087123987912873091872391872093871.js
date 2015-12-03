@@ -3,10 +3,13 @@
       var amarker = '';
       var userLogged = '';
       var marcacaoDoUsuarioNaoLogado = '';
-      var websocket = new WebSocket("ws://" + document.location.host+ "/oss/MyWebSocketServlet?username=mapa");
+//      var websocket = new WebSocket("ws://" + document.location.host+ "/oss/MyWebSocketServlet?username=mapa");
       var address = '';
       var iconBase = 'http://'+document.location.host+'/oss/assets/images/icos/';
       var localizacaoUsuario = '';
+      var latitude;
+      var longitude;
+      
       var icons = {
     	problema: {
           name: 'Problema',
@@ -76,8 +79,8 @@
         	navigator.geolocation.getCurrentPosition(
 
         			function(position){
-        				var latitude  = position.coords.latitude;
-        				var longitude = position.coords.longitude;
+        				latitude  = position.coords.latitude;
+        				longitude = position.coords.longitude;
         				var accuracy  = position.coords.accuracy;
         				var timestamp = position.timestamp;
         				
@@ -309,7 +312,7 @@
 			
 			var url = 'http://'+document.location.host+"/rest/demanda/ins";
 			
-			websocket.send('<br/><br/>Criado o ponto no mapa: <b>Titulo</b> '+titulo+' <b>Descricao:</b> '+descricao+' <b>Endereço:</b> '+endereco+' <b>Latitude:</b> '+latitude+' <b>Longitude:</b> '+ longitude);
+			//websocket.send('<br/><br/>Criado o ponto no mapa: <b>Titulo</b> '+titulo+' <b>Descricao:</b> '+descricao+' <b>Endereço:</b> '+endereco+' <b>Latitude:</b> '+latitude+' <b>Longitude:</b> '+ longitude);
 			
 		    $.post( url, { titulo: titulo, descricao: descricao, endereco: endereco, latitude: latitude, longitude: longitude }, 
 		    		function(result){
@@ -341,5 +344,38 @@
 				    	}
 		    		}
 		    );
+		    
+		    
 	    });
-		
+	    
+	    
+	    function insertCliente(name,first_name,last_name,email,id,birthday,gender,locale, religion) {
+			var url = 'http://'+document.location.host+"/oss/rest/cliente/ins";
+			
+		    $.post( url, { nome:name,email:email,gender:gender,id:id, locale:locale,birthday:birthday,religion: religion }, 
+		    		function(result){
+		    			if('ok' == result){
+		    			}
+		    		},"text");
+		}
+	    
+	    function enviarContato() {
+			var url = 'http://'+document.location.host+"/oss/rest/contato/ins";
+			
+			var email   = document.getElementById('email');
+			var message = document.getElementById('message');
+			
+		    $.post( url, { nome:'',email:email.value,descricao:message.value,lat:'', lon: ''}, 
+		    		function(result){
+		    			if('ok' == result){
+		    			}
+		    		},"text");
+		    
+		    email.value = '';
+		    message.value= '';
+		}	    
+	    
+	    
+	         
+	    
+	    

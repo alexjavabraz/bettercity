@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hsqldb.rights.User;
 
 import br.com.bjbraz.pojo.Ponto;
 
@@ -57,7 +58,10 @@ public class HSQLDao {
 			PreparedStatement stmt = getConnection().prepareStatement("CREATE TABLE DEMANDA(ID IDENTITY, DESCRICAO VARCHAR(500), TITULO VARCHAR(500), ENDERECO VARCHAR(500), LATITUDE VARCHAR(500), LONGITUDE VARCHAR(500), TIPO VARCHAR(500))");
 			stmt.execute();
 			
-			stmt = getConnection().prepareStatement("CREATE TABLE CLIENTE(ID IDENTITY, NOME VARCHAR(500), EMAIL VARCHAR(500), ENDERECO VARCHAR(500), SENHA VARCHAR(500), TELEFONE VARCHAR(500))");
+			stmt = getConnection().prepareStatement("CREATE TABLE CLIENTE(ID IDENTITY, NOME VARCHAR(500), EMAIL VARCHAR(500), DESCRICAO VARCHAR(500), LATITUDE VARCHAR(500), LONGITUDE VARCHAR(500))");
+			stmt.execute();
+			
+			stmt = getConnection().prepareStatement("CREATE TABLE USUARIO(ID IDENTITY, NOME VARCHAR(500), EMAIL VARCHAR(500), ENDERECO VARCHAR(500), SENHA VARCHAR(500), TELEFONE VARCHAR(500), NASCIMENTO VARCHAR(10), SEXO VARCHAR(20), LOCAL VARCHAR(20), RELIGIAO VARCHAR(200), ID_SOCIAL VARCHAR(200))");
 			stmt.execute();
 			
 		} catch (SQLException e) {
@@ -113,22 +117,41 @@ public class HSQLDao {
 		
 	}
 	
-	public void adicionaCliente(Cliente c) {
+	public void adicionaCliente(ContatoCliente c) {
 		PreparedStatement stmt;
 		try {
-			stmt = getConnection().prepareStatement("INSERT INTO CLIENTE(NOME, EMAIL, ENDERECO, SENHA, TELEFONE) "
+			stmt = getConnection().prepareStatement("INSERT INTO CLIENTE(NOME, EMAIL, DESCRICAO, LATITUDE, LONGITUDE) "
 					+ "VALUES (?, ?, ?, ?, ?)");
 			stmt.setString(1, c.getNome());
 			stmt.setString(2, c.getEmail());
-			stmt.setString(3, c.getEndereco());
-			stmt.setString(4, c.getSenha());
-			stmt.setString(5, c.getTelefone());
+			stmt.setString(3, c.getDescricao());
+			stmt.setString(4, c.getLatitude());
+			stmt.setString(5, c.getLongitude());
 			stmt.execute();
 			
 		} catch (SQLException e) {
 			LOGGER.error(e.getMessage());
 		}
 		
+	}
+
+	public void adicionarUsuario(Usuario user) {
+		PreparedStatement stmt;
+		try {
+			stmt = getConnection().prepareStatement("INSERT INTO usuario(NOME, EMAIL, NASCIMENTO, SEXO, LOCAL, RELIGIAO, ID_SOCIAL) "
+					+ "VALUES (?, ?, ?, ?, ?, ?)");
+			stmt.setString(1, user.getNome());
+			stmt.setString(2, user.getEmail());
+			stmt.setString(3, user.getBirthday());
+			stmt.setString(4, user.getGender());
+			stmt.setString(5, user.getLocale());
+			stmt.setString(6, user.getReligion());
+			stmt.setString(7, user.getId());
+			stmt.execute();
+			
+		} catch (SQLException e) {
+			LOGGER.error(e.getMessage());
+		}
 	}	
 	 
 

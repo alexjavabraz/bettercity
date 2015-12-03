@@ -1,7 +1,6 @@
 package br.com.bjbraz.service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -10,11 +9,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import br.com.bjbraz.entity.Cliente;
+import br.com.bjbraz.entity.ContatoCliente;
 import br.com.bjbraz.entity.HSQLDao;
 
-@Path("/cliente/ins")
-public class ClienteResource {
+@Path("/contato/ins")
+public class ContatoClienteResource {
 	
 	@Context
 	private HttpServletRequest request;
@@ -25,22 +24,19 @@ public class ClienteResource {
     public String insert(
     		@FormParam("nome") String nome, 
     		@FormParam("email") String email,
-    		@FormParam("endereco") String endereco, 
-    		@FormParam("telefone") String telefone,
-    		@FormParam("senha") String senha) {
+    		@FormParam("descricao") String descricao, 
+    		@FormParam("lat") String lat,
+    		@FormParam("lon") String longi) {
 		
-		Cliente c = new Cliente();
+		ContatoCliente c = new ContatoCliente();
 		c.setEmail(email);
-		c.setEndereco(endereco);
+		c.setDescricao(descricao);
 		c.setNome(nome);
-		c.setSenha(senha);
-		c.setTelefone(telefone);
+		c.setLatitude(lat);
+		c.setLongitude(longi);
 				
 		HSQLDao dao = new HSQLDao();
-		
 		dao.adicionaCliente(c);
-		
-		HttpSession session = request.getSession();
 		
         return "ok";
     }

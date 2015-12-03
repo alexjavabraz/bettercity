@@ -14,7 +14,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import br.com.bjbraz.entity.Cliente;
+import br.com.bjbraz.entity.ContatoCliente;
 import br.com.bjbraz.entity.HSQLDao;
 
 /**
@@ -48,19 +48,6 @@ public class LoginServlet extends HttpServlet {
 		String endereco = request.getParameter("endereco"); 
 		String telefone = request.getParameter("telefone");
 		String senha    = request.getParameter("senha");
-		
-		Cliente c = new Cliente();
-		c.setEmail(email);
-		c.setEndereco(endereco);
-		c.setNome(nome);
-		c.setSenha(senha);
-		c.setTelefone(telefone);
-				
-		HSQLDao dao = new HSQLDao();
-		
-		dao.adicionaCliente(c);
-		
-		request.getSession().setAttribute("usuario", c);
 		
 		response.sendRedirect("/");
 	}
