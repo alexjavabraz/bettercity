@@ -56,7 +56,7 @@
         });
 
         var script = document.createElement('script');
-        script.src = 'http://'+document.location.host+'/rest/map';
+        script.src = 'http://'+document.location.host+'/oss/rest/map';
         document.getElementsByTagName('head')[0].appendChild(script);
         
         var legend = document.getElementById('legend');
@@ -105,7 +105,7 @@
         				
         			}, 
         			function(error){
-        					alert(error);
+        					console.log(error);
         			},
         			
         			{timeout:10000}, {maximumAge:20000});

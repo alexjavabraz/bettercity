@@ -41,37 +41,59 @@
 	</servlet-mapping>
 
 	<filter>
-		<filter-name>ExpiresFilter</filter-name>
-		<filter-class>org.apache.catalina.filters.ExpiresFilter</filter-class>
-		<init-param>
-			<param-name>ExpiresByType image</param-name>
-			<param-value>access plus 1 day</param-value>
-		</init-param>
-		<init-param>
-			<param-name>ExpiresByType text/css</param-name>
-			<param-value>access plus 1 day</param-value>
-		</init-param>
-		<init-param>
-			<param-name>ExpiresByType application/javascript</param-name>
-			<param-value>access plus 1 day</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>ExpiresFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-	</filter-mapping>
+    <filter-name>ExpiresFilter</filter-name>
+    <filter-class>org.apache.catalina.filters.ExpiresFilter</filter-class>
+    <init-param>
+      <param-name>ExpiresDefault</param-name>
+      <param-value>access plus 2 weeks</param-value>
+    </init-param>
+    <init-param>
+      <param-name>ExpiresExcludedResponseStatusCodes</param-name>
+      <param-value>304, 500, 503</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>ExpiresFilter</filter-name>
+    <url-pattern>*.woff</url-pattern>
+    <url-pattern>*.js</url-pattern>
+    <url-pattern>*.png</url-pattern>
+    <url-pattern>*.jpg</url-pattern>
+    <url-pattern>*.jpeg</url-pattern>
+    <url-pattern>*.gif</url-pattern>
+    <url-pattern>*.ico</url-pattern>
+    <url-pattern>*.css</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
 
-	<filter>
-		<filter-name>UrlRewriteFilter</filter-name>
-		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter
-		</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>UrlRewriteFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
-	</filter-mapping>
+<!-- 	<filter> -->
+<!--     <filter-name>UrlRewriteFilter</filter-name> -->
+<!--     <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class> -->
+<!--     <init-param> -->
+<!--       <param-name>logLevel</param-name> -->
+<!--       <param-value>ERROR</param-value> -->
+<!--     </init-param> -->
+<!--     <init-param> -->
+<!--       <param-name>confPath</param-name> -->
+<!--       <param-value>/WEB-INF/urlrewrite.xml</param-value> -->
+<!--     </init-param> -->
+<!--   </filter> -->
+<!--   <filter-mapping> -->
+<!--     <filter-name>UrlRewriteFilter</filter-name> -->
+<!--     <url-pattern>/*</url-pattern> -->
+<!--     <dispatcher>REQUEST</dispatcher> -->
+<!--     <dispatcher>FORWARD</dispatcher> -->
+<!--   </filter-mapping> -->
+  
+  
+<!--   <filter> -->
+<!--     <filter-name>compressionFilter</filter-name> -->
+<!--     <filter-class>br.com.bjbraz.filter.GZIPFilter</filter-class> -->
+<!--   </filter> -->
+<!--   <filter-mapping> -->
+<!--     <filter-name>compressionFilter</filter-name> -->
+<!--     <url-pattern>*.html</url-pattern> -->
+<!--     <url-pattern>*.css</url-pattern> -->
+<!--     <url-pattern>*.js</url-pattern> -->
+<!--   </filter-mapping> -->
 
 </web-app>

@@ -7,8 +7,8 @@
     <urlrewrite>
     
 	<rule>
-		<from>^.*\.(js|css|gif|jpg|png)$</from>
-		<set type="expires">1 day</set>
+		<from>^.*\.(js|css|gif|jpg|png|jpeg|bmp)$</from>
+		<set type="expires">2 weeks</set>
 	</rule>
 	
 	<rule>
