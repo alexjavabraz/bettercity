@@ -1,11 +1,14 @@
 package br.com.bjbraz.service;
 
+import java.io.InputStream;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -36,16 +39,51 @@ public class DemandaResource {
 		d.setEndereco(endereco);
 		d.setLatitude(latitude);
 		d.setLongitude(longitude);
-		
 		HSQLDao dao = new HSQLDao();
-		
-		
 		dao.adicionaDemanda(d);
 		
-		HttpSession session = request.getSession();
-		session.setAttribute("teste", "teste");
 		
         return "ok";
     }
+	
+	/**
+	 * 
+	 * @param lon
+	 * @param lat
+	 * @param id
+	 * @param descricao
+	 * @param titulo
+	 * @param in
+	 * @return
+	 */
+	@POST
+	@Path("/nova/{id}/{lat}/{long}")
+	@Consumes(MediaType.APPLICATION_OCTET_STREAM)
+	public String uploadFoto(@PathParam("lon") String lon, @PathParam("lat") String lat, @PathParam("id") String id, @PathParam("descricao") String descricao, @PathParam("titulo") String titulo, final InputStream in){
+		String idDemanda = salvarDemandaNoBancoDeDados(titulo, id, lat, lon, descricao);
+		return idDemanda;
+	}
+
+	/**
+	 * 
+	 * @param titulo
+	 * @param id
+	 * @param latitude
+	 * @param longitude
+	 * @param descricao
+	 * @return
+	 */
+	private String salvarDemandaNoBancoDeDados(String titulo, String id, String latitude, String longitude, String descricao) {
+		Demanda d = new Demanda();
+		d.setDescricao(descricao);
+		d.setTitulo(titulo);
+		d.setEndereco(descricao);
+		d.setLatitude(latitude);
+		d.setLongitude(longitude);
+		HSQLDao dao = new HSQLDao();
+		Integer idGerado = dao.adicionaDemanda(d);
+		
+		return String.valueOf(idGerado);
+	}
 
 }

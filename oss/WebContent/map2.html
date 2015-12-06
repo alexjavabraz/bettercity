@@ -18,19 +18,20 @@
     <meta property="og:image" content="http://palloi.github.io/responsive-header-only-css/assets/images/image-shared.png" />
     <meta property="og:keywords" content="aplicativo social, CidadeMelhor, melhorar minha cidade, " />
     <meta property="og:description" content="Mostre o que você quer melhorar no seu bairro, na sua cidade!" />
+    <link rel="alternate" href="http://69.64.52.116:8181" hreflang="pt-br" />
     
-    <link rel="icon" type="image/vnd.microsoft.icon" href="http://localhost:8080/oss/assets/images/icos/favicon.ico" />
-    <link href="http://localhost:8080/oss/assets/images/icos/favicon.ico" rel="shortcut icon">
+    <link rel="icon" type="image/vnd.microsoft.icon" href="http://69.64.52.116:8181/assets/images/icos/favicon.ico" />
+    <link href="http://69.64.52.116:8181/assets/images/icos/favicon.ico" rel="shortcut icon">
 	<link href="http://fonts.googleapis.com/css?family=Cookie|Open+Sans:400,700" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css" />
-    <link rel="stylesheet" type="text/css" href="assets/stylesheets/footer.css" />
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/style-min.css" />
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/footer-min.css" />
     
     <!--[if lt IE 9]>
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
     
     <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="js/98712903879087123987912873091872391872093871.js"></script>
+    <script type="text/javascript" src="js/98712903879087123987912873091872391872093871-min.js"></script>
 	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdL1lXGAN3qc3dcbTUxCcIYai5dc5hr6c&libraries=places"></script>
     
 	<script>
@@ -148,7 +149,21 @@
   js = d.createElement(s); js.id = id;
   js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.5&appId=1641774959428289";
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>  
+}(document, 'script', 'facebook-jssdk'));
+</script>  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-70802078-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
  	 <input id="pac-input" class="controls" type="text" placeholder="Buscar pelo endereço">
     <header>
       <h1 class="float-l">
@@ -225,8 +240,8 @@
 
     <section id="Cotia_Melhor_Ja">
       <div style="align:center">
-    	  <img src="assets/images/googleplay.jpg" width="150px" height=60px" alt="Baixe no GooglePlay" style="width:150px;height:60px;valign:'center'" class="float-r" />
-	      <img src="assets/images/applestore.png" width="150px" height=60px" alt="Baixe na Applestore" style="width:150px;height:60px;" class="float-r" />
+    	  <img src="assets/images/googleplay.jpg" width="150px" height="60px" alt="Baixe no GooglePlay" style="width:150px;height:60px;valign:'center'" class="float-r" />
+	      <img src="assets/images/applestore.png" width="150px" height="60px" alt="Baixe na Applestore" style="width:150px;height:60px;" class="float-r" />
       </div>
       <p>
         <strong>Comece agora mesmo:</strong> <a href='login.html'>Comece a melhorar</a> sua cidade agora mesmo, baixe o app.

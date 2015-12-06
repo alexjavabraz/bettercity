@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,22 +100,30 @@ public class HSQLDao {
 		return demandas;
 	}
 
-	public void adicionaDemanda(Demanda d) {
+	public Integer adicionaDemanda(Demanda d) {
+		Integer retorno = null;
 		PreparedStatement stmt;
 		try {
 			stmt = getConnection().prepareStatement("INSERT INTO DEMANDA(DESCRICAO, TITULO, ENDERECO, LATITUDE, LONGITUDE) "
-					+ "VALUES (?, ?, ?, ?, ?)");
+					+ "VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, d.getDescricao());
 			stmt.setString(2, d.getTitulo());
 			stmt.setString(3, d.getEndereco());
 			stmt.setString(4, d.getLatitude());
 			stmt.setString(5, d.getLongitude());
-			stmt.execute();
+			stmt.executeUpdate();
+			
+			ResultSet rs = stmt.getGeneratedKeys();
+			
+			if(rs != null && rs.next()){
+				retorno = rs.getInt(1);
+			}
 			
 		} catch (SQLException e) {
 			LOGGER.error(e.getMessage());
 		}
 		
+		return retorno;
 	}
 	
 	public void adicionaCliente(ContatoCliente c) {
