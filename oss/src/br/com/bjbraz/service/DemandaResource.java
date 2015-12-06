@@ -57,7 +57,7 @@ public class DemandaResource {
 	 * @return
 	 */
 	@POST
-	@Path("/nova/{id}/{lat}/{long}")
+	@Path("/nova/{id}/{lat}/{long}/{descricao}/{titulo}")
 	@Consumes(MediaType.APPLICATION_OCTET_STREAM)
 	public String uploadFoto(@PathParam("lon") String lon, @PathParam("lat") String lat, @PathParam("id") String id, @PathParam("descricao") String descricao, @PathParam("titulo") String titulo, final InputStream in){
 		String idDemanda = salvarDemandaNoBancoDeDados(titulo, id, lat, lon, descricao);
