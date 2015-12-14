@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 
 import br.com.bjbraz.entity.Demanda;
 import br.com.bjbraz.entity.HSQLDao;
+import br.com.bjbraz.entity.Usuario;
 
 
 @Path("/demanda/ins")
@@ -85,5 +87,27 @@ public class DemandaResource {
 		
 		return String.valueOf(idGerado);
 	}
+	
+	
+	@GET
+	@Path("insTest/{latitude}/{longitude}")
+	@Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public String insert(
+    		@PathParam("latitude") String latitude, 
+    		@PathParam("longitude") String longitude) {
+		
+		Demanda d = new Demanda();
+		d.setDescricao("teste");
+		d.setTitulo("teste");
+		d.setEndereco("teste");
+		d.setLatitude(latitude);
+		d.setLongitude(longitude);
+		HSQLDao dao = new HSQLDao();
+		dao.adicionaDemanda(d);
+		
+		
+        return "ok";
+    }	
 
 }

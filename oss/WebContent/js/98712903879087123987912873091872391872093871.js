@@ -58,9 +58,14 @@
            
         });
 
-        var script = document.createElement('script');
-        script.src = 'http://'+document.location.host+'/oss/rest/map';
-        document.getElementsByTagName('head')[0].appendChild(script);
+        
+        
+        setInterval(function(){
+        			var script = document.createElement('script');
+        			console.log('finding points');
+			        script.src = 'http://'+document.location.host+'/oss/rest/map';
+			        document.getElementsByTagName('head')[0].appendChild(script);
+			        }, 10000);
         
         var legend = document.getElementById('legend');
         for (var key in icons) {
@@ -99,6 +104,8 @@
         			            optimized: true,
         			            draggable: false
         			          });
+        					
+        					map.setCenter(localizacaoUsuario.getPosition());
         					
         					
         				}else{

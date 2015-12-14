@@ -90,7 +90,11 @@ public class HSQLDao {
 				demanda.setLatitude(rs.getString("LATITUDE"));
 				demanda.setLongitude(rs.getString("LONGITUDE"));
 				demanda.setTitulo(rs.getString("TITULO"));
-				demandas.add(demanda.toPonto());
+				
+				Ponto p = demanda.toPonto();
+				if(p != null){
+					demandas.add(p);
+				}
 			}
 			
 		} catch (SQLException e) {

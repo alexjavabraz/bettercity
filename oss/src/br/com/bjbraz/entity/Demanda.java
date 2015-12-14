@@ -84,12 +84,18 @@ public class Demanda {
 	
 	public Ponto toPonto(){
 		Ponto p = new Ponto();
-		p.setCoordenada(new Coordenada(Double.parseDouble(getLatitude()), Double.parseDouble(getLongitude())));
-		p.setDetalhe(getDescricao());
-		p.setPlace(getEndereco());
-		p.setTitle(getTitulo());
-		p.setType(getTipo());
-		return p;
+		try{
+			p.setCoordenada(new Coordenada(Double.parseDouble(getLatitude()), Double.parseDouble(getLongitude())));
+			p.setDetalhe(getDescricao());
+			p.setPlace(getEndereco());
+			p.setTitle(getTitulo());
+			p.setType(getTipo());
+			return p;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 	
 }
