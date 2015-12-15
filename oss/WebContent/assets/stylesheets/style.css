@@ -569,19 +569,70 @@ section p {
 	height: 311px;    
 }
 
-.sprites-os-problemas-da-cidade {
-    background-position: -2px -44px;
-    display: block;
-    height: 38px;
-    margin: 0;
-    position: relative;
-	float: right;
-	width: 539px;
-	height: 311px;    
-	margin: 2px;
-}
-
-.melhorar-minha-cidade {
-	background: url(http://localhost:8080/oss/assets/images/melhorar-minha-cidade.jpg) no-repeat
-}
+		.todos-juntos-por-uma-cidade-melhor, .problemas-da-cidade, .googleplay, .applestore, .melhorou-a-cidade, .obra-em-andamento-para-melhorar-a-cidade, .melhoria-em-analise, .solicitacao-de-melhoria-na-cidade {
+			background: url(http://localhost:8080/oss/assets/images/melhorar-minha-cidade.jpg) no-repeat;
+		}
+		
+		.todos-juntos-por-uma-cidade-melhor{
+			background-position: -536px 2px;
+    		width: 392px;
+			height: 256px;
+			margin: 2px;
+			float: right;
+			color:black;
+ 			font:20px Impact; 			    
+		}
+		
+		.problemas-da-cidade{
+			    background-position: 0 0;
+			    width: 539px;
+			    height: 309px;
+			margin: 2px;
+			float: right;
+			color:white;
+ 			font:20px Impact; 			    
+		}		
+		
+		.googleplay{
+			    background-position: -539px -258px;
+			    width: 182px;
+			    height: 50px;
+			    valign:center;
+			    float: right;
+		}
+		
+		.applestore{
+			    background-position: -719px -263px;
+			    width: 142px;
+			    height: 49px;
+			    float: right;
+		}
+		
+		.melhorou-a-cidade{
+			    background-position: -867px -257px;
+			    width: 28px;
+			    height: 28px;
+      			margin:13px 0px 0px 0px;
+		}
+		
+		.obra-em-andamento-para-melhorar-a-cidade{
+		    background-position: -896px -257px;
+		    width: 150px;
+		    height: 32px;
+		    margin:13px 0px 0px 0px;
+		}
+		
+		.melhoria-em-analise{
+		    background-position: -865px -288px;
+		    width: 32px;
+		    height: 29px;
+		    margin:13px 0px 0px 0px;
+		}
+		
+		.existe-um-problema-a-ser-resolvido-na-cidade{
+			background-position: -898px -290px;
+			width: 32px;
+			height: 40px;
+			margin:13px 0px 0px 0px;
+		}
 
