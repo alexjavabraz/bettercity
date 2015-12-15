@@ -558,3 +558,30 @@ section p {
 }
 
 
+.sprites-todos-juntos-por-uma-cidade-melhor {
+    background-position: -2px -44px;
+    display: block;
+    height: 38px;
+    margin: 0;
+    position: relative;
+	float: right;
+	width: 539px;
+	height: 311px;    
+}
+
+.sprites-os-problemas-da-cidade {
+    background-position: -2px -44px;
+    display: block;
+    height: 38px;
+    margin: 0;
+    position: relative;
+	float: right;
+	width: 539px;
+	height: 311px;    
+	margin: 2px;
+}
+
+.melhorar-minha-cidade {
+	background: url(http://localhost:8080/oss/assets/images/melhorar-minha-cidade.jpg) no-repeat
+}
+
