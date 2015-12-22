@@ -456,14 +456,7 @@ section p {
     height: 100%;
 }
 
-#signwall {
-    width: 460px;
-    background: url('http://localhost:8080/oss/assets/images/icos/city.jpg') no-repeat #fff;
-    border: 1px solid #ddd;
-    z-index: 9999999999;
-    height: 330px;
-    font-size: 12px;
-}
+
 
 #signwall .half-left {
     border-right: 1px solid #ccc;
@@ -635,4 +628,49 @@ section p {
 			height: 40px;
 			margin:13px 0px 0px 0px;
 		}
+		
+@media screen and (min-width: 801px){
+	#signwall {
+	    width: 460px;
+	    background: url('http://localhost:8080/oss/assets/images/icos/city.jpg') no-repeat #fff;
+	    border: 1px solid #ddd;
+	    z-index: 9999999999;
+	    height: 330px;
+	    font-size: 12px;
+		position: absolute; 
+     	margin: 0px; 
+     	top: 0px; 
+     	left: 30%;	    
+	}
+}		
 
+@media screen and (min-width: 768px) and (max-width: 800px){
+	#signwall {
+    width: 460px;
+    background: url('http://localhost:8080/oss/assets/images/icos/city.jpg') no-repeat #fff;
+    border: 1px solid #ddd;
+    z-index: 9999999999;
+    height: 330px;
+    font-size: 12px;
+     position: absolute; 
+     margin: 0px; 
+     top: 0px; 
+     left: 175px;
+	}
+}
+
+
+@media screen and (max-width: 767px) {
+	#signwall {
+		position: absolute;
+		background: url('http://localhost:8080/oss/assets/images/icos/city.jpg') no-repeat #fff;
+    	border: 1px solid #ddd;
+		z-index: 9999999999;
+	    margin: 0px;
+	    top: 0px;
+	    left: 95px;
+	    margin: 0 auto;
+	    width: 68%;
+	    
+	}
+}

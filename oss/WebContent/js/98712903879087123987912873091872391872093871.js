@@ -5,7 +5,7 @@
       var marcacaoDoUsuarioNaoLogado = '';
 //      var websocket = new WebSocket("ws://" + document.location.host+ "/oss/MyWebSocketServlet?username=mapa");
       var address = '';
-      var iconBase = 'http://'+document.location.host+'/oss/assets/images/icos/';
+      var iconBase = 'http://www.cotiamelhor.com.br/assets/images/icos/';
       var localizacaoUsuario = '';
       var latitude;
       var longitude;
