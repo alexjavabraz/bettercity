@@ -7,12 +7,17 @@
 <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
 <url>
-  <loc>http://69.64.52.116:8181/</loc>
+  <loc>http://www.cotiamelhor.com.br/</loc>
   <lastmod>2015-12-03T01:03:18+00:00</lastmod>
   <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://69.64.52.116:8181/login.html</loc>
+  <loc>http://www.cotiamelhor.com.br/login.html</loc>
+  <lastmod>2015-11-28T21:37:48+00:00</lastmod>
+  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://www.cotiamelhor.com.br/acessar.html</loc>
   <lastmod>2015-11-28T21:37:48+00:00</lastmod>
   <changefreq>daily</changefreq>
 </url>
