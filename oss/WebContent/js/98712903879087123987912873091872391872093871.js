@@ -5,7 +5,7 @@
       var marcacaoDoUsuarioNaoLogado = '';
 //      var websocket = new WebSocket("ws://" + document.location.host+ "/oss/MyWebSocketServlet?username=mapa");
       var address = '';
-      var iconBase = 'http://www.cotiamelhor.com.br/assets/images/icos/';
+      var iconBase = 'http://localhost:8080/oss/assets/images/icos/';
       var localizacaoUsuario = '';
       var latitude;
       var longitude;
@@ -30,21 +30,28 @@
       }; 
       
       
-      function criaString(title, description){
-    	  return '<div id="content">'+
-          '<div id="siteNotice">'+
-          '</div>'+
-          '<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
-          '<div id="bodyContent">'+
-          '<p><b>'+description+'</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-          'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-          'south west of the nearest large town, Alice Springs; 450&#160;km '+
-          '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-          'Heritage Site.</p>'+
-          '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-          'https://en.wikipedia.org/w/index.php?title=Uluru</a></p>'+
-          '</div>'+
-          '</div>';
+      function criaString(title, address, detail, id){
+    	  
+    	  return '	<div id='+id+' class="form">'+
+				'	<nav class="" id='+id+'>'+
+				'	<a id="'+id+'" class="melhorar-minha-cidade-opcao-selecionada">Problema</a>'+
+				'	<a id="'+id+'" class="projects">Informação</a>'+
+				'	<a id="'+id+'" class="services">Sugestão</a>'+
+				'	<a id="'+id+'" put_before_onClick="this.className=\'melhorar-minha-cidade-opcao-selecionada\'" class="contact">Outro</a>'+
+				'	</nav>'+
+				'	<div class="formulario">'+
+				'   <input type="hidden" id="formulario_lat'+id+'" value=>'+
+				'   <input type="hidden" id="formulario_long'+id+'" value=>'+
+				'	<div>'+
+				'    <input type="text" class="formulario_input" id="formulario_titulo'+id+'" value="'+title+'" readonly /></div>'+
+				'	<div>'+
+				'   <textarea id="formulario_descricao'+id+'" class="formulario_textarea" maxlength="500" cols="50" rows="4">"'+detail+'"</textarea>'+
+				'   </div>'+
+				'	<div><input type="text" id="formulario_endereco'+id+'" class="formulario_input" name="endereco" value="'+address+'" readonly /></div>'+
+				'	<div class="formulario_div_imagem"><img src="assets/images/icos/photo.png" class="formulario_imagem" id="formulario_imagem_'+id+'" onClick="insertDemanda('+id+')" class="formulario_button"/></div>'+
+				'	<div class="formulario_div_btn"><button class="btn" onClick="insertDemanda('+id+')" />Detalhe</div>'+
+				'	</div>';
+    	  
       }
       
       function initialize() {
@@ -62,7 +69,7 @@
         
         setInterval(function(){
         			var script = document.createElement('script');
-        			console.log('finding points');
+        			console.log('finding points... ' + 'http://'+document.location.host+'/oss/rest/map');
 			        script.src = 'http://'+document.location.host+'/oss/rest/map';
 			        document.getElementsByTagName('head')[0].appendChild(script);
 			        }, 10000);
@@ -281,18 +288,23 @@
       // Loop through the results array and place a marker for each
       // set of coordinates.
       window.eqfeed_callback = function(results) {
+    	  
+    	  console.log('calling callback... ' + results.features.length);
+    	  
         for (var i = 0; i < results.features.length; i++) {
           var coords = results.features[i].geometry.coordinates;
           var latLng = new google.maps.LatLng(coords[0],coords[1]);
           var title  = results.features[i].properties['title'];
-          var label = results.features[i].properties['place'];
+          var alabel = results.features[i].properties['place'];
           var zIndex = results.features[i].properties['mag'];
+          var detail = results.features[i].properties['detail'];
+          var id 	 = results.features[i].id;
           
           new google.maps.Marker({
             position: latLng,
             map: map,
             title: results.features[i].properties['title'],
-            label: results.features[i].properties['place'],
+            label: results.features[i].properties['detail'],
             icon: icons[results.features[i].properties['type']].icon,
             zIndex: zIndex,
             optimized: true,
@@ -300,7 +312,7 @@
           }).addListener('click', function() {
         	  
         	  	new google.maps.InfoWindow({
-        		    content: criaString( this.title, this.label)
+        		    content: criaString( this.title, alabel, detail, id)
         		  }).open(map, this);
           });
           

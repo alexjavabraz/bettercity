@@ -2,6 +2,7 @@ package br.com.bjbraz.pojo;
 
 public class Ponto {
 
+	private String id;
 	private String place;
 	private String time;
 	private String updated;
@@ -34,7 +35,7 @@ public class Ponto {
 	public String toString() {
 		//return 	 "{'type':'Feature','properties':{'mag':"+zIndex+",'place':'"+descricaoDoProblema+"','time':1446559068660,'updated':1446559263142,'tz':-480,"+"'url':'"+url+"','detail':'"+url+"','felt':0,'cdi':1,'mmi':null,'alert':null,'status':'"+status+"','tsunami':0,'sig':96,'net':'nn','code':'00517535','ids':',nn00517535,','sources':',nn,','types':',dyfi,general-link,general-link,geoserve,nearby-cities,origin,phase-data,','nst':17,'dmin':0.562,'rms':null,'gap':275.49,'magType':'ml',"+ "'type':'"+type+"','title':'"+title+"'},"+ "'geometry':{'type':'Point','coordinates':["+coordenada.getLatitudeAsString()+","+coordenada.getLongitudeAsString()+"]},'id':'nn00517535'}";
 		
-		return "{'type':'Feature','properties':{'mag':"+zIndex+",'place':'"+place+"','time':1446559068660,'updated':1446559263142,'tz':-480, 'url':'','detail':'"+descricaoDoProblema+"','felt':0,'cdi':1,'mmi':null,'alert':null,      'status':'automatic','tsunami':0,'sig':96,'net':'nn','code':'00517535', 'ids':',nn00517535,','sources':',nn,','types':',dyfi,general-link,general-link,geoserve,nearby-cities,origin,phase-data,','nst':17,'dmin':0.562,'rms':null,'gap':275.49,'magType':'ml',     'type':'"+type+"',  'title':'"+title+"'},          'geometry':{'type':'Point','coordinates':["+coordenada.getLatitudeAsString()+","+coordenada.getLongitudeAsString()+",0.2]},'id':'nn00517535'}";
+		return "{'type':'Feature','properties':{'mag':"+zIndex+",'place':'"+place+"','time':1446559068660,'updated':1446559263142,'tz':-480, 'url':'','detail':'"+descricaoDoProblema+"','felt':0,'cdi':1,'mmi':null,'alert':null,      'status':'automatic','tsunami':0,'sig':96,'net':'nn','code':'00517535', 'ids':',nn00517535,','sources':',nn,','types':',dyfi,general-link,general-link,geoserve,nearby-cities,origin,phase-data,','nst':17,'dmin':0.562,'rms':null,'gap':275.49,'magType':'ml',     'type':'"+type+"',  'title':'"+title+"'},          'geometry':{'type':'Point','coordinates':["+coordenada.getLatitudeAsString()+","+coordenada.getLongitudeAsString()+",0.2]},'id':'"+id+"'}";
 	}
 	
 	public String getPlace() {
@@ -195,6 +196,22 @@ public class Ponto {
 		} else if (!zIndex.equals(other.zIndex))
 			return false;
 		return true;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getDescricaoDoProblema() {
+		return descricaoDoProblema;
+	}
+
+	public void setDescricaoDoProblema(String descricaoDoProblema) {
+		this.descricaoDoProblema = descricaoDoProblema;
 	}
 	
 

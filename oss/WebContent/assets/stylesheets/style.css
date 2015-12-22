@@ -261,18 +261,10 @@ section p {
 }
 
 
-
-
-
-
-
-
-
-
 		#map { 
        	margin: 75px 0px 0px 0px; padding: 0; width: 99%;  height: 595px;background-color: #CCC; 
        	}
-       #legend {background: white; padding: 5px; width:10%}
+       #legend {background: white; padding: 5px; width:5%}
         #legend h3 {
         margin-top: 0;
       }
@@ -312,7 +304,7 @@ section p {
   text-decoration: none !important;
   line-height: 1;
   text-transform: uppercase;
-  background-color: transparent;
+  
   -webkit-webkit-transition: background-color 0.25s;
   -moz-webkit-transition: background-color 0.25s;
   -ms-webkit-transition: background-color 0.25s;
@@ -331,6 +323,10 @@ section p {
 .form  nav.projects .projects,
 .form  nav.services .services,
 .form  nav.contact .contact {
+  background-color: #E35885;
+}
+
+.melhorar-minha-cidade-opcao-selecionada {
   background-color: #E35885;
 }
 
@@ -437,6 +433,13 @@ section p {
 	position: relative;
     margin: 5px 4px -54px 0px;
     padding: 0px 0px 0px 0px;
+    left: -4%;
+}
+
+.formulario_melhorar_minha_cidade{
+    position: relative;
+    margin: 0px 0px -56px 1px;
+    padding: 0px 0px 39px 0px;
     left: -4%;
 }
 

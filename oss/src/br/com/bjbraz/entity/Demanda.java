@@ -90,6 +90,7 @@ public class Demanda {
 			p.setPlace(getEndereco());
 			p.setTitle(getTitulo());
 			p.setType(getTipo());
+			p.setId(String.valueOf(getId()));
 			return p;
 		}catch(Exception e){
 			e.printStackTrace();

@@ -3,7 +3,6 @@ package br.com.bjbraz.service;
 import java.io.InputStream;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -16,7 +15,6 @@ import javax.ws.rs.core.MediaType;
 
 import br.com.bjbraz.entity.Demanda;
 import br.com.bjbraz.entity.HSQLDao;
-import br.com.bjbraz.entity.Usuario;
 
 
 @Path("/demanda/ins")
@@ -90,17 +88,21 @@ public class DemandaResource {
 	
 	
 	@GET
-	@Path("insTest/{latitude}/{longitude}")
+	@Path("insTest/{latitude}/{longitude}/{descricao}/{titulo}/{endereco}")
 	@Produces(MediaType.TEXT_PLAIN)
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    public String insert(
+    public String insTest(
     		@PathParam("latitude") String latitude, 
-    		@PathParam("longitude") String longitude) {
+    		@PathParam("longitude") String longitude,
+    		@PathParam("descricao") String descricao,
+    		@PathParam("titulo") String titulo,
+    		@PathParam("endereco") String endereco
+    		) {
 		
 		Demanda d = new Demanda();
-		d.setDescricao("teste");
-		d.setTitulo("teste");
-		d.setEndereco("teste");
+		d.setDescricao(descricao);
+		d.setTitulo(titulo);
+		d.setEndereco(endereco);
 		d.setLatitude(latitude);
 		d.setLongitude(longitude);
 		HSQLDao dao = new HSQLDao();
