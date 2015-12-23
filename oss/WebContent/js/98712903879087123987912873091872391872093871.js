@@ -54,18 +54,26 @@
     	  
       }
       
-      function initialize() {
-    	  
+      function initialize2() {
     	  /*FB.getLoginStatus();*/
     	  
-        map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 14,
-          center: new google.maps.LatLng(-23.6057502,-46.9178099),
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-           
-        });
-
-        
+          map = new google.maps.Map(document.getElementById('map-problema-apontado'), {
+            zoom: 20,
+            center: new google.maps.LatLng(-23.6057502,-46.9178099),
+            mapTypeId: google.maps.MapTypeId.SATELLITE
+             
+          });
+          
+      }//END INITIALIZE2
+      
+      function initialize() {
+    	  /*FB.getLoginStatus();*/
+          map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 14,
+            center: new google.maps.LatLng(-23.6057502,-46.9178099),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+             
+          });
         
         setInterval(function(){
         			var script = document.createElement('script');
@@ -236,7 +244,7 @@
 	      }
 	 	}
       	//END MAP MARKER
-      }
+      }//END INITIALIZE FUNCTION
       
       function addPointNaoLogado(){
     	  return document.getElementById('facaLogin').innerHTML;

@@ -260,29 +260,50 @@ section p {
   }
 }
 
+#map {
+	margin: 75px 0px 0px 0px;
+	padding: 0;
+	width: 99%;
+	height: 595px;
+	background-color: #CCC;
+}
 
-		#map { 
-       	margin: 75px 0px 0px 0px; padding: 0; width: 99%;  height: 595px;background-color: #CCC; 
-       	}
-       #legend {background: white; padding: 5px; width:5%}
-        #legend h3 {
-        margin-top: 0;
-      }
-      #legend img {
-        vertical-align: middle;
-      }
-      .imagemDesc {
-      	width:30px;
-      	margin:13px 0px 0px 0px;
-      }
-      .textDesc {
-      	padding: 0px 0px 0px 60px;
-      	margin: -32px 0px 0px 0px;
-      }
-      .conteinerDesc {
-      	margin: 15px 0px 0px 15px;
-      }
-  
+#map-problema-apontado {
+	margin: 0px 0px 0px 0px;
+	padding: 0;
+	width: 50%;
+	height: 185px;
+	background-color: #CCC;
+}
+
+#legend {
+	background: white;
+	padding: 5px;
+	width: 5%
+}
+
+#legend h3 {
+	margin-top: 0;
+}
+
+#legend img {
+	vertical-align: middle;
+}
+
+.imagemDesc {
+	width: 30px;
+	margin: 13px 0px 0px 0px;
+}
+
+.textDesc {
+	padding: 0px 0px 0px 60px;
+	margin: -32px 0px 0px 0px;
+}
+
+.conteinerDesc {
+	margin: 15px 0px 0px 15px;
+}
+
 .form{
 	    overflow: hidden;
 }
@@ -677,3 +698,32 @@ section p {
 	    
 	}
 }
+
+
+#cidadao-que-quer-melhorar-a-cidade {
+    border-radius: 15px 50px;
+    border: 2px solid #61A1BC;
+/*     background: #73AD21; */
+    padding: 10px; 
+    width: 100px;
+    height: 75px; 
+}
+
+#melhoria-da-cidade-solicitada{
+    margin: -187px 4px 4px 474px;
+}
+
+#detalhe-do-problema{
+	
+}
+
+#fotos-do-problema-da-cidade{
+    padding: 35px 0px 0px 0px;
+    width: 50%;
+	height: 185px;
+}
+
+#detalhe-do-problema,  #melhoria-da-cidade-solicitada, #cidadao-que-quer-melhorar-a-cidade{
+	padding: 20px 0px 0px 0px;
+}
+
