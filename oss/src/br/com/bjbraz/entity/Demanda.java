@@ -98,5 +98,13 @@ public class Demanda {
 		
 		return null;
 	}
+
+	@Override
+	public String toString() {
+		return "{ \"name\":\"" + id + "\", \"descricao\":\"" + descricao + "\", \"titulo\":\"" + titulo + "\", \"endereco\":\"" + endereco
+				+ "\", \"latitude\":" + latitude + ", \"longitude\":" + longitude + ", \"tipo\":\"" + tipo + "\" }";
+	}
+	
+	
 	
 }

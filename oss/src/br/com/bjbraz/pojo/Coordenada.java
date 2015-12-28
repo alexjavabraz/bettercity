@@ -3,9 +3,16 @@ package br.com.bjbraz.pojo;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Coordenada {
 	
+	 @XmlElement
 	private double latitude;
+	 
+	 @XmlElement
 	private double longitude;
 
 	private DecimalFormat format;

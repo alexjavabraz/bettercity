@@ -35,7 +35,7 @@ html{
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   /*font-family: 'Cookie', cursive;*/
-  /*font:14px/1.5 Arial, Helvetica, sans-serif;*/
+  font:14px/1.5 Arial, Helvetica, sans-serif;
   color: #333;
   text-shadow: 0 1px 0 #fff;
 }
@@ -147,7 +147,7 @@ section p {
 
 @media screen and (max-width: 767px) {
 	header h1{
-		font-size: 70px;
+		font-size: 50px;
 	}
 		
   header nav {
@@ -272,7 +272,7 @@ section p {
 	margin: 0px 0px 0px 0px;
 	padding: 0;
 	width: 50%;
-	height: 185px;
+	height: 385px;
 	background-color: #CCC;
 }
 
@@ -528,7 +528,7 @@ section p {
 .signwall_formulario h1 {
 	color: #FFF;
 	font-size: 64px;
-	font-family: 'Cookie', cursive;
+/* 	font-family: 'Cookie', cursive; */
 	font-weight: normal;
 	line-height: 1;
 	text-shadow: 0 3px 0 rgba(0,0,0,0.1);
@@ -646,7 +646,7 @@ section p {
 		    margin:13px 0px 0px 0px;
 		}
 		
-		.existe-um-problema-a-ser-resolvido-na-cidade{
+		.solicitacao-de-melhoria-na-cidade{
 			background-position: -898px -290px;
 			width: 32px;
 			height: 40px;
@@ -710,7 +710,7 @@ section p {
 }
 
 #melhoria-da-cidade-solicitada{
-    margin: -187px 4px 4px 474px;
+    margin: -379px 4px 4px 51%;
 }
 
 #detalhe-do-problema{
@@ -718,12 +718,23 @@ section p {
 }
 
 #fotos-do-problema-da-cidade{
-    padding: 35px 0px 0px 0px;
-    width: 50%;
+    padding: 125px 0px 0px 0px;
+    width: 1o0%;
 	height: 185px;
 }
 
 #detalhe-do-problema,  #melhoria-da-cidade-solicitada, #cidadao-que-quer-melhorar-a-cidade{
-	padding: 20px 0px 0px 0px;
+	padding: 20px -1px 0px 0px;
 }
 
+.texto-detalhe-do-problema{
+	padding: 15px 0px 0px 0px;
+	line-height: 110%;
+}
+
+#acoes-detalhe-do-problema-compartilhar{
+    padding: 2px 2px 2px 50%;
+    margin: 0px 0px 0px 0px;
+    width: 200px;
+    height: 170px;
+}

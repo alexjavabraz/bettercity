@@ -32,7 +32,7 @@
       
       function criaString(title, address, detail, id){
     	  
-    	  return '	<div id='+id+' class="form">'+
+    	  return '	<form name="frm'+id+'" action="detalhe-demanda.html"><div id='+id+' class="form">'+
 				'	<nav class="" id='+id+'>'+
 				'	<a id="'+id+'" class="melhorar-minha-cidade-opcao-selecionada">Problema</a>'+
 				'	<a id="'+id+'" class="projects">Informação</a>'+
@@ -40,29 +40,109 @@
 				'	<a id="'+id+'" put_before_onClick="this.className=\'melhorar-minha-cidade-opcao-selecionada\'" class="contact">Outro</a>'+
 				'	</nav>'+
 				'	<div class="formulario">'+
-				'   <input type="hidden" id="formulario_lat'+id+'" value=>'+
+				'   <input type="hidden" name="id"  id="formulario_lat'+id+'" value="'+id+'">'+
 				'   <input type="hidden" id="formulario_long'+id+'" value=>'+
 				'	<div>'+
 				'    <input type="text" class="formulario_input" id="formulario_titulo'+id+'" value="'+title+'" readonly /></div>'+
 				'	<div>'+
 				'   <textarea id="formulario_descricao'+id+'" class="formulario_textarea" maxlength="500" cols="50" rows="4">"'+detail+'"</textarea>'+
 				'   </div>'+
-				'	<div><input type="text" id="formulario_endereco'+id+'" class="formulario_input" name="endereco" value="'+address+'" readonly /></div>'+
-				'	<div class="formulario_div_imagem"><img src="assets/images/icos/photo.png" class="formulario_imagem" id="formulario_imagem_'+id+'" onClick="insertDemanda('+id+')" class="formulario_button"/></div>'+
-				'	<div class="formulario_div_btn"><button class="btn" onClick="insertDemanda('+id+')" />Detalhe</div>'+
-				'	</div>';
+				'	<div><input type="text" id="formulario_endereco'+id+'" class="formulario_input" value="'+address+'" readonly /></div>'+
+				'	<div class="formulario_div_imagem"><img src="assets/images/icos/photo.png" class="formulario_imagem" id="formulario_imagem_'+id+'" onClick="enviarParaDetalhe('+id+');" class="formulario_button"/></div>'+
+				'	<div class="formulario_div_btn"><button class="btn" />Ver detalhe</div>'+
+				'	</div></form>';
+    	  
+      }
+      
+      function enviarParaDetalhe(id){
     	  
       }
       
       function initialize2() {
     	  /*FB.getLoginStatus();*/
     	  
+    	  var titulo = '';
+		  var descricao = '';
+		  var endereco = '';
+		  var alatitude = '';
+		  var alongitude = '';
+		  var tipo = '';
+		  
           map = new google.maps.Map(document.getElementById('map-problema-apontado'), {
-            zoom: 20,
-            center: new google.maps.LatLng(-23.6057502,-46.9178099),
-            mapTypeId: google.maps.MapTypeId.SATELLITE
-             
-          });
+              zoom: 17,
+              center: new google.maps.LatLng(-23.548466,-46.6332475),
+              mapTypeId: google.maps.MapTypeId.SATELLITE,
+              zoomControlOptions : {
+                  style : google.maps.ZoomControlStyle.SMALL
+              }
+            });		  
+    	  
+          var QueryString = function () {
+    		  var query_string = {};
+    		  var query = window.location.search.substring(1);
+    		  var vars = query.split("&");
+    		  for (var i=0;i<vars.length;i++) {
+    		    var pair = vars[i].split("=");
+    		    if (typeof query_string[pair[0]] === "undefined") {
+    		      query_string[pair[0]] = decodeURIComponent(pair[1]);
+    		    } else if (typeof query_string[pair[0]] === "string") {
+    		      var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+    		      query_string[pair[0]] = arr;
+    		    } else {
+    		      query_string[pair[0]].push(decodeURIComponent(pair[1]));
+    		    }
+    		  } 
+    		    return query_string;
+    		}();
+    		
+    		var url = 'http://'+document.location.host+'/oss/rest/detalhe/get/'+QueryString.id;
+    		
+    		
+    		$('#compartilharDetalheDemanda').click(function(e){
+    			e.preventDefault();
+    			FB.ui({
+    			method: 'feed',
+    			name: 'Ajude a melhorar a cidade você também.',
+//    			link: 'http://localhost:8080/oss/detalhe-demanda.html?id=0',
+    			picture: 'http://localhost:8080/oss/assets/images/melhore-a-cidade-fb.jpg',
+    			caption: 'via MelhorarMinhaCidade.com.br',
+    			description: "Com o APP MelhorarMinhaCidade você mostra o que precisa ser melhorado, para os órgãos competentes, compartilha com seus amigos, acumula pontos e concorre á prêmios. Mostre o que você quer melhorar no seu bairro, na sua cidade!",
+    			});
+    			});
+    		
+            
+            $.get( url, { id: QueryString.id  }, 
+  		    		function(result){
+		  		    			if (result != '') {
+								var json = JSON.parse(result);
+								titulo = json.titulo;
+								descricao = json.descricao;
+								endereco = json.endereco;
+								alatitude = json.latitude;
+								alongitude = json.longitude;
+								tipo = json.tipo;
+								
+								var centralizada = new google.maps.LatLng(   parseFloat(alatitude), parseFloat(alongitude)  );
+					            
+					            map.setCenter( centralizada );
+					            
+					            new google.maps.Marker({
+	        					    position: centralizada,
+	        					    map: map,
+	        					    icon: icons['problema'].icon
+	        					});
+					            
+					            document.getElementById('titulo-do-problema-cidade').innerHTML = titulo;
+					            document.getElementById('texto-detalhe-do-problema').innerHTML = descricao;
+					            document.getElementById('data-do-problema').innerHTML = endereco;
+								
+							}
+  		    		},"text");
+            
+
+            
+            
+    		
           
       }//END INITIALIZE2
       
@@ -105,9 +185,6 @@
         				var timestamp = position.timestamp;
         				
         				if(accuracy < 50000){ //especified in meters
-        					console.log(latitude);
-        					console.log(longitude);
-        					console.log(accuracy);
 
         					localizacaoUsuario = new google.maps.Marker({
         			            position: {lat: latitude, lng: longitude},

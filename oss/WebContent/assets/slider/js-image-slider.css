@@ -87,8 +87,8 @@ a.group1-Prev, a.group1-Next
     top:0;
     user-select: none;
 }
-a.group1-Prev{background-position:0 0; left: -310px;}
-a.group1-Next {background-position:0 -150px;left:264px;}
+a.group1-Prev{background-position:0 0; left: -660px;}
+a.group1-Next {background-position:0 -150px;left:610px;}
 
 a.group1-Prev:hover{background-position:50px 0;}
 a.group1-Next:hover {background-position:50px -150px;}

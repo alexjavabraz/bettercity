@@ -21,7 +21,6 @@ public class MapResource {
     @POST
     @Consumes("text/plain")
     public void postClichedMessage(String message) {
-        // Store the message
     }
-
+    
 }

@@ -108,8 +108,7 @@ public class DemandaResource {
 		HSQLDao dao = new HSQLDao();
 		dao.adicionaDemanda(d);
 		
-		
         return "ok";
-    }	
-
+    }
+	
 }

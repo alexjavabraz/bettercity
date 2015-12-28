@@ -38,6 +38,14 @@ public class MapJson {
         }
 
     }
+    
+    public MapJson(String id) {
+        pontosDoMapa = new ArrayList<Ponto>();
+
+        HSQLDao dao = new HSQLDao();
+        pontosDoMapa = new ArrayList<Ponto>();
+
+    }
 
     public String getType() {
         return type;

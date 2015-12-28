@@ -103,6 +103,35 @@ public class HSQLDao {
 		
 		return demandas;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Demanda listarDemanda(String id) {
+		Demanda ademanda = null;
+		
+		try {
+			PreparedStatement stmt = getConnection().prepareStatement("select ID, DESCRICAO, TITULO, ENDERECO, LATITUDE, LONGITUDE from DEMANDA where ID = ? ");
+			stmt.setInt(1, Integer.parseInt(id));
+			ResultSet rs           = stmt.executeQuery();
+			
+			while(rs.next()){
+				ademanda = new Demanda();
+				ademanda.setDescricao(rs.getString("DESCRICAO"));
+				ademanda.setEndereco(rs.getString("ENDERECO"));
+				ademanda.setId(rs.getInt("ID"));
+				ademanda.setLatitude(rs.getString("LATITUDE"));
+				ademanda.setLongitude(rs.getString("LONGITUDE"));
+				ademanda.setTitulo(rs.getString("TITULO"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return ademanda;
+	}	
 
 	public Integer adicionaDemanda(Demanda d) {
 		Integer retorno = null;

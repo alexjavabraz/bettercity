@@ -1,19 +1,50 @@
 package br.com.bjbraz.pojo;
 
-public class Ponto {
+import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+public class Ponto implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2307209889475292535L;
+
+	@XmlElement
 	private String id;
+
+	@XmlElement
 	private String place;
+
+	@XmlElement
 	private String time;
+
+	@XmlElement
 	private String updated;
+
+	@XmlElement
 	private String url = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/nn00517535.geojsonp";
+
+	@XmlElement
 	private String zIndex;
+
+	@XmlElement
 	private String descricaoDoProblema;
+
+	@XmlElement
 	private String status = "automatic";
+
+	@XmlElement
 	private String type;
+
+	@XmlElement
 	private String title;
+
+	@XmlElement
 	private Coordenada coordenada;
-	
 
 	/*
 	 * {'type':'Feature','properties':{'mag':3, 'place':'Rua alga marinha,
@@ -21,23 +52,32 @@ public class Ponto {
 	 * altura do n&#250;mero 100', 'time':1446559068660,
 	 * 'updated':1446559263142, 'tz':-480,
 	 * 'url':'http://earthquake.usgs.gov/earthquakes/eventpage/nn00517535',
-	 * 'detail':'http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/nn00517535.geojsonp',
-	 * 'felt':0, 'cdi':1, 'mmi':null, 'alert':null, 'status':'automatic',
-	 * 'tsunami':0,'sig':96,'net':'nn',
-	 * 'code':'00517535','ids':',nn00517535,','sources':',nn,','types':',dyfi,general-link,general-link,geoserve,nearby-cities,origin,phase-data,','nst':17,'dmin':0.562,'rms':null,'gap':275.49,'magType':'ml',
+	 * 'detail':'http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/
+	 * nn00517535.geojsonp', 'felt':0, 'cdi':1, 'mmi':null, 'alert':null,
+	 * 'status':'automatic', 'tsunami':0,'sig':96,'net':'nn',
+	 * 'code':'00517535','ids':',nn00517535,','sources':',nn,','types':',dyfi,
+	 * general-link,general-link,geoserve,nearby-cities,origin,phase-data,','nst
+	 * ':17,'dmin':0.562,'rms':null,'gap':275.49,'magType':'ml',
 	 * 'type':'problema', 'title':'Buraco na cal&ccedil;ada'},
-	 * 'geometry':{'type':'Point','coordinates':[-23.6069171,-46.9195135,0.2]},'id':'nn00517535'},
+	 * 'geometry':{'type':'Point','coordinates':[-23.6069171,-46.9195135,0.2]},'
+	 * id':'nn00517535'},
 	 */
-
-	
 
 	@Override
 	public String toString() {
-		//return 	 "{'type':'Feature','properties':{'mag':"+zIndex+",'place':'"+descricaoDoProblema+"','time':1446559068660,'updated':1446559263142,'tz':-480,"+"'url':'"+url+"','detail':'"+url+"','felt':0,'cdi':1,'mmi':null,'alert':null,'status':'"+status+"','tsunami':0,'sig':96,'net':'nn','code':'00517535','ids':',nn00517535,','sources':',nn,','types':',dyfi,general-link,general-link,geoserve,nearby-cities,origin,phase-data,','nst':17,'dmin':0.562,'rms':null,'gap':275.49,'magType':'ml',"+ "'type':'"+type+"','title':'"+title+"'},"+ "'geometry':{'type':'Point','coordinates':["+coordenada.getLatitudeAsString()+","+coordenada.getLongitudeAsString()+"]},'id':'nn00517535'}";
-		
-		return "{'type':'Feature','properties':{'mag':"+zIndex+",'place':'"+place+"','time':1446559068660,'updated':1446559263142,'tz':-480, 'url':'','detail':'"+descricaoDoProblema+"','felt':0,'cdi':1,'mmi':null,'alert':null,      'status':'automatic','tsunami':0,'sig':96,'net':'nn','code':'00517535', 'ids':',nn00517535,','sources':',nn,','types':',dyfi,general-link,general-link,geoserve,nearby-cities,origin,phase-data,','nst':17,'dmin':0.562,'rms':null,'gap':275.49,'magType':'ml',     'type':'"+type+"',  'title':'"+title+"'},          'geometry':{'type':'Point','coordinates':["+coordenada.getLatitudeAsString()+","+coordenada.getLongitudeAsString()+",0.2]},'id':'"+id+"'}";
+		// return
+		// "{'type':'Feature','properties':{'mag':"+zIndex+",'place':'"+descricaoDoProblema+"','time':1446559068660,'updated':1446559263142,'tz':-480,"+"'url':'"+url+"','detail':'"+url+"','felt':0,'cdi':1,'mmi':null,'alert':null,'status':'"+status+"','tsunami':0,'sig':96,'net':'nn','code':'00517535','ids':',nn00517535,','sources':',nn,','types':',dyfi,general-link,general-link,geoserve,nearby-cities,origin,phase-data,','nst':17,'dmin':0.562,'rms':null,'gap':275.49,'magType':'ml',"+
+		// "'type':'"+type+"','title':'"+title+"'},"+
+		// "'geometry':{'type':'Point','coordinates':["+coordenada.getLatitudeAsString()+","+coordenada.getLongitudeAsString()+"]},'id':'nn00517535'}";
+
+		return "{'type':'Feature','properties':{'mag':" + zIndex + ",'place':'" + place
+				+ "','time':1446559068660,'updated':1446559263142,'tz':-480, 'url':'','detail':'" + descricaoDoProblema
+				+ "','felt':0,'cdi':1,'mmi':null,'alert':null,      'status':'automatic','tsunami':0,'sig':96,'net':'nn','code':'00517535', 'ids':',nn00517535,','sources':',nn,','types':',dyfi,general-link,general-link,geoserve,nearby-cities,origin,phase-data,','nst':17,'dmin':0.562,'rms':null,'gap':275.49,'magType':'ml',     'type':'"
+				+ type + "',  'title':'" + title + "'},          'geometry':{'type':'Point','coordinates':["
+				+ coordenada.getLatitudeAsString() + "," + coordenada.getLongitudeAsString() + ",0.2]},'id':'" + id
+				+ "'}";
 	}
-	
+
 	public String getPlace() {
 		return place;
 	}
@@ -122,8 +162,7 @@ public class Ponto {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((coordenada == null) ? 0 : coordenada.hashCode());
+		result = prime * result + ((coordenada == null) ? 0 : coordenada.hashCode());
 		result = prime * result + ((descricaoDoProblema == null) ? 0 : descricaoDoProblema.hashCode());
 		result = prime * result + ((place == null) ? 0 : place.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
@@ -213,6 +252,5 @@ public class Ponto {
 	public void setDescricaoDoProblema(String descricaoDoProblema) {
 		this.descricaoDoProblema = descricaoDoProblema;
 	}
-	
 
 }
