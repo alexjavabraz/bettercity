@@ -469,7 +469,7 @@ section p {
 }
 
 #pw-mask{
-    background: url("http://localhost:8080/oss/assets/images/icos/overlay-preto.png") repeat;
+    background: url("http://www.cotiamelhor.com.br/assets/images/icos/overlay-preto.png") repeat;
     display: none;
     left: 0;
     min-height: 3000px;
@@ -587,7 +587,7 @@ section p {
 }
 
 		.todos-juntos-por-uma-cidade-melhor, .problemas-da-cidade, .googleplay, .applestore, .melhorou-a-cidade, .obra-em-andamento-para-melhorar-a-cidade, .melhoria-em-analise, .solicitacao-de-melhoria-na-cidade {
-			background: url(http://localhost:8080/oss/assets/images/melhorar-minha-cidade.jpg) no-repeat;
+			background: url(http://www.cotiamelhor.com.br/assets/images/melhorar-minha-cidade.jpg) no-repeat;
 		}
 		
 		.todos-juntos-por-uma-cidade-melhor{
@@ -656,7 +656,7 @@ section p {
 @media screen and (min-width: 801px){
 	#signwall {
 	    width: 460px;
-	    background: url('http://localhost:8080/oss/assets/images/icos/city.jpg') no-repeat #fff;
+	    background: url('http://www.cotiamelhor.com.br/assets/images/icos/city.jpg') no-repeat #fff;
 	    border: 1px solid #ddd;
 	    z-index: 9999999999;
 	    height: 330px;
@@ -671,7 +671,7 @@ section p {
 @media screen and (min-width: 768px) and (max-width: 800px){
 	#signwall {
     width: 460px;
-    background: url('http://localhost:8080/oss/assets/images/icos/city.jpg') no-repeat #fff;
+    background: url('http://www.cotiamelhor.com.br/assets/images/icos/city.jpg') no-repeat #fff;
     border: 1px solid #ddd;
     z-index: 9999999999;
     height: 330px;
@@ -687,7 +687,7 @@ section p {
 @media screen and (max-width: 767px) {
 	#signwall {
 		position: absolute;
-		background: url('http://localhost:8080/oss/assets/images/icos/city.jpg') no-repeat #fff;
+		background: url('http://www.cotiamelhor.com.br/assets/images/icos/city.jpg') no-repeat #fff;
     	border: 1px solid #ddd;
 		z-index: 9999999999;
 	    margin: 0px;

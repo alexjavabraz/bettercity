@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+
+  <head>
+    <title>Melhorar Minha Cidade - Aplicativo Social</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    
+    <meta name="description" content="O MelhorarMinhaCidade e uma plataforma para que o cidadao mostre os problemas da cidade, solicite melhorias, de sugestoes e concorra a premios. Solu&#231;&#227;o tecnológica para quest&#245;es de relevância p&#250;blica">
+    <meta name="keywords" content="social, cidadania, melhorar minha cidade, cidadão, Melhorar Minha Cidade" />
+
+	<meta property="og:url"                content="http://www.cotiamelhor.com.br/detalhe-demanda.html?id=1" />
+	<meta property="og:type"               content="website" />
+	<meta property="og:title" 			   content="Faça sua cidade melhor, exerça a cidadania" />
+	<meta property="og:image"              content="http://localhost:8080/oss/assets/images/melhore-a-cidade-fb.jpg" />
+	
+	<meta property="og:image:width" content="600px" />
+	<meta property="og:image:height" content="315px" />
+	
+	<meta property="og:image:height" content="315px" />
+	<meta property="fb:app_id" content="443717059168243"/>
+	
+	<meta property="og:site_name" 		   content="MelhorarMinhaCidade" />
+	<meta property="og:locale" 			   content="pt_br" />
+    <meta property="og:keywords" 		   content="aplicativo social, CidadeMelhor, melhorar minha cidade " />
+    <meta property="og:description" 	   content="Mostre o que você quer melhorar no seu bairro, na sua cidade!" />
+    <link rel="alternate" href="http://69.64.52.116:8181" hreflang="pt-br" />
+    
+    <link rel="icon" type="image/vnd.microsoft.icon" href="http://69.64.52.116:8181/assets/images/icos/favicon.ico" />
+    <link href="http://69.64.52.116:8181/assets/images/icos/favicon.ico" rel="shortcut icon">
+	<link href="http://fonts.googleapis.com/css?family=Cookie|Open+Sans:400,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css" />
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/footer.css" />
+    <link rel="stylesheet" type="text/css" href="assets/slider/js-image-slider.css" />
+    
+    <!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+    
+    <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/98712903879087123987912873091872391872093871.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3&amp;key=AIzaSyBdL1lXGAN3qc3dcbTUxCcIYai5dc5hr6c"></script>
+	
+	<script type="text/javascript" src="assets/slider/js-image-slider.js"></script>
+    
+	<script>
+	
+	google.maps.event.addDomListener(window, 'load', initialize2);
+	
+	  function statusChangeCallback(response) {
+	    console.log('statusChangeCallback');
+	    console.log(response);
+	    if (response.status === 'connected') {
+	      testAPI();
+	    } else if (response.status === 'not_authorized') {
+	    } else {
+	    }
+	  }
+
+	  function checkLoginState() {
+	    FB.getLoginStatus(function(response) {
+	      statusChangeCallback(response);
+	    });
+	  }
+
+	  window.fbAsyncInit = function() {
+	  FB.init({
+	    appId      : '443717059168243',
+	    cookie     : true,  // enable cookies to allow the server to access 
+	                        // the session
+	    xfbml      : true,  // parse social plugins on this page
+	    version    : 'v2.2' // use version 2.2
+	  });
+
+	  FB.getLoginStatus(function(response) {
+	    statusChangeCallback(response);
+	  });
+
+	  };
+
+	  (function(d, s, id) {
+	    var js, fjs = d.getElementsByTagName(s)[0];
+	    if (d.getElementById(id)) return;
+	    js = d.createElement(s); js.id = id;
+	    js.src = "//connect.facebook.net/pt_BR/sdk.js";
+	    fjs.parentNode.insertBefore(js, fjs);
+	  }(document, 'script', 'facebook-jssdk'));
+
+	  function testAPI() {
+	    console.log('Welcome!  Fetching your information.... ');
+	    FB.api('/me?fields=name,first_name,last_name,email,picture,id,birthday,gender,locale, religion, hometown', function(response) {
+	      console.log('Successful login for: ' + response.name);
+	      console.log('name, ' + response.name + '.');
+	      console.log('email, ' + response.email + '.');
+	      console.log('first_name, ' + response.first_name + '.');
+	      console.log('last_name, ' + response.last_name + '.');
+	      console.log('id, ' + response.id + '.');
+	      console.log('birthday, ' + response.birthday + '.');
+	      console.log('Gender, ' + response.gender + '.');
+	      console.log('locale, ' + response.locale + '.');
+	      console.log('Religion, ' + response.religion + '.');
+	      
+	      pictureUser = response.picture.data.url;
+    	  userLogged = response;
+	      
+	      if('undefined' == pictureUser){
+	    	  pictureUser = iconBase + 'voce-esta-aqui.png';
+	      }else{
+	    	  localizacaoUsuario.setIcon(pictureUser);
+	      }
+	      
+	      insertCliente(response.name,response.first_name,response.last_name,response.email,response.id,response.birthday,response.gender,response.locale, response.religion);
+	      
+	      if(marcacaoDoUsuarioNaoLogado != ''){
+	    	  amarker.setMap(null);
+	      }
+	      
+	    });
+	  }
+	  
+	</script>
+        
+  </head>
+  <body>
+  <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.5&appId=443717059168243";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-70802078-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+ 	 <input id="pac-input" class="controls" type="text" placeholder="Buscar pelo endereço">
+    <header>
+      <h1 class="float-l">
+        Melhorar minha cidade
+      </h1>
+      
+      <input type="checkbox" id="control-nav" />
+      <label for="control-nav" class="control-nav"></label>
+      <label for="control-nav" class="control-nav-close"></label>
+
+      <nav class="float-r">
+        <ul class="list-auto">
+          <li>
+            <a href="index.html#CotiaMelhor" title="Cidade Melhor, Cotia Melhor">O App</a>
+          </li>
+          <li>
+            <a href="index.html#Cotia_Melhor_como_funciona" title="Como funciona o Cidade Melhor">Como funciona?</a>
+          </li>
+          <li>
+            <a href="index.html#Cotia_Melhor_Ja" title="Comece a melhorar a cidade Já">Melhore a Cidade j&#225;</a>
+          </li>
+          <li>
+            <a href="index.html#mapaProblemas" title="Confira no mapa">Onde precisa melhorar</a>
+          </li>
+          <li>
+            <a href="#" id="login" title="Comece agora mesmo a melhorar a Cidade">Acessar</a>
+          </li>          
+        </ul>
+      </nav>
+    </header>
+    
+    <section id="principal">
+    
+<!-- 	    <img src="assets/images/alex.jpg" id="cidadao-que-quer-melhorar-a-cidade" width="200px" height="150px" alt="Juntos para melhorar nossa cidade" /> -->
+		
+		<div id="mapa-do-problema">
+			<div id="map-problema-apontado"></div>
+		</div>
+		<div id="melhoria-da-cidade-solicitada">
+		    <div id="titulo-do-problema">
+		    	<h1 id="titulo-do-problema-cidade">Falta de lombada na Estrada do Capuava</h1>
+		    </div>
+		    <div id="data-do-problema">
+		    	
+		    </div>
+		    <div id="detalhe-do-problema">
+		    	<h2 class="texto-detalhe-do-problema" id="texto-detalhe-do-problema">Está faltando uma lombada aqui na Estrada do capuava, altura do número 2451, risco de acidentes, peço aos responsáveis verificar.
+		    	</h2>
+		    </div>
+	    </div>	
+	    <div id="acoes-detalhe-do-problema-compartilhar">
+		    	<img src="assets/images/botoes/botaoavaliar.png" id="compartilharDetalheDemanda" style="width:550px;heigth:88px"></img><br/>
+	    </div>
+	    <div id="fotos-do-problema-da-cidade">
+	    
+	    <div id="sliderFrame">
+	        <div id="slider">
+	            <img src="assets/slider/slider-1.jpg" width="600px" height="400px" />
+	            <img src="assets/slider/slider-2.jpg" width="600px" height="400px" />
+	            <img src="assets/slider/slider-3.jpg" width="600px" height="400px" />
+	            <img src="assets/slider/slider-4.jpg" width="600px" height="400px" />
+	        </div>
+	        <div class="group1-Wrapper">
+	            <a onclick="imageSlider.previous()" class="group1-Prev"></a>
+	            <a onclick="imageSlider.next()" class="group1-Next"></a>
+	        </div>
+	        <div style="text-align:center;padding:20px;z-index:20;">
+	            <a onclick="imageSlider.previous()" class="group2-Prev"></a>
+	            <a id='auto' onclick="switchAutoAdvance()"></a>
+	            <a onclick="imageSlider.next()" class="group2-Next"></a>
+	        </div>
+    	</div>
+	    
+	    </div>    
+    
+    </section>
+
+		<footer id="contato" class="footer-distributed" style="margin-top: 240px;">
+
+			<div class="footer-left">
+
+				<h3>Melhorar minha Cidade</h3><div class="fb-like" data-action="like"></div>
+
+				<p class="footer-links">
+					<a href="#CotiaMelhor">O CidadeMelhor</a>
+					·
+					<a href="#Cotia_Melhor_como_funciona">Como Funciona?</a>
+					·
+					<a href="#Cotia_Melhor_Ja">Melhore a Cidade já</a>
+					·
+					<a href="#mapaProblemas">Onde Precisamos Melhorar</a>
+				</p>
+
+				<div class="footer-icons">
+
+					<a href="#" class="fa-facebook"></a>
+					<a href="#" class="fa-google"></a>
+					<a href="#" class="fa-linkedin"></a>
+					<a href="#" class="fa-github"></a>
+
+				</div>
+				<p class="footer-company-name"><a href='www.bjbraz.com.br' style="text-decoration: none;color: aliceblue;">BJBraz Sistemas &copy; 2015</a></p>
+			</div>
+
+			<div class="footer-right">
+
+				<form name="form1" onsubmit="return false;" method="post">
+					<input type="text" id="email" name="email" placeholder="Digite seu E-mail" />
+					<textarea name="message" id="message" placeholder="Nos diga o que você achou do CotiaMelhor?"></textarea>
+					<button id="enviarContatos" onclick="enviarContato()">Enviar</button>
+				</form>
+
+			</div>
+			
+		</footer>
+		 
+    <script type="text/javascript">
+        //The following script is for the group 2 navigation buttons.
+        function switchAutoAdvance() {
+            imageSlider.switchAuto();
+            switchPlayPauseClass();
+        }
+        function switchPlayPauseClass() {
+            var auto = document.getElementById('auto');
+            var isAutoPlay = imageSlider.getAuto();
+            auto.className = isAutoPlay ? "group2-Pause" : "group2-Play";
+            auto.title = isAutoPlay ? "Pause" : "Play";
+        }
+        switchPlayPauseClass();
+    </script>
+  </body>
+</html>
