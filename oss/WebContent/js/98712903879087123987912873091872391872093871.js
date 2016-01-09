@@ -3,12 +3,12 @@
       var amarker = '';
       var userLogged = '';
       var marcacaoDoUsuarioNaoLogado = '';
-//      var websocket = new WebSocket("ws://" + document.location.host+ "/oss/MyWebSocketServlet?username=mapa");
       var address = '';
       var iconBase = 'http://localhost:8080/oss/assets/images/icos/';
       var localizacaoUsuario = '';
       var latitude;
       var longitude;
+      var itens = [];
       
       var icons = {
     	problema: {
@@ -335,10 +335,10 @@
     	  
     	  return '	<div id='+id+' class="form">'+
 				'	<nav class="" id='+id+'>'+
-				'	<a href="'+id+'" onClick="document.getElementById('+id+').className=\'home\'"     class="home"     ng-click="ativo=\'home\'">Problema</a>'+
-				'	<a href="#'+id+'" onClick="document.getElementById('+id+').className=\'projects\'" class="projects" ng-click="ativo=\'projects\'">Informação</a>'+
-				'	<a href="#'+id+'" onClick="document.getElementById('+id+').className=\'services\'" class="services" ng-click="ativo=\'services\'">Sugestão</a>'+
-				'	<a href="#'+id+'" onClick="document.getElementById('+id+').className=\'contact\'"  class="contact"  ng-click="ativo=\'contact\'">Outro</a>'+
+				'	<a  id="'+id+'a" onClick="select("'+id+'a", "'+id+'b", "'+id+'c", "'+id+'d");" class="home" >Problema</a>'+
+				'	<a  id="'+id+'b" onClick="select("'+id+'b", "'+id+'a", "'+id+'c", "'+id+'d");" class="projects">Informação</a>'+
+				'	<a  id="'+id+'c" onClick="select("'+id+'c", "'+id+'a", "'+id+'b", "'+id+'d");" class="services">Sugestão</a>'+
+				'	<a  id="'+id+'d" onClick="select("'+id+'d", "'+id+'a", "'+id+'c", "'+id+'b");" class="contact">Outro</a>'+
 				'	</nav>'+
 				'	<div class="formulario"><input type="hidden" id="formulario_lat'+id+'" value="'+lat+'"><input type="hidden" id="formulario_long'+id+'" value="'+lng+'">'+
 				'	<div><input type="text" class="formulario_input" id="formulario_titulo'+id+'" required placeholder="Qual o problema?" /></div>'+
@@ -358,8 +358,10 @@
     	  }, function (results, status) {
     	    if (status === google.maps.GeocoderStatus.OK) {
     	      if (results[1]) {
-    	        document.getElementById(address).value=results[0].formatted_address;
-    	        console.log(results[0].formatted_address);
+    	    	if(document.getElementById(address) != null){
+    	        	document.getElementById(address).value=results[0].formatted_address;
+    	        	console.log(results[0].formatted_address);
+    	      	}
     	      } else {
     	        console.log('No results found');
     	      }
@@ -373,31 +375,31 @@
       // Loop through the results array and place a marker for each
       // set of coordinates.
       window.eqfeed_callback = function(results) {
-    	  
     	  console.log('calling callback... ' + results.features.length);
     	  
         for (var i = 0; i < results.features.length; i++) {
           var coords = results.features[i].geometry.coordinates;
           var latLng = new google.maps.LatLng(coords[0],coords[1]);
           var title  = results.features[i].properties['title'];
-          var alabel = results.features[i].properties['place'];
-          var zIndex = results.features[i].properties['mag'];
-          var detail = results.features[i].properties['detail'];
-          var id 	 = results.features[i].id;
+          var place  = results.features[i].properties['place'];
+          var zIndex = parseInt(results.features[i].id); //results.features[i].properties['mag'];
+          var label  = results.features[i].properties['detail'];
+          var iconType 	 = results.features[i].properties['type'];
+          itens[zIndex] = place;
           
           new google.maps.Marker({
             position: latLng,
             map: map,
-            title: results.features[i].properties['title'],
-            label: results.features[i].properties['detail'],
-            icon: icons[results.features[i].properties['type']].icon,
+            title: title,
+            label: label,
+            icon: icons[iconType].icon,
             zIndex: zIndex,
             optimized: true,
             draggable: false
           }).addListener('click', function() {
         	  
         	  	new google.maps.InfoWindow({
-        		    content: criaString( this.title, alabel, detail, id)
+        		    content: criaString( this.title, itens[this.zIndex], this.label, this.zIndex)
         		  }).open(map, this);
           });
           
@@ -439,7 +441,7 @@
 		    
 		    $("#login").click(function(){
 		    			console.log($("#login").html());
-		    			
+		    			loginFaceBook();
 				    	if($("#login").html() == 'Acessar'){
 				    			$("#pw-mask").show(timeout)
 				    	    	$("#signwall").show(timeout);
@@ -479,7 +481,50 @@
 		    message.value= '';
 		}	    
 	    
-	    
+	    // Here we run a very simple test of the Graph API after login is
+		  // successful.  See statusChangeCallback() for when this call is made.
+		  function loginFaceBook() {
+		    console.log('Welcome!  Fetching your information.... ');
+		    FB.api('/me?fields=name,first_name,last_name,email,picture,id,birthday,gender,locale, religion, hometown', function(response) {
+		      console.log('Successful login for: ' + response.name);
+		      console.log('name, ' + response.name + '.');
+		      console.log('email, ' + response.email + '.');
+		      console.log('first_name, ' + response.first_name + '.');
+		      console.log('last_name, ' + response.last_name + '.');
+		      console.log('id, ' + response.id + '.');
+		      console.log('birthday, ' + response.birthday + '.');
+		      console.log('Gender, ' + response.gender + '.');
+		      console.log('locale, ' + response.locale + '.');
+		      console.log('Religion, ' + response.religion + '.');
+		      
+		      pictureUser = response.picture.data.url;
+	    	  userLogged = response;
+		      
+		      if('undefined' == pictureUser){
+		    	  pictureUser = iconBase + 'voce-esta-aqui.png';
+		      }else{
+		    	  localizacaoUsuario.setIcon(pictureUser);
+		      }
+		      
+		      insertCliente(response.name,response.first_name,response.last_name,response.email,response.id,response.birthday,response.gender,response.locale, response.religion);
+		      
+		      document.getElementById('pw-mask').style.display='none';
+		      document.getElementById('signwall').style.display='none';
+		      document.getElementById('login').innerHTML = response.name;
+		      
+		      if(marcacaoDoUsuarioNaoLogado != ''){
+		    	  amarker.setMap(null);
+		      }
+		      
+		    });
+		  }//end loginFaceBook
+		  
+		  function select(a, b, c, d){
+			  document.getElementById(a).className='melhorar-minha-cidade-opcao-selecionada';
+			  document.getElementById(b).className='home';
+			  document.getElementById(c).className='home';
+			  document.getElementById(d).className='home';
+		  }
 	         
 	    
 	    

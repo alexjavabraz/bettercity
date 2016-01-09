@@ -115,6 +115,7 @@ section img {
 
 section p {
   padding: 10px 0 20px;
+  display: inline;
 }
   
 
@@ -737,4 +738,12 @@ section p {
     margin: 0px 0px 0px 0px;
     width: 200px;
     height: 170px;
+}
+
+
+section h3{
+	margin: 0px;
+    padding: 0px;
+    font-size: 20px;
+    display: inline;
 }
