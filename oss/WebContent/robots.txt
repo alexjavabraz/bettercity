@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /IvotXkG6yMUvXxXZremap_XpWvE.html
+Disallow: /google7c079a33033b56c6.html

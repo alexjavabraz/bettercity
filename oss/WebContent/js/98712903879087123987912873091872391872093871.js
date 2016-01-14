@@ -416,7 +416,7 @@
     		var latitude  = document.getElementById('formulario_lat'+id).value;
     		var longitude = document.getElementById('formulario_long'+id).value;
 			
-			var url = 'http://'+document.location.host+"/rest/demanda/ins";
+			var url = 'http://'+document.location.host+"/oss/rest/demanda/ins";
 			
 			//websocket.send('<br/><br/>Criado o ponto no mapa: <b>Titulo</b> '+titulo+' <b>Descricao:</b> '+descricao+' <b>Endereço:</b> '+endereco+' <b>Latitude:</b> '+latitude+' <b>Longitude:</b> '+ longitude);
 			

@@ -1,7 +1,7 @@
 package br.com.bjbraz.entity;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,8 +9,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import org.apache.log4j.Logger;
-import org.hsqldb.rights.User;
 
 import br.com.bjbraz.pojo.Ponto;
 
@@ -26,13 +30,12 @@ public class HSQLDao {
 	 */
 	protected static final Logger LOGGER = Logger.getLogger(HSQLDao.class);
 	
-	private static Connection c;
 	
 	/**
 	 * 
 	 */
 	public HSQLDao(){
-		criarTabela();
+//		criarTabela();
 	}
 	
 	/**
@@ -40,11 +43,25 @@ public class HSQLDao {
 	 */
 	public Connection getConnection(){
 		try {
-			Class.forName("org.hsqldb.jdbcDriver" );
-			if(c == null || c.isClosed()){
-				c = DriverManager.getConnection("jdbc:hsqldb:mem:demandas", "SA", "");
-			}
-			return c;
+			
+			Connection connection = null;
+		    try {
+		      InitialContext context = new InitialContext();
+		      
+		      Context envCtx = (Context) context.lookup("java:comp/env");
+		      
+		      DataSource dataSource = (DataSource) envCtx.lookup("jdbc/MySQLDB");
+		      connection = dataSource.getConnection();
+		      
+		      
+		    } catch (NamingException e) {
+		      e.printStackTrace();
+		    } catch (SQLException e) {
+		      e.printStackTrace();
+		    }
+		    return connection;
+			
+			
 		} catch (Exception e) {
 			LOGGER.error(e.getMessage());
 		}
@@ -78,7 +95,7 @@ public class HSQLDao {
 		List<Ponto> demandas = new ArrayList<Ponto>();
 		
 		try {
-			PreparedStatement stmt = getConnection().prepareStatement("select ID, DESCRICAO, TITULO, ENDERECO, LATITUDE, LONGITUDE from DEMANDA");
+			PreparedStatement stmt = getConnection().prepareStatement("select ID_DEMANDA, DESCRICAO, TITULO, ENDERECO, LATITUDE, LONGITUDE from tb_demanda");
 			ResultSet rs           = stmt.executeQuery();
 			Demanda demanda        = null;
 			
@@ -86,7 +103,7 @@ public class HSQLDao {
 				demanda = new Demanda();
 				demanda.setDescricao(rs.getString("DESCRICAO"));
 				demanda.setEndereco(rs.getString("ENDERECO"));
-				demanda.setId(rs.getInt("ID"));
+				demanda.setId(rs.getInt("ID_DEMANDA"));
 				demanda.setLatitude(rs.getString("LATITUDE"));
 				demanda.setLongitude(rs.getString("LONGITUDE"));
 				demanda.setTitulo(rs.getString("TITULO"));
@@ -112,7 +129,7 @@ public class HSQLDao {
 		Demanda ademanda = null;
 		
 		try {
-			PreparedStatement stmt = getConnection().prepareStatement("select ID, DESCRICAO, TITULO, ENDERECO, LATITUDE, LONGITUDE from DEMANDA where ID = ? ");
+			PreparedStatement stmt = getConnection().prepareStatement("select ID_DEMANDA, DESCRICAO, TITULO, ENDERECO, LATITUDE, LONGITUDE from TB_DEMANDA where ID_DEMANDA = ? ");
 			stmt.setInt(1, Integer.parseInt(id));
 			ResultSet rs           = stmt.executeQuery();
 			
@@ -136,14 +153,19 @@ public class HSQLDao {
 	public Integer adicionaDemanda(Demanda d) {
 		Integer retorno = null;
 		PreparedStatement stmt;
+		Date hoje = new Date(new java.util.Date().getTime());
+
 		try {
-			stmt = getConnection().prepareStatement("INSERT INTO DEMANDA(DESCRICAO, TITULO, ENDERECO, LATITUDE, LONGITUDE) "
-					+ "VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			stmt = getConnection().prepareStatement("INSERT INTO tb_demanda(DESCRICAO, TITULO, ENDERECO, LATITUDE, LONGITUDE, DH_INCLUSAO, DH_ALTERACAO, ID_STATUS) "
+					+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, d.getDescricao());
 			stmt.setString(2, d.getTitulo());
 			stmt.setString(3, d.getEndereco());
 			stmt.setString(4, d.getLatitude());
 			stmt.setString(5, d.getLongitude());
+			stmt.setDate(6, hoje);
+			stmt.setDate(7, hoje);
+			stmt.setInt(8, 0);
 			stmt.executeUpdate();
 			
 			ResultSet rs = stmt.getGeneratedKeys();
@@ -162,13 +184,10 @@ public class HSQLDao {
 	public void adicionaCliente(ContatoCliente c) {
 		PreparedStatement stmt;
 		try {
-			stmt = getConnection().prepareStatement("INSERT INTO CLIENTE(NOME, EMAIL, DESCRICAO, LATITUDE, LONGITUDE) "
-					+ "VALUES (?, ?, ?, ?, ?)");
-			stmt.setString(1, c.getNome());
-			stmt.setString(2, c.getEmail());
-			stmt.setString(3, c.getDescricao());
-			stmt.setString(4, c.getLatitude());
-			stmt.setString(5, c.getLongitude());
+			stmt = getConnection().prepareStatement("INSERT INTO tb_contato(email_user, txt_descricao) "
+					+ "VALUES (?, ?)");
+			stmt.setString(1, c.getNome() +  " " + c.getEmail() );
+			stmt.setString(2, c.getDescricao());
 			stmt.execute();
 			
 		} catch (SQLException e) {
@@ -180,7 +199,7 @@ public class HSQLDao {
 	public void adicionarUsuario(Usuario user) {
 		PreparedStatement stmt;
 		try {
-			stmt = getConnection().prepareStatement("INSERT INTO usuario(NOME, EMAIL, NASCIMENTO, SEXO, LOCAL, RELIGIAO, ID_SOCIAL) "
+			stmt = getConnection().prepareStatement("INSERT INTO tb_usuario(nm_usuario, email_usuario, data_nascimento, SEXO, LOCAL, RELIGIAO, ID_SOCIAL) "
 					+ "VALUES (?, ?, ?, ?, ?, ?)");
 			stmt.setString(1, user.getNome());
 			stmt.setString(2, user.getEmail());
