@@ -57,10 +57,15 @@ public class DemandaResource {
 	 * @return
 	 */
 	@POST
-	@Path("/nova/{id}/{lat}/{long}/{descricao}/{titulo}")
+	@Path("/nova/{id}/{lat}/{lon}/{descricao}/{titulo}/{endereco}")
 	@Consumes(MediaType.APPLICATION_OCTET_STREAM)
-	public String uploadFoto(@PathParam("lon") String lon, @PathParam("lat") String lat, @PathParam("id") String id, @PathParam("descricao") String descricao, @PathParam("titulo") String titulo, final InputStream in){
-		String idDemanda = salvarDemandaNoBancoDeDados(titulo, id, lat, lon, descricao);
+	public String uploadFoto(@PathParam("lat") String lat, @PathParam("lon") String lon, @PathParam("id") String id, @PathParam("descricao") String descricao, @PathParam("titulo") String titulo, @PathParam("endereco") String endereco, final InputStream in){
+		String idDemanda = "";
+		
+		if(lat!= null && lon != null){
+			idDemanda = salvarDemandaNoBancoDeDados(titulo, id, lat, lon, descricao, endereco);
+		}
+		
 		return idDemanda;
 	}
 
@@ -73,11 +78,11 @@ public class DemandaResource {
 	 * @param descricao
 	 * @return
 	 */
-	private String salvarDemandaNoBancoDeDados(String titulo, String id, String latitude, String longitude, String descricao) {
+	private String salvarDemandaNoBancoDeDados(String titulo, String id, String latitude, String longitude, String descricao, String endereco) {
 		Demanda d = new Demanda();
 		d.setDescricao(descricao);
 		d.setTitulo(titulo);
-		d.setEndereco(descricao);
+		d.setEndereco(endereco);
 		d.setLatitude(latitude);
 		d.setLongitude(longitude);
 		HSQLDao dao = new HSQLDao();
