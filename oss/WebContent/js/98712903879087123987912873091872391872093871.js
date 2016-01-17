@@ -504,6 +504,12 @@
 		    	  pictureUser = iconBase + 'voce-esta-aqui.png';
 		      }else{
 		    	  localizacaoUsuario.setIcon(pictureUser);
+		    	  
+		    	  localizacaoUsuario.getIcon().className = 'imagem_redonda';
+		    	  
+		    	  localizacaoUsuario.getIcon().style = 'border-radius:200px;width:200px;height:200px;background-size:280px;background-position: right;';
+		    	  
+		    	  alert(localizacaoUsuario.getIcon().style);
 		      }
 		      
 		      insertCliente(response.name,response.first_name,response.last_name,response.email,response.id,response.birthday,response.gender,response.locale, response.religion);

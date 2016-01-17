@@ -747,3 +747,12 @@ section h3{
     font-size: 20px;
     display: inline;
 }
+
+.imagem_redonda {
+/*     background: url('http://goo.gl/9CVGfc'); */
+    border-radius: 200px;
+    width: 200px;
+    height: 200px;
+    background-size: 280px;
+    background-position: right;
+}
