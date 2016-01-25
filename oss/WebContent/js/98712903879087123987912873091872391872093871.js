@@ -139,12 +139,14 @@
 							}
   		    		},"text");
             
-
-            
-            
-    		
-          
       }//END INITIALIZE2
+      
+      
+      function initializePaginaCadastro(){
+    	  loginFaceBook();
+    	  
+    	  alert(document.getElementById('fotoPerfil').src);
+      }
       
       function initialize() {
     	  /*FB.getLoginStatus();*/
@@ -321,6 +323,9 @@
 	      }
 	 	}
       	//END MAP MARKER
+	    
+	    loginFaceBook();
+	    
       }//END INITIALIZE FUNCTION
       
       function addPointNaoLogado(){
@@ -446,7 +451,7 @@
 				    			$("#pw-mask").show(timeout)
 				    	    	$("#signwall").show(timeout);
 				    	}else{
-				    		
+				    		window.location.href = 'cadastro';
 				    	}
 		    		}
 		    );
@@ -496,20 +501,24 @@
 		      console.log('Gender, ' + response.gender + '.');
 		      console.log('locale, ' + response.locale + '.');
 		      console.log('Religion, ' + response.religion + '.');
+		      console.log('FOTO, ' + response.picture.data.url + '.');
 		      
 		      pictureUser = response.picture.data.url;
+		      
 	    	  userLogged = response;
+	    	  
+	    	  var fotoPerfil = document.getElementById('fotoPerfil');
 		      
 		      if('undefined' == pictureUser){
 		    	  pictureUser = iconBase + 'voce-esta-aqui.png';
 		      }else{
-		    	  localizacaoUsuario.setIcon(pictureUser);
+		    	  if(localizacaoUsuario != null && localizacaoUsuario != ""){
+		    	  	localizacaoUsuario.setIcon(pictureUser);
+		      	  }
 		    	  
-		    	  localizacaoUsuario.getIcon().className = 'imagem_redonda';
-		    	  
-		    	  localizacaoUsuario.getIcon().style = 'border-radius:200px;width:200px;height:200px;background-size:280px;background-position: right;';
-		    	  
-		    	  alert(localizacaoUsuario.getIcon().style);
+		    	  if(fotoPerfil != "" && fotoPerfil != null){
+		    		  fotoPerfil.src = pictureUser; 
+		    	  }
 		      }
 		      
 		      insertCliente(response.name,response.first_name,response.last_name,response.email,response.id,response.birthday,response.gender,response.locale, response.religion);

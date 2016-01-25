@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <title>Melhorar Minha Cidade - O Cidadão faz um mundo melhor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    
+    <meta name="description" content="O MelhorarMinhaCidade e uma plataforma para que o cidadão mostre os problemas da cidade, solicite melhorias.Faça um mundo melhor. Solu&#231;&#227;o tecnológica para quest&#245;es de relevância p&#250;blica">
+    <meta name="keywords" content="social,cidadania,cidadão,Melhorar Minha Cidade" />
+
+	<meta property="og:title" content="O Cidadão faz sua cidade melhor, exerce a cidadania, e faz um mundo melhor" />
+	<meta property="fb:app_id" content="443717059168243"/>
+	
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://www.melhorarminhacidade.com.br" />
+	<meta property="og:site_name" content="MelhorarMinhaCidade" />
+	<meta property="og:locale" content="pt_br" />
+    <meta property="og:image" content="http:///www.melhorarminhacidade.com.br/images/melhore-a-cidade-fb.jpg" />
+    <meta property="og:keywords" content="aplicativo social, Melhorar Minha Cidade, melhorar minha cidade,mundo melhor, cidadão " />
+    <meta property="og:description" content="Mostre o que você quer melhorar na sua cidade! Faça um mundo melhor!" />
+    <link rel="alternate" href="http://69.64.52.116:8181" hreflang="pt-br" />
+    
+    <link rel="icon" type="image/vnd.microsoft.icon" href="http://69.64.52.116:8181/assets/images/icos/favicon.ico" />
+    <link href="http://69.64.52.116:8181/assets/images/icos/favicon.ico" rel="shortcut icon"/>
+	<link href="http://fonts.googleapis.com/css?family=Cookie|Open+Sans:400,700" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../assets/stylesheets/style.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/stylesheets/cadastro-style.css" />
+    <link rel="stylesheet" type="text/css" href="../assets/stylesheets/footer.css" />
+    
+    <!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+    
+    <script type="text/javascript" src="../js/jquery/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="../js/98712903879087123987912873091872391872093871.js"></script>
+	<script>
+	
+	
+	window.onload = function() {
+		initializePaginaCadastro();
+	};
+
+	  window.fbAsyncInit = function() {
+	  FB.init({
+	    appId      : '1641774959428289',
+	    cookie     : true, 
+	    xfbml      : true,
+	    version    : 'v2.2'
+	  });
+
+	  FB.getLoginStatus(function(response) {
+	    statusChangeCallback(response);
+	  });
+
+	  };
+
+	  (function(d, s, id) {
+	    var js, fjs = d.getElementsByTagName(s)[0];
+	    if (d.getElementById(id)) return;
+	    js = d.createElement(s); js.id = id;
+	    js.src = "//connect.facebook.net/pt_BR/sdk.js";
+	    fjs.parentNode.insertBefore(js, fjs);
+	  }(document, 'script', 'facebook-jssdk'));
+	  
+	  
+	  function statusChangeCallback(response) {
+		    console.log('statusChangeCallback');
+		    console.log(response);
+		    if (response.status === 'connected') {
+		      loginFaceBook();
+		    } else if (response.status === 'not_authorized') {
+		    }
+	  }
+	  
+	  function checkLoginState() {
+		    FB.getLoginStatus(function(response) {
+		      statusChangeCallback(response);
+		    });
+		  }
+	  
+	</script>
+        
+  </head>
+  <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.5&appId=1641774959428289";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-70802078-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    <input id="pac-input" class="controls" type="text" placeholder="Buscar pelo endereço">
+    <header>
+      <h1 class="float-l">
+        Melhorar minha cidade
+      </h1>
+      
+      <input type="checkbox" id="control-nav" />
+      <label for="control-nav" class="control-nav"></label>
+      <label for="control-nav" class="control-nav-close"></label>
+
+      <nav class="float-r">
+        <ul class="list-auto">
+          <li>
+            <a href="#MelhorarMinhaCidade" title="Cidade Melhor, Cotia Melhor">O App</a>
+          </li>
+          <li>
+            <a href="#Melhorar_Minha_Cidade_como_funciona" title="Como funciona o Cidade Melhor">Como funciona?</a>
+          </li>
+          <li>
+            <a href="#Melhorar_Minha_Cidade_Ja" title="Comece a melhorar a cidade Já">Melhore a Cidade j&#225;</a>
+          </li>
+          <li>
+            <a href="#mapaProblemas" title="Confira no mapa">Onde precisa melhorar</a>
+          </li>
+          
+          <li>
+            <a href="#" id="login" title="Comece agora mesmo a melhorar a Cidade">Acessar</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+	<br/>
+	<div>
+		<img id="fotoPerfil" />
+	</div>
+	<div id="minhaContaConteudo">
+    				    <div style="margin-top: 50px; float: center; width: 100%;">
+							Dados de contato
+						</div>
+						<div id="divisao" style="margin-right: 25px;">
+							<div>
+								Nome* :
+									<input type="text" name="nome" id="nome" value="" placeholder="Seu Nome" tabindex="3"/>
+							</div>
+							<div>
+								Sobrenome* :
+									<input type="text" name="sobrenome" id="sobrenome" placeholder="Seu Sobre Nome" value="" tabindex="4"/>
+							</div>
+							<div>
+								Data Nascimento* :
+									<input type="text" value="" name="dataNascimento" id="dataNascimento"  onkeypress="dataNasc(event,this);" tabindex="7" maxlength="10"/>
+							</div>
+							<div id="divContato" style="margin-top: 0px">
+								Telefone Fixo* :
+									<input type="text" name="telefone" id="telefone" value="" tabindex="9" maxlength="9"/>
+									<input type="text" name="ddd" id="ddd" value="" tabindex="8">
+							</div>
+							<div id="divContato">
+								Celular :
+									<input type="text" name="celular" id="celular" value="" maxlength="10" tabindex="11"/>
+									<input type="text" name="dddCel" id="dddCel" value="" tabindex="10" maxlength="2"/>	
+							</div>
+						</div>
+						<div id="divisao">
+											<div style="margin: 30px 5px;">
+												CEP* :
+												<input type="text" name="cep" id="cep" value="" tabindex="12" maxlength="9" onkeypress="cepVAL(event,this);"/>
+												<input type="button" 
+													name="btn_buscar" 
+													id="btn_buscar"
+													value="Buscar"
+													class="buttonSecundario buttonSecundario-rounded buttonSecundario-flat-primary"/>
+											</div>
+											<div>
+												Endereço* :
+												<input type="text" name="endereco" id="endereco" value="" tabindex="13"/>
+											</div>
+											<div>
+												Número* :
+												<input type="text" name="numero" id="numero" value="" tabindex="14"/>
+											</div>
+											<div>
+												Bairro* :
+												<input type="text" name="bairro" id="bairro" value="" tabindex="15"/>
+											</div>
+											<div>
+												UF* :
+												<select name="estado" id="estado"  tabindex="16">
+													<option selected="selected">Selecione o Estado</option>
+												</select>
+											</div>
+											<div>
+												Cidade* :
+												<select name="cidade" id="cidade"  tabindex="17">
+													<option selected="selected">Selecione a Cidade</option>
+												</select>
+											</div>
+											<div>
+												Complemento :
+												<input type="text" name="complemento" id="complemento" value="" tabindex="18">
+											</div>
+						</div>
+    </div>
+	<footer id="contato" class="footer-distributed">
+
+			<div class="footer-left">
+
+				<h3>Melhorar minha Cidade</h3><div class="fb-like" data-action="like"></div>
+
+				<p class="footer-links">
+					<a href="#CotiaMelhor">O App</a>
+					·
+					<a href="#Cotia_Melhor_como_funciona">Como Funciona?</a>
+					·
+					<a href="#Cotia_Melhor_Ja">Melhore a Cidade já</a>
+					·
+					<a href="#mapaProblemas">Onde Precisamos Melhorar</a>
+				</p>
+
+				<div class="footer-icons">
+
+					<a href="#" class="fa-facebook"></a>
+					<a href="#" class="fa-google"></a>
+					<a href="#" class="fa-linkedin"></a>
+					<a href="#" class="fa-github"></a>
+
+				</div>
+				<p class="footer-company-name"><a href='www.bjbraz.com.br' style="text-decoration: none;color: aliceblue;">BJBraz Sistemas &copy; 2015</a></p>
+			</div>
+
+			<div class="footer-right">
+
+				<form name="form1" onsubmit="return false;" method="post">
+					<input type="text" id="email" name="email" placeholder="Digite seu E-mail" />
+					<textarea name="message" id="message" placeholder="Nos diga o que você achou do Melhorar Minha Cidader?"></textarea>
+					<button id="enviarContatos" onclick="enviarContato()">Enviar</button>
+				</form>
+
+			</div>
+			
+		</footer>
+		<div id="parabens" style="display:none">
+			<h3>Parabéns você ajudou a melhorar a sua cidade!</h3>
+		</div>
+		
+		<div id="facaLogin" style="display:none">
+			<h3>Faça Login e comece a melhorar a cidade.</h3><br/>
+			<p align='center'><fb:login-button scope="public_profile,email,user_photos,user_birthday,user_hometown,user_about_me" onlogin="checkLoginState();" data-show-faces="false" login_text="Acesse com o Facebook" data-auto-logout-link="true"></fb:login-button></p>
+		</div>
+
+		<div id="pw-mask" style="display:none"></div>
+
+	<div id="signwall" class="shadow js-center-fixed" style="display:none; position: absolute; margin: 0px; top: 0px; left: 395px;">
+		<div class="big-header">
+			<div class="homebutton">
+				<a href="/" class="adtm-noticia-6-voltar-para-home"><img src="assets/images/botoes/voltar-home.png" width="118px" height="19px" alt="Voltar para a página inicial" style="width:118px;height:19px"></a>
+			</div>
+		</div>
+		<div id="sw-content">
+		
+		</div>
+		<div class="half-left">
+		
+			<span><b>Acesse com o facebook</b></span> 
+			<span><b>Não desejo me cadastrar.</b><br/><a href="/" class="adtm-noticia-6-voltar-para-home">Voltar para home.</a> </span>
+		</div>
+		<div class="half-right">
+			<div id="social-links">
+				<fb:login-button scope="public_profile,email,user_photos" onlogin="checkLoginState();" data-show-faces="false" login_text="Acesse com o Facebook" data-auto-logout-link="true"></fb:login-button>
+			</div>
+		</div>
+	</div>
+
+  </body>
+</html>
