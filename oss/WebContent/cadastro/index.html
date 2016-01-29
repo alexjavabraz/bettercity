@@ -154,7 +154,7 @@
 							</div>
 							<div>
 								Data Nascimento* :
-									<input type="text" value="" name="dataNascimento" id="dataNascimento"  onkeypress="dataNasc(event,this);" tabindex="7" maxlength="10"/>
+									<input type="text" value="" name="dataNascimento" id="dataNascimento"  placeholder="Sua Data de Nascimento"  onkeypress="dataNasc(event,this);" tabindex="7" maxlength="10"/>
 							</div>
 							<div id="divContato" style="margin-top: 0px">
 								Telefone Fixo* :
@@ -168,14 +168,9 @@
 							</div>
 						</div>
 						<div id="divisao">
-											<div style="margin: 30px 5px;">
+											<div>
 												CEP* :
 												<input type="text" name="cep" id="cep" value="" tabindex="12" maxlength="9" onkeypress="cepVAL(event,this);"/>
-												<input type="button" 
-													name="btn_buscar" 
-													id="btn_buscar"
-													value="Buscar"
-													class="buttonSecundario buttonSecundario-rounded buttonSecundario-flat-primary"/>
 											</div>
 											<div>
 												Endereço* :
@@ -186,26 +181,37 @@
 												<input type="text" name="numero" id="numero" value="" tabindex="14"/>
 											</div>
 											<div>
+												Complemento :
+												<input type="text" name="complemento" id="complemento" value="" tabindex="18">
+											</div>
+											<div>
 												Bairro* :
 												<input type="text" name="bairro" id="bairro" value="" tabindex="15"/>
 											</div>
 											<div>
 												UF* :
 												<select name="estado" id="estado"  tabindex="16">
-													<option selected="selected">Selecione o Estado</option>
+													<option selected="selected">São Paulo</option>
+													<option value="Outro">Outro</option>
 												</select>
 											</div>
 											<div>
 												Cidade* :
 												<select name="cidade" id="cidade"  tabindex="17">
 													<option selected="selected">Selecione a Cidade</option>
+													<option value="Sao Paulo">São Paulo</option>
+													<option value="Cotia">Cotia</option>
+													<option value="Itapevi">Itapevi</option>
+													<option value="Osasco">Osasco</option>
+													<option value="Barueri">Barueri</option>
+													<option value="Outro">Outro</option>
 												</select>
 											</div>
-											<div>
-												Complemento :
-												<input type="text" name="complemento" id="complemento" value="" tabindex="18">
+											<div class="centralizar">
+												<button id="salvar">Salvar</button>
 											</div>
 						</div>
+						
     </div>
 	<footer id="contato" class="footer-distributed">
 

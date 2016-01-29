@@ -8,6 +8,7 @@
       var localizacaoUsuario = '';
       var latitude;
       var longitude;
+      var emailDoUsuario = "alexjavabraz@gmail.com";
       var itens = [];
       
       var icons = {
@@ -143,9 +144,27 @@
       
       
       function initializePaginaCadastro(){
-    	  loginFaceBook();
-    	  
-    	  alert(document.getElementById('fotoPerfil').src);
+    		$('#salvar').click(function(e){
+    			e.preventDefault();
+    			
+    			nome           = document.getElementById('nome').value;
+    			sobreNome      = document.getElementById('sobrenome').value;
+    			dataNascimento = document.getElementById('dataNascimento').value; 
+    			telFixo 	   = document.getElementById('telefone').value;
+    			telCelular     = document.getElementById('celular').value;
+    			cep            = document.getElementById('cep').value; 
+    			endereco       = document.getElementById('endereco').value; 
+    			numero         = document.getElementById('numero').value;
+    			complemento    = document.getElementById('complemento').value; 
+    			bairro         = document.getElementById('bairro').value;
+    			estado         = document.getElementById('estado').value; 
+    			cidade         = document.getElementById('cidade').value; 
+    			linkFoto       = 'teste';
+    			
+    			complementarCadastro(emailDoUsuario, nome, sobreNome, dataNascimento, telFixo, telCelular, cep, endereco, numero, complemento, bairro, estado, cidade, linkFoto);
+    		});
+    		
+      	  	loginFaceBook();
       }
       
       function initialize() {
@@ -460,16 +479,6 @@
 	    });
 	    
 	    
-	    function insertCliente(name,first_name,last_name,email,id,birthday,gender,locale, religion) {
-			var url = 'http://'+document.location.host+"/oss/rest/cliente/ins";
-			
-		    $.post( url, { nome:name,email:email,gender:gender,id:id, locale:locale,birthday:birthday,religion: religion }, 
-		    		function(result){
-		    			if('ok' == result){
-		    			}
-		    		},"text");
-		}
-	    
 	    function enviarContato() {
 			var url = 'http://'+document.location.host+"/oss/rest/contato/ins";
 			
@@ -503,10 +512,10 @@
 		      console.log('Religion, ' + response.religion + '.');
 		      console.log('FOTO, ' + response.picture.data.url + '.');
 		      
-		      pictureUser = response.picture.data.url;
+		      pictureUser    = response.picture.data.url;
+		      emailDoUsuario = response.email;
 		      
-	    	  userLogged = response;
-	    	  
+	    	  userLogged     = response;
 	    	  var fotoPerfil = document.getElementById('fotoPerfil');
 		      
 		      if('undefined' == pictureUser){
@@ -521,7 +530,7 @@
 		    	  }
 		      }
 		      
-		      insertCliente(response.name,response.first_name,response.last_name,response.email,response.id,response.birthday,response.gender,response.locale, response.religion);
+		      insertCliente(response.name,response.first_name,response.last_name,emailDoUsuario,response.id,response.birthday,response.gender,response.locale, response.religion, pictureUser);
 		      
 		      document.getElementById('pw-mask').style.display='none';
 		      document.getElementById('signwall').style.display='none';
@@ -540,6 +549,25 @@
 			  document.getElementById(c).className='home';
 			  document.getElementById(d).className='home';
 		  }
-	         
-	    
-	    
+		  
+		    function insertCliente(name,first_name,last_name,email,id,birthday,gender,locale, religion, linkFoto) {
+				var url = 'http://'+document.location.host+"/oss/rest/cliente/ins";
+				
+			    $.post( url, { nome:name,email:email,gender:gender,id:id, locale:locale,birthday:birthday,religion: religion, linkFoto:linkFoto}, 
+			    		function(result){
+			    			if('ok' == result){
+			    			}
+			    		},"text");
+			}
+		    
+		    function complementarCadastro(email, nome, sobreNome, dataNascimento, telFixo, telCelular, cep, endereco, numero, complemento, bairro, estado, cidade, linkFoto){
+		    	var url = 'http://'+document.location.host+"/oss/rest/cliente/alterarCliente";
+				
+			    $.post( url, { email:email, nome:nome, sobreNome:sobreNome, dataNascimento:dataNascimento, telFixo:telFixo, telCelular:telCelular, cep:cep, endereco:endereco, numero:numero, complemento:complemento, bairro:bairro, estado:estado, cidade:cidade, linkFoto:linkFoto}, 
+			    		function(result){
+			    			if('ok' == result){
+			    			}
+			    		},"text");
+		    }
+		    
+	        

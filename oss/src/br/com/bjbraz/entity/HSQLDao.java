@@ -237,6 +237,105 @@ public class HSQLDao {
 		} catch (SQLException e) {
 			LOGGER.error(e.getMessage());
 		}
+	}
+
+	public Usuario buscarUsuarioPorEmail(String email) {
+		Usuario retorno = null;
+		
+		try {
+			
+			Connection conn = getConnection();
+			PreparedStatement stmt = conn.prepareStatement("select id_usuario, nm_usuario, email_usuario, link_photo, data_nascimento, sexo,  "+
+					" local, religiao, id_social, sobre_nome, tel_fixo, tel_celular, cep, endereco, numero, complemento, bairro, estado, cidade "+
+					" from alex_database.tb_usuario where email_usuario = ? ");
+			stmt.setString(1, email);
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()){
+				retorno = new Usuario();
+				retorno.setBairro(rs.getString("bairro"));
+				retorno.setBirthday(rs.getString("data_nascimento"));
+				retorno.setCep(rs.getString("cep"));
+				retorno.setCidade(rs.getString("cidade"));
+				retorno.setComplemento(rs.getString("complemento"));
+				retorno.setEmail(rs.getString("email_usuario"));
+				retorno.setEndereco(rs.getString("endereco"));
+				retorno.setEstado(rs.getString("estado"));
+				retorno.setGender(rs.getString("sexo"));
+				retorno.setLocale(rs.getString("local"));
+				retorno.setId(rs.getString("id_usuario"));
+				retorno.setIdSocial(rs.getString("id_social"));
+				retorno.setNome(rs.getString("nm_usuario"));
+				retorno.setNumero(rs.getString("numero"));
+				retorno.setReligion(rs.getString("religiao"));
+				retorno.setSobreNome(rs.getString("sobre_nome"));
+				retorno.setTelCelular(rs.getString("tel_celular"));
+				retorno.setTelFixo(rs.getString("tel_fixo"));
+			}
+			closeConnection(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return retorno;
+	}
+
+	public void salvarUsuario(Usuario user) {
+		Connection conn = getConnection();
+
+		try{
+			PreparedStatement stmt = conn.prepareStatement(
+				" update alex_database.tb_usuario set "+ 
+						" nm_usuario = ? , "+
+						" email_usuario = ?, "+
+						" link_photo = ?, "+
+						" data_nascimento = ?, "+
+						" sexo= ?, "+
+						" local= ?, "+
+						" religiao= ?, "+
+						" id_social= ?, "+
+						" sobre_nome= ? , "+
+						" tel_fixo= ?, "+
+						" tel_celular= ?, "+
+						" cep= ?, "+
+						" endereco= ?, "+
+						" numero= ? , "+
+						" complemento= ?, "+
+						" bairro= ?, "+
+						" estado= ? , "+
+						" cidade= ? "+
+						" where id_usuario = ? ");
+			stmt.setString(1, user.getNome());
+			stmt.setString(2, user.getEmail());
+			stmt.setString(3, user.getLinkFoto());
+			stmt.setString(4, user.getBirthday());
+			stmt.setString(5, user.getGender());
+			stmt.setString(6, user.getLocale());
+			stmt.setString(7, user.getReligion());
+			stmt.setString(8, user.getIdSocial());
+			stmt.setString(9, user.getSobreNome());
+			stmt.setString(10, user.getTelFixo());
+			
+			stmt.setString(11, user.getTelCelular());
+			stmt.setString(12, user.getCep());
+			stmt.setString(13, user.getEndereco());
+			stmt.setString(14, user.getNumero());
+			
+			stmt.setString(15, user.getComplemento());
+			stmt.setString(16, user.getBairro());
+			stmt.setString(17, user.getEstado());
+			stmt.setString(18, user.getCidade());
+			
+			stmt.setInt(19, Integer.parseInt(user.getId()));
+			
+			stmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			closeConnection(conn);
+		}
+		
 	}	
 	 
 
