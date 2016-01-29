@@ -38,20 +38,22 @@
 	
 	
 	window.onload = function() {
-		initializePaginaCadastro();
+		
 	};
 
 	  window.fbAsyncInit = function() {
-	  FB.init({
-	    appId      : '1641774959428289',
-	    cookie     : true, 
-	    xfbml      : true,
-	    version    : 'v2.2'
-	  });
-
-	  FB.getLoginStatus(function(response) {
-	    statusChangeCallback(response);
-	  });
+		  FB.init({
+		    appId      : '1641774959428289',
+		    cookie     : true, 
+		    xfbml      : true,
+		    version    : 'v2.2'
+		  });
+	
+		  FB.getLoginStatus(function(response) {
+		    statusChangeCallback(response);
+		  });
+		  
+		  initializePaginaCadastro();
 
 	  };
 
@@ -107,7 +109,7 @@
     <input id="pac-input" class="controls" type="text" placeholder="Buscar pelo endereço">
     <header>
       <h1 class="float-l">
-        Melhorar minha cidade
+        <a href="/" class="link">Melhorar minha cidade</a>
       </h1>
       
       <input type="checkbox" id="control-nav" />
@@ -237,7 +239,6 @@
 					<a href="#" class="fa-github"></a>
 
 				</div>
-				<p class="footer-company-name"><a href='www.bjbraz.com.br' style="text-decoration: none;color: aliceblue;">BJBraz Sistemas &copy; 2015</a></p>
 			</div>
 
 			<div class="footer-right">

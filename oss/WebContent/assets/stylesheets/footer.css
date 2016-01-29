@@ -52,7 +52,7 @@ footer{
 
 .footer-distributed .footer-links{
 	color:  #ffffff;
-	margin: 0 0 10px;
+	margin: 0 0 0px;
 	padding: 0;
 }
 
@@ -73,7 +73,7 @@ footer{
 /* Footer social icons */
 
 .footer-distributed .footer-icons{
-	margin-top: 40px;
+	margin-top: 10px;
 }
 
 .footer-distributed .footer-icons a{
@@ -108,20 +108,18 @@ footer{
 .footer-distributed form input,
 .footer-distributed form textarea{
 	display: block;
-	border-radius: 3px;
-	box-sizing: border-box;
-	background-color:  #ffffff;
-	box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1);
-	border: none;
-	resize: none;
-
-	font: inherit;
-	font-size: 14px;
-	font-weight: normal;
-	color:  #61A1BC;
-
-	width: 400px;
-	padding: 18px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    border: none;
+    resize: none;
+    font: inherit;
+    font-size: 14px;
+    font-weight: normal;
+    color: #61A1BC;
+    width: 400px;
+    padding: 14px;
 }
 
 .footer-distributed ::-webkit-input-placeholder {
@@ -139,23 +137,23 @@ footer{
 
 
 .footer-distributed form input{
-	height: 55px;
-	margin-bottom: 15px;
+	height: 20px;
+	margin-bottom: 5px;
 }
 
 .footer-distributed form textarea{
-	height: 100px;
-	margin-bottom: 20px;
+	height: 60px;
+	margin-bottom: 5px;
 }
 
 .footer-distributed form button{
 	border-radius: 3px;
-	background-color:  #ffffff;
-	color: #61A1BC;
-	border: 0;
-	padding: 15px 50px;
-	font-weight: bold;
-	float: left;
+    background-color: #ffffff;
+    color: #61A1BC;
+    border: 0;
+    padding: 10px 38px;
+    font-weight: bold;
+    float: left;
 }
 
 /* If you don't want the footer to be responsive, remove these media queries */

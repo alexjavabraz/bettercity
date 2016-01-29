@@ -8,7 +8,10 @@
       var localizacaoUsuario = '';
       var latitude;
       var longitude;
-      var emailDoUsuario = "alexjavabraz@gmail.com";
+      var emailDoUsuario;
+      var nomeDoUsuario;
+      var birthDay;
+      
       var itens = [];
       
       var icons = {
@@ -164,7 +167,7 @@
     			complementarCadastro(emailDoUsuario, nome, sobreNome, dataNascimento, telFixo, telCelular, cep, endereco, numero, complemento, bairro, estado, cidade, linkFoto);
     		});
     		
-      	  	loginFaceBook();
+      	  	//loginFaceBook();
       }
       
       function initialize() {
@@ -514,6 +517,8 @@
 		      
 		      pictureUser    = response.picture.data.url;
 		      emailDoUsuario = response.email;
+		      nomeDoUsuario  = response.name;
+		      birthDay       = response.birthday;
 		      
 	    	  userLogged     = response;
 	    	  var fotoPerfil = document.getElementById('fotoPerfil');
