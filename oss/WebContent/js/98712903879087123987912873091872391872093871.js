@@ -4,13 +4,22 @@
       var userLogged = '';
       var marcacaoDoUsuarioNaoLogado = '';
       var address = '';
-      var iconBase = 'http://localhost:8080/oss/assets/images/icos/';
+      var iconBase = 'http://www.melhorarminhacidade.com.br/assets/images/icos/';
       var localizacaoUsuario = '';
       var latitude;
       var longitude;
       var emailDoUsuario;
       var nomeDoUsuario;
       var birthDay;
+      var telfixo = "";
+      var telcelular = "";
+      var cep = "";
+      var endereco = "";
+      var numero = "";
+      var complemento = "";
+      var bairro = "";
+      var uf = "";
+      var cidade = "";
       
       var itens = [];
       
@@ -150,11 +159,11 @@
     		$('#salvar').click(function(e){
     			e.preventDefault();
     			
-    			nome           = document.getElementById('nome').value;
-    			sobreNome      = document.getElementById('sobrenome').value;
+    			nomeDoUsuario           = document.getElementById('nome').value;
+    			birthDay      = document.getElementById('sobrenome').value;
     			dataNascimento = document.getElementById('dataNascimento').value; 
-    			telFixo 	   = document.getElementById('telefone').value;
-    			telCelular     = document.getElementById('celular').value;
+    			telfixo 	   = document.getElementById('telefone').value;
+    			telcelular     = document.getElementById('celular').value;
     			cep            = document.getElementById('cep').value; 
     			endereco       = document.getElementById('endereco').value; 
     			numero         = document.getElementById('numero').value;
@@ -162,12 +171,15 @@
     			bairro         = document.getElementById('bairro').value;
     			estado         = document.getElementById('estado').value; 
     			cidade         = document.getElementById('cidade').value; 
-    			linkFoto       = 'teste';
+    			sobreNome      = document.getElementById('sobrenome').value;
+    			linkFoto       = pictureUser;
     			
-    			complementarCadastro(emailDoUsuario, nome, sobreNome, dataNascimento, telFixo, telCelular, cep, endereco, numero, complemento, bairro, estado, cidade, linkFoto);
+    			complementarCadastro(this, emailDoUsuario, nomeDoUsuario, sobreNome, birthDay, telfixo, telcelular, cep, endereco, numero, complemento, bairro, estado, cidade, linkFoto);
+    			
     		});
     		
       	  	//loginFaceBook();
+    		
       }
       
       function initialize() {
@@ -473,7 +485,7 @@
 				    			$("#pw-mask").show(timeout)
 				    	    	$("#signwall").show(timeout);
 				    	}else{
-				    		window.location.href = 'cadastro';
+				    		window.location.href = 'http://'+document.location.host+'/oss/cadastro';
 				    	}
 		    		}
 		    );
@@ -530,7 +542,31 @@
 		    	  	localizacaoUsuario.setIcon(pictureUser);
 		      	  }
 		    	  
-		    	  if(fotoPerfil != "" && fotoPerfil != null){
+		    	  //se estiver na pagina de cadastro preenche o conteudo da tag img com a pictureUser
+		    	  if($('#imagemPerfil') !== 'undefined' && $('#imagemPerfil') !== null){
+		    		  	var imagem = document.getElementById('imagemPerfil');
+		    		  	if(imagem != null && imagem !== 'undefined'){
+		    		  		imagem.src = pictureUser;
+		    		  		
+		    		  		retrieveCadastro(response.email);
+
+		        			document.getElementById('nome').value = response.first_name;
+		        			document.getElementById('sobrenome').value = response.last_name;
+		        			document.getElementById('dataNascimento').value = birthDay; 
+		        			document.getElementById('telefone').value = telfixo;
+		        			document.getElementById('celular').value = telcelular;
+		        			document.getElementById('cep').value = cep; 
+		        			document.getElementById('endereco').value = endereco; 
+		        			document.getElementById('numero').value = numero;
+		        			document.getElementById('complemento').value = complemento; 
+		        			document.getElementById('bairro').value = bairro;
+		        			document.getElementById('estado').value = uf; 
+		        			document.getElementById('cidade').value = cidade; 
+		        			
+		    		  	}
+		    	  }
+		    	  
+		    	  if(fotoPerfil != "" && fotoPerfil != null && fotoPerfil !== 'undefined'){
 		    		  fotoPerfil.src = pictureUser; 
 		    	  }
 		      }
@@ -565,14 +601,47 @@
 			    		},"text");
 			}
 		    
-		    function complementarCadastro(email, nome, sobreNome, dataNascimento, telFixo, telCelular, cep, endereco, numero, complemento, bairro, estado, cidade, linkFoto){
+		    function complementarCadastro(botao, email, nome, sobreNome, dataNascimento, telFixo, telCelular, cep, endereco, numero, complemento, bairro, estado, cidade, linkFoto){
 		    	var url = 'http://'+document.location.host+"/oss/rest/cliente/alterarCliente";
 				
 			    $.post( url, { email:email, nome:nome, sobreNome:sobreNome, dataNascimento:dataNascimento, telFixo:telFixo, telCelular:telCelular, cep:cep, endereco:endereco, numero:numero, complemento:complemento, bairro:bairro, estado:estado, cidade:cidade, linkFoto:linkFoto}, 
 			    		function(result){
 			    			if('ok' == result){
+			    				botao.innerHTML = 'Salvo com Sucesso!';
 			    			}
 			    		},"text");
 		    }
+		    
+		    function retrieveCadastro(email){
+		    	var url = 'http://'+document.location.host+"/oss/rest/cliente/retrieve";
+				
+			    $.post( url, { email:email}, 
+			    		function(result){
+			    			if(result !== null){
+			    				var json = JSON.parse(result);
+			    				
+			    				telfixo = json["telfixo"];
+			    				telcelular = json["telcelular"];
+			    				cep = json["cep"];
+			    				endereco = json["endereco"];
+			    				numero = json["numero"];
+			    				complemento = json["complemento"];
+			    				bairro = json["bairro"];
+			    				uf = json["uf"];
+			    				cidade = json["cidade"];
+			    				
+			        			document.getElementById('telefone').value = telfixo;
+			        			document.getElementById('celular').value = telcelular;
+			        			document.getElementById('cep').value = cep; 
+			        			document.getElementById('endereco').value = endereco; 
+			        			document.getElementById('numero').value = numero;
+			        			document.getElementById('complemento').value = complemento; 
+			        			document.getElementById('bairro').value = bairro;
+			        			document.getElementById('estado').value = uf; 
+			        			document.getElementById('cidade').value = cidade; 
+			    				
+			    			}
+			    		},"text");
+		    }		    
 		    
 	        

@@ -82,4 +82,20 @@ public class CadastroUserResource {
         return "ok";
     }
 	
+	@POST
+	@Path("/retrieve")
+	@Produces(MediaType.TEXT_PLAIN)
+	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public String retrieve(
+    		@FormParam("email") String email
+    		) {
+		
+		if(null == email){
+			return "";
+		}
+		HSQLDao dao  = new HSQLDao();
+		Usuario user = dao.buscarUsuarioPorEmail(email);
+        return user.generateJson();
+    }	
+	
 }

@@ -177,7 +177,12 @@ public class Usuario {
 	public void setIdSocial(String idSocial) {
 		this.idSocial = idSocial;
 	}
-	
+
+	public String generateJson() {
+		StringBuilder sb = new StringBuilder(350);
+		sb.append("{\"nome\":\""+getNome()+"\",\"telfixo\":\""+getTelFixo()+"\",\"telcelular\":\""+getTelCelular()+"\",\"cep\":\""+getCep()+"\",\"endereco\":\""+getEndereco()+"\",\"numero\":\""+getNumero()+"\",\"complemento\":\""+getComplemento()+"\",\"bairro\":\""+getBairro()+"\",\"uf\":\""+getEstado()+"\",\"cidade\":\""+getCidade()+"\"}");
+		return sb.toString();
+	}
 
 	/*
 	 * 

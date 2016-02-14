@@ -119,16 +119,16 @@
       <nav class="float-r">
         <ul class="list-auto">
           <li>
-            <a href="#MelhorarMinhaCidade" title="Cidade Melhor, Cotia Melhor">O App</a>
+            <a href="../#MelhorarMinhaCidade" title="Cidade Melhor, Cotia Melhor">O App</a>
           </li>
           <li>
-            <a href="#Melhorar_Minha_Cidade_como_funciona" title="Como funciona o Cidade Melhor">Como funciona?</a>
+            <a href="../#Melhorar_Minha_Cidade_como_funciona" title="Como funciona o Cidade Melhor">Como funciona?</a>
           </li>
           <li>
-            <a href="#Melhorar_Minha_Cidade_Ja" title="Comece a melhorar a cidade Já">Melhore a Cidade j&#225;</a>
+            <a href="../#Melhorar_Minha_Cidade_Ja" title="Comece a melhorar a cidade Já">Melhore a Cidade j&#225;</a>
           </li>
           <li>
-            <a href="#mapaProblemas" title="Confira no mapa">Onde precisa melhorar</a>
+            <a href="../#mapaProblemas" title="Confira no mapa">Onde precisa melhorar</a>
           </li>
           
           <li>
@@ -137,13 +137,15 @@
         </ul>
       </nav>
     </header>
-	<br/>
-	<div>
-		<img id="fotoPerfil" />
-	</div>
 	<div id="minhaContaConteudo">
     				    <div style="margin-top: 50px; float: center; width: 100%;">
 							Dados de contato
+							<div id="imagem_perfil">
+								<img class="imagem_redonda" id="imagemPerfil" src=""/>
+								<div class="centralizar">
+												<button class="button_geral" id="salvar">Salvar</button>
+								</div>
+							</div>
 						</div>
 						<div id="divisao" style="margin-right: 25px;">
 							<div>
@@ -159,27 +161,25 @@
 									<input type="text" value="" name="dataNascimento" id="dataNascimento"  placeholder="Sua Data de Nascimento"  onkeypress="dataNasc(event,this);" tabindex="7" maxlength="10"/>
 							</div>
 							<div id="divContato" style="margin-top: 0px">
-								Telefone Fixo* :
+								Telefone Fixo :
 									<input type="text" name="telefone" id="telefone" value="" tabindex="9" maxlength="9"/>
-									<input type="text" name="ddd" id="ddd" value="" tabindex="8">
 							</div>
 							<div id="divContato">
 								Celular :
 									<input type="text" name="celular" id="celular" value="" maxlength="10" tabindex="11"/>
-									<input type="text" name="dddCel" id="dddCel" value="" tabindex="10" maxlength="2"/>	
 							</div>
 						</div>
 						<div id="divisao">
 											<div>
-												CEP* :
+												CEP :
 												<input type="text" name="cep" id="cep" value="" tabindex="12" maxlength="9" onkeypress="cepVAL(event,this);"/>
 											</div>
 											<div>
-												Endereço* :
+												Endereço :
 												<input type="text" name="endereco" id="endereco" value="" tabindex="13"/>
 											</div>
 											<div>
-												Número* :
+												Número :
 												<input type="text" name="numero" id="numero" value="" tabindex="14"/>
 											</div>
 											<div>
@@ -187,18 +187,18 @@
 												<input type="text" name="complemento" id="complemento" value="" tabindex="18">
 											</div>
 											<div>
-												Bairro* :
+												Bairro :
 												<input type="text" name="bairro" id="bairro" value="" tabindex="15"/>
 											</div>
 											<div>
-												UF* :
+												UF :
 												<select name="estado" id="estado"  tabindex="16">
 													<option selected="selected">São Paulo</option>
 													<option value="Outro">Outro</option>
 												</select>
 											</div>
 											<div>
-												Cidade* :
+												Cidade :
 												<select name="cidade" id="cidade"  tabindex="17">
 													<option selected="selected">Selecione a Cidade</option>
 													<option value="Sao Paulo">São Paulo</option>
@@ -209,26 +209,23 @@
 													<option value="Outro">Outro</option>
 												</select>
 											</div>
-											<div class="centralizar">
-												<button id="salvar">Salvar</button>
-											</div>
 						</div>
 						
     </div>
-	<footer id="contato" class="footer-distributed">
+	<footer id="contato" class="footer-distributed" style="position:fixed">
 
 			<div class="footer-left">
 
 				<h3>Melhorar minha Cidade</h3><div class="fb-like" data-action="like"></div>
 
 				<p class="footer-links">
-					<a href="#CotiaMelhor">O App</a>
+					<a href="../#Melhorar_Minha_Cidade">O App</a>
 					·
-					<a href="#Cotia_Melhor_como_funciona">Como Funciona?</a>
+					<a href="../#Melhorar_Minha_Cidade_como_funciona">Como Funciona?</a>
 					·
-					<a href="#Cotia_Melhor_Ja">Melhore a Cidade já</a>
+					<a href="../#Melhorar_Minha_Cidade_Ja">Melhore a Cidade já</a>
 					·
-					<a href="#mapaProblemas">Onde Precisamos Melhorar</a>
+					<a href="../#mapaProblemas">Onde Precisamos Melhorar</a>
 				</p>
 
 				<div class="footer-icons">
@@ -245,7 +242,7 @@
 
 				<form name="form1" onsubmit="return false;" method="post">
 					<input type="text" id="email" name="email" placeholder="Digite seu E-mail" />
-					<textarea name="message" id="message" placeholder="Nos diga o que você achou do Melhorar Minha Cidader?"></textarea>
+					<textarea name="message" id="message" placeholder="Nos diga o que você achou do Melhorar Minha Cidade?"></textarea>
 					<button id="enviarContatos" onclick="enviarContato()">Enviar</button>
 				</form>
 

@@ -1,348 +1,281 @@
 <!DOCTYPE html>
 <html lang="pt">
-<head>
-<title>Melhorar Minha Cidade - Aplicativo Social</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" />
-<meta name="description" content="O CidadeMelhor e uma plataforma para que o cidadao mostre os problemas da cidade, solicite melhorias, de sugestoes e concorra a premios. Solu&#231;&#227;o tecnológica para quest&#245;es de relevância p&#250;blica">
-<meta name="keywords" content="social, cidadania, melhorar minha cidade, cidadão" />
-<meta property="og:title" content="Faça sua cidade melhor, exerça a cidadania" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.cotiamelhor.com.br" />
-<meta property="og:site_name" content="CidadeMelhor" />
-<meta property="og:locale" content="pt_br" />
-<meta property="og:image" content="http://palloi.github.io/responsive-header-only-css/assets/images/image-shared.png" />
-<meta property="og:keywords"	content="aplicativo social, CidadeMelhor, melhorar minha cidade, " />
-<meta property="og:description"
-	content="Mostre o que você quer melhorar no seu bairro, na sua cidade!" />
-<link rel="alternate" href="http://69.64.52.116:8181" hreflang="pt-br" />
-<link rel="icon" type="image/vnd.microsoft.icon"
-	href="http://www.cotiamelhor.com.br/assets/images/icos/favicon.ico" />
-<link href="http://www.cotiamelhor.com.br/assets/images/icos/favicon.ico" rel="shortcut icon">
-<link href="http://fonts.googleapis.com/css?family=Cookie|Open+Sans:400,700" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="assets/stylesheets/style-min.css" />
-<link rel="stylesheet" type="text/css" href="assets/stylesheets/footer-min.css" />
-<script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="js/98712903879087123987912873091872391872093871-min.js"></script>
-<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdL1lXGAN3qc3dcbTUxCcIYai5dc5hr6c&libraries=places">
-</script> 
-<script>
+  <head>
+    <title>Melhorar Minha Cidade - O Cidadão faz um mundo melhor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    
+    <meta name="description" content="O Melhorar Minha Cidade e uma plataforma para que o cidadão mostre os problemas da cidade, solicite melhorias.Faça um mundo melhor. Solu&#231;&#227;o tecnológica para quest&#245;es de relevância p&#250;blica">
+    <meta name="keywords" content="social,cidadania,cidadão,Melhorar Minha Cidade" />
+
+	<meta property="og:title" content="O Cidadão faz sua cidade melhor, exerce a cidadania, e faz um mundo melhor" />
+	<meta property="fb:app_id" content="443717059168243"/>
+	
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="http://www.melhorarminhacidade.com.br" />
+	<meta property="og:site_name" content="MelhorarMinhaCidade" />
+	<meta property="og:locale" content="pt_br" />
+    <meta property="og:image" content="http:///www.melhorarminhacidade.com.br/images/melhore-a-cidade-fb.jpg" />
+    <meta property="og:keywords" content="aplicativo social, Melhorar Minha Cidade, melhorar minha cidade,mundo melhor, cidadão " />
+    <meta property="og:description" content="Mostre o que você quer melhorar na sua cidade! Faça um mundo melhor!" />
+    <link rel="alternate" href="http://69.64.52.116:8181" hreflang="pt-br" />
+    
+    <link rel="icon" type="image/vnd.microsoft.icon" href="http://69.64.52.116:8181/assets/images/icos/favicon.ico" />
+    <link href="http://69.64.52.116:8181/assets/images/icos/favicon.ico" rel="shortcut icon" />
+	<link href="http://fonts.googleapis.com/css?family=Cookie|Open+Sans:400,700" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/style.css" />
+    <link rel="stylesheet" type="text/css" href="assets/stylesheets/footer.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    
+    <!--[if lt IE 9]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+    
+    <script type="text/javascript" src="js/jquery/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/98712903879087123987912873091872391872093871.js"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBdL1lXGAN3qc3dcbTUxCcIYai5dc5hr6c&libraries=places"></script>
+    
+	<script>
+	
 	google.maps.event.addDomListener(window, 'load', initialize);
-	function statusChangeCallback(response) {
-		console.log('statusChangeCallback');
-		console.log(response);
-		if (response.status === 'connected') {
-			testAPI();
-		} else if (response.status === 'not_authorized') {
-		} else {
-			abreConexaoFB();
-		}
-	}
-	function abreConexaoFB() {
-		var timeout = 1000;
-		$("#pw-mask").show(timeout)
-		$("#signwall").show(timeout);
-	}
-	function checkLoginState() {
-		FB.getLoginStatus(function(response) {
-			statusChangeCallback(response);
-		});
-	}
-	window.fbAsyncInit = function() {
-		FB.init({
-			appId : '443717059168243',
-			cookie : true, // enable cookies to allow the server to access 
-			xfbml : true, // parse social plugins on this page
-			version : 'v2.2' // use version 2.2
-		});
-		FB.getLoginStatus(function(response) {
-			statusChangeCallback(response);
-		});
-	};
+	
+	  function statusChangeCallback(response) {
+	    console.log('statusChangeCallback');
+	    console.log(response);
+	    if (response.status === 'connected') {
+	      loginFaceBook();
+	    } else if (response.status === 'not_authorized') {
+	    }
+	  }
 
-	(function(d, s, id) {
-		var js, fjs = d.getElementsByTagName(s)[0];
-		if (d.getElementById(id))
-			return;
-		js = d.createElement(s);
-		js.id = id;
-		js.src = "//connect.facebook.net/pt_BR/sdk.js";
-		fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));
+	  function checkLoginState() {
+	    FB.getLoginStatus(function(response) {
+	      statusChangeCallback(response);
+	    });
+	  }
 
-	function testAPI() {
-		console.log('Welcome!  Fetching your information.... ');
-		FB
-				.api(
-						'/me?fields=name,first_name,last_name,email,picture,id,birthday,gender,locale, religion, hometown',
-						function(response) {
-							console.log('Successful login for: '
-									+ response.name);
-							console.log('name, ' + response.name + '.');
-							console.log('email, ' + response.email + '.');
-							console.log('first_name, ' + response.first_name
-									+ '.');
-							console.log('last_name, ' + response.last_name
-									+ '.');
-							console.log('id, ' + response.id + '.');
-							console.log('birthday, ' + response.birthday + '.');
-							console.log('Gender, ' + response.gender + '.');
-							console.log('locale, ' + response.locale + '.');
-							console.log('Religion, ' + response.religion + '.');
-							pictureUser = response.picture.data.url;
-							userLogged = response;
-							if ('undefined' == pictureUser) {
-								pictureUser = iconBase + 'voce-esta-aqui.png';
-							} else {
-								localizacaoUsuario.setIcon(pictureUser);
-							}
-							insertCliente(response.name, response.first_name,
-									response.last_name, response.email,
-									response.id, response.birthday,
-									response.gender, response.locale,
-									response.religion);
-							document.getElementById('pw-mask').style.display = 'none';
-							document.getElementById('signwall').style.display = 'none';
-							document.getElementById('login').innerHTML = response.name;
-							if (marcacaoDoUsuarioNaoLogado != '') {
-								amarker.setMap(null);
-							}
-						});
-	}
+	  window.fbAsyncInit = function() {
+	  FB.init({
+	    appId      : '1641774959428289',
+	    cookie     : true, 
+	    xfbml      : true,
+	    version    : 'v2.2'
+	  });
+
+	  FB.getLoginStatus(function(response) {
+	    statusChangeCallback(response);
+	  });
+
+	  };
+
+	  (function(d, s, id) {
+	    var js, fjs = d.getElementsByTagName(s)[0];
+	    if (d.getElementById(id)) return;
+	    js = d.createElement(s); js.id = id;
+	    js.src = "//connect.facebook.net/pt_BR/sdk.js";
+	    fjs.parentNode.insertBefore(js, fjs);
+	  }(document, 'script', 'facebook-jssdk'));
+	  
+	</script>
+        
+  </head>
+  <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.5&appId=1641774959428289";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-70802078-1', 'auto');
+  ga('send', 'pageview');
+
 </script>
-</head>
-<body>
-	<div id="fb-root"></div>
-	<script>
-		(function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id))
-				return;
-			js = d.createElement(s);
-			js.id = id;
-			js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.5&appId=443717059168243";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
-	</script>
-	<script>
-		(function(i, s, o, g, r, a, m) {
-			i['GoogleAnalyticsObject'] = r;
-			i[r] = i[r] || function() {
-				(i[r].q = i[r].q || []).push(arguments)
-			}, i[r].l = 1 * new Date();
-			a = s.createElement(o), m = s.getElementsByTagName(o)[0];
-			a.async = 1;
-			a.src = g;
-			m.parentNode.insertBefore(a, m)
-		})(window, document, 'script',
-				'//www.google-analytics.com/analytics.js', 'ga');
-		ga('create', 'UA-70802078-1', 'auto');
-		ga('send', 'pageview');
-	</script>
-	<input id="pac-input" class="controls" type="text"
-		placeholder="Buscar pelo endereço">
-	<header>
-		<h1 class="float-l">Melhorar minha cidade</h1>
-		<input type="checkbox" id="control-nav" /> <label for="control-nav"
-			class="control-nav"></label> <label for="control-nav"
-			class="control-nav-close"></label>
-		<nav class="float-r">
-			<ul class="list-auto">
-				<li><a href="#CotiaMelhor" title="Cidade Melhor, Cotia Melhor">OCidadeMelhor</a></li>
-				<li><a href="#Cotia_Melhor_como_funciona"
-					title="Como funciona o Cidade Melhor">Como funciona?</a></li>
-				<li><a href="#Cotia_Melhor_Ja"
-					title="Comece a melhorar a cidade Já">Melhore a Cidade j&#225;</a></li>
-				<li><a href="#mapaProblemas" title="Confira no mapa">Ondeprecisa
-						melhorar</a></li>
-				<li><a href="#" id="login"
-					title="Comece agora mesmo a melhorar a Cidade">Acessar</a></li>
-			</ul>
-		</nav>
-	</header>
-	<section id="CotiaMelhor">
-		<img class="todos-juntos-por-uma-cidade-melhor" width="396px"
-			height="256px" alt="Juntos para melhorar nossa cidade" />
-		<p>
-			<strong>O CidadeMelhor</strong> faz a integra&#231;&#227;o entre
-			oscidad&#227;os e o poder p&#250;blico. Acreditamos que
-			nenhumamudan&#231;a acontecer&#225;, sem a participa&#231;&#227;o
-			ativadaqueles que no seu dia-a-dia sofrem por problemas no seu
-			bairro, nasua cidade. A popula&#231;&#227;o tem papel fundamental
-			namudan&#231;a, nosso pa&#237;s é imenso, e nem sempre o
-			poderp&#250;blico consegue chegar no n&#237;vel de detalhe que
-			precisamos,precisamos mostrar os problemas e dar sugest&#245;es de
-			melhoria. OCidadeMelhor é uma solu&#231;&#227;o tecnológica para
-			quest&#245;esde relevância p&#250;blica.
-		</p>
-		<p>
-			<strong>Queremos um pa&#237;s melhor:</strong> Para isso contamos
-			coma sua participa&#231;&#227;o, baixe o aplicativo e comece a
-			mostrar,os problemas do seu bairro.
-		</p>
-		<p>
-			<strong>Solicite melhorias, d&#234; sugest&#245;es,participe
-				e concorra a pr&#234;mios:</strong> Ajude a melhorar a cidade, useo nosso
-			aplicativo, tire fotos do problema e d&#234; sugest&#245;esde
-			melhoria, além de fazer uma CidadeMelhor, voc&#234; concorre&#225;
-			pr&#234;mios.
-		</p>
-		<p>
-			<strong>Pelo mundo todo:</strong> As pessoas est&#227;o se
-			envolvendona administra&#231;&#227;o da sua cidade, querendo ser
-			ouvidos, equerendo ter mais voz ativa. <br />Exerça você também o seu
-			dever decidadão.
-		</p>
-	</section>
-	<section id="Cotia_Melhor_como_funciona">
-		<img class="problemas-da-cidade" width="539px" height="309px"
-			alt="Os problemas da cidade" />
-		<p>
-			<strong>Baixe o aplicativo Melhorar Minha Cidade:</strong> No
-			GooglePlay para Android e PlayStore para Apple. Em breve Windows
-			Phone.
-		</p>
-		<p>
-			<strong>Acesse:</strong> <a href='login.html'>Clique aqui ecomece
-				a melhorar a cidade</a>.
-		</p>
-		<p>
-			<strong>Comece a ter uma CidadeMelhor:</strong> Comece a enviar
-			fotosdos problemas que voc&#234; encontra na cidade, no seu bairro.
-			Estesproblemas ser&#227;o encaminhados para as autoridades
-			p&#250;blicas.
-		</p>
-		<div class="conteinerDesc">
-			<div class="existe-um-problema-a-ser-resolvido-na-cidade"></div>
-			<p class="textDesc">Assim irá aparecer sua sugestão /
-				reclamação,este ícone significa que alguém apontou um problema para
-				sercorrigido.</p>
-			<br />
-			<div class="melhoria-em-analise"></div>
-			<p class="textDesc">Sua solicitação está em análise pelos
-				órgãoscompetentes.</p>
-			<br />
-			<div class="obra-em-andamento-para-melhorar-a-cidade"></div>
-			<p class="textDesc">Ótimo o responsável por corrigir o problemajá
-				analizou e está atuando no local, você ganhou pontos.</p>
-			<br />
-			<div class="melhorou-a-cidade"></div>
-			<p class="textDesc">Uhulll ficamos felizes! O problema
-				foicorrigido! Compartilhe nas redes sociais que você melhorou a
-				cidade!</p>
-			<br />
-		</div>
-		<p>
-			<strong>Veja os problemas sendo resolvidos:</strong> Assim que
-			oórg&#227;o p&#250;blico resolve o problema, voc&#234; fica sabendo
-			epode avalidar.
-		</p>
-		<p>
-			<strong>Concorra &#224; pr&#234;mios:</strong> Voc&#234;
-			concorre&#224; pr&#234;mios exclusivos, quanto mais voc&#234; ajudar
-			a fazeruma CidadeMelhor, mais chances tem de ganhar.
-		</p>
-	</section>
-	<section id="Cotia_Melhor_Ja">
-		<div style="align: center">
-			<div class="googleplay"></div>
-			<div class="applestore"></div>
-		</div>
-		<p>
-			<strong>Comece agora mesmo:</strong> <a href='login.html'>Comecea
-				melhorar</a> sua cidade agora mesmo, baixe o app.
-		</p>
-		<p>
-			<strong>Pelo site voc&#234; acompanha</strong> como est&#225; se asua
-			solicitação de melhoria foi aprovada, se tem alguma obra
-			emexecu&#231;&#227;o, se j&#225; foi concluído. Cada solicitação
-			gerapontos, quanto mais você participar, sua cidade fica melhor e
-			vocêconcorre á prêmios.
-		</p>
-		<p>
-			<strong>Caso você solicite uma melhoria</strong> e esta melhoria
-			sejaaceita, você ganha ainda mais pontos, e concorre á prêmios!
-		</p>
-	</section>
-	<section id="mapaProblemas">
-		<div>
-			<div class="fb-like" data-share="true" data-width="450"
-				data-show-faces="true"></div>
-			<div id="map"></div>
-			<div id="legend">Legenda</div>
-		</div>
-	</section>
-	<footer id="contato" class="footer-distributed">
-		<div class="footer-left">
-			<h3>Melhorar minha Cidade</h3>
-			<div class="fb-like" data-action="like"></div>
-			<p class="footer-links">
-				<a href="#CotiaMelhor">O CidadeMelhor</a>·
-				<ahref="#Cotia_Melhor_como_funciona">Como Funciona?</a>·<ahref="#Cotia_Melhor_Ja">Melhore
-				a Cidade já</a>·<ahref="#mapaProblemas">Onde Precisamos Melhorar</a>
-			</p>
-			<div class="footer-icons">
-				<a href="#" class="fa-facebook"></a><a href="#" class="fa-google"></a>
-				<ahref ="#" class="fa-linkedin">
-				</a>
-				<a href="#" class="fa-github"></a>
+
+    <input id="pac-input" class="controls" type="text" placeholder="Buscar pelo endereço">
+    <header>
+      <h1 class="float-l">
+        Melhorar minha cidade
+      </h1>
+      
+      <input type="checkbox" id="control-nav" />
+      <label for="control-nav" class="control-nav"></label>
+      <label for="control-nav" class="control-nav-close"></label>
+
+      <nav class="float-r">
+        <ul class="list-auto">
+          <li>
+            <a href="#Melhorar_Minha_Cidade" title="Cidade Melhor, Melhorar Minha Cidade">O App</a>
+          </li>
+          <li>
+            <a href="#Melhorar_Minha_Cidade_como_funciona" title="Como funciona o Melhorar Minha Cidade">Como funciona?</a>
+          </li>
+          <li>
+            <a href="#Melhorar_Minha_Cidade_Ja" title="Comece a melhorar a cidade Já">Melhore a Cidade j&#225;</a>
+          </li>
+          <li>
+            <a href="#mapaProblemas" title="Confira no mapa">Onde precisa melhorar</a>
+          </li>
+          
+          <li>
+            <a href="#" id="login" title="Comece agora mesmo a melhorar a Cidade">Acessar</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+
+<div class="caixa-melhorar-minha-cidade" style="margin: 100px 0px 0px 0px;">
+	<div class="melhorando-minha-cidade">
+		<h3>O que precisa melhorar ?</h3>
+		<hr>
+		<div class="row">
+			
+			<div class="form-group">
+			
+				<div class="col-md-12">
+					<label>Endereço aproximado</label>
+					<input type="text" id="endereco" name="endereco" class="form-control" value="" readonly="">
+				</div>
+			
 			</div>
-			<p class="footer-company-name">
-				<a href='www.bjbraz.com.br'
-					style="text-decoration: none; color: aliceblue;">BJBrazSistemas
-					&copy; 2015</a>
-			</p>
+		
 		</div>
-		<div class="footer-right">
-			<form name="form1" onsubmit="return false;" method="post">
-				<input type="text" id="email" name="email"
-					placeholder="Digite seu E-mail" />
-				<textarea name="message" id="message"
-					placeholder="Nos diga o que você achou do CotiaMelhor?"></textarea>
-				<button id="enviarContatos" onclick="enviarContato()">Enviar</button>
-			</form>
+		
+		
+		<div class="row">
+			
+			<div class="form-group">
+			
+				<div class="col-md-12">
+					<label>Tipo do Problema</label>
+					<select id="categoria" name="categoria" class="form-control valid" aria-required="true" aria-invalid="false">
+														<option value="1">Acessibilidade</option><option value="2">Água e esgoto</option><option value="3">Árvore</option><option value="4">Bem público</option><option value="5">Buraco</option><option value="6">Educação</option><option value="8">Iluminação</option><option value="9">Lixo</option><option value="10">Mato</option><option value="11">Obra</option><option value="23">Outros</option><option value="12">Pedestre</option><option value="22">Poluição</option><option value="17">Saúde</option><option value="18">Segurança</option><option value="19">Social</option><option value="21">Trânsito</option><option value="20">Transporte</option>													</select>
+				</div>
+			
+			</div>
+		
+		</div>		
+		<div class="row">
+			<div class="form-group">
+				<div class="col-md-12">
+					<label>Descrição</label>
+					<textarea id="descricao" name="descricao" class="form-control" rows="5" maxlength="512" autofocus=""></textarea>
+				</div>
+			</div>
 		</div>
-	</footer>
-	<div id="parabens" style="display: none">
-		<h3>Parabéns você ajudou a melhorar a sua cidade!</h3>
+		
+<div class="row">
+											<div class="form-group">
+												<div class="col-md-12">
+													<label>Foto</label>
+													<span class="file-input file-input-new">
+<div class="kv-upload-progress hide"></div>
+<div class="input-group ">
+   <div tabindex="-1" class="form-control file-caption  kv-fileinput-caption">
+   <span class="file-caption-ellipsis" style="display: none;">…</span>
+   <div class="file-caption-name"></div>
+</div>
+   <div class="input-group-btn">
+       <button type="button" title="Remover imagem" class="btn btn-error fileinput-remove fileinput-remove-button"><i class="glyphicon glyphicon-trash"></i> X</button>
+       <button type="button" title="Abort ongoing upload" class="hide btn btn-default fileinput-cancel fileinput-cancel-button"><i class="glyphicon glyphicon-ban-circle"></i> Cancel</button>
+       
+       <div class="btn btn-quaternary btn-file"> <i class="icon icon-folder-open"></i>&nbsp;&nbsp;Selecionar <input id="foto" name="foto" type="file" class="file"></div>
+   </div>
+</div></span>
+												</div>
+											</div>
+										</div> 
+		
+		
+	
 	</div>
-	<div id="facaLogin" style="display: none">
-		<h3>Faça Login e comece a melhorar a cidade.</h3>
-		<br />
-		<p align='center'>
-			<fb:login-buttonscope
-				="public_profile,email,user_photos,user_birthday,user_hometown,user_about_me"onlogin="checkLoginState();"
-				data-show-faces="false" login_text="Acesse com o Facebook"
-				data-auto-logout-link="true">
-				</fb:login-button>
-		</p>
-	</div>
-	<div id="pw-mask" style="display: none"></div>
-	<div id="signwall" class="shadow js-center-fixed"
-		style="display: none;">
+</div>
+
+
+
+
+
+
+    
+    
+		<footer id="contato" class="footer-distributed" style="position:relative">
+
+			<div class="footer-left">
+
+				<h3>Melhorar minha Cidade</h3><div class="fb-like" data-action="like"></div>
+
+				<p class="footer-links">
+					<a href="#Melhorar_Minha_Cidade">O App</a>
+					·
+					<a href="#Melhorar_Minha_Cidade_como_funciona">Como Funciona?</a>
+					·
+					<a href="#Melhorar_Minha_Cidade_Ja">Melhore a Cidade já</a>
+					·
+					<a href="#mapaProblemas">Onde Precisamos Melhorar</a>
+				</p>
+
+				<div class="footer-icons">
+
+					<a href="#" class="fa-facebook"></a>
+					<a href="#" class="fa-google"></a>
+					<a href="#" class="fa-linkedin"></a>
+					<a href="#" class="fa-github"></a>
+
+				</div>
+			</div>
+
+			<div class="footer-right">
+
+				<form name="form1" onsubmit="return false;" method="post">
+					<input type="text" id="email" name="email" placeholder="Digite seu E-mail" />
+					<textarea name="message" id="message" placeholder="Nos diga o que você achou do Melhorar Minha Cidade?"></textarea>
+					<button id="enviarContatos" onclick="enviarContato()">Enviar</button>
+				</form>
+
+			</div>
+			
+		</footer>
+		<div id="parabens" style="display:none">
+			<h3>Parabéns você ajudou a melhorar a sua cidade!</h3>
+		</div>
+		
+		<div id="facaLogin" style="display:none">
+			<h3>Faça Login e comece a melhorar a cidade.</h3><br/>
+			<p align='center'><fb:login-button scope="public_profile,email,user_photos,user_birthday,user_hometown,user_about_me" onlogin="checkLoginState();" data-show-faces="false" login_text="Acesse com o Facebook" data-auto-logout-link="true"></fb:login-button></p>
+		</div>
+
+		<div id="pw-mask" style="display:none"></div>
+
+	<div id="signwall" class="shadow js-center-fixed" style="display:none; position: absolute; margin: 0px; top: 0px; left: 395px;">
 		<div class="big-header">
 			<div class="homebutton">
-				<a href="/" class="adtm-noticia-6-voltar-para-home"><imgsrc
-						="assets/images/botoes/voltar-home.png" width="118px"
-						height="19px" alt="Voltar para a página inicial"
-						style="width: 118px; height: 19px"></a>
+				<a href="/" class="adtm-noticia-6-voltar-para-home"><img src="assets/images/botoes/voltar-home.png" width="118px" height="19px" alt="Voltar para a página inicial" style="width:118px;height:19px"></a>
 			</div>
 		</div>
-		<div id="sw-content"></div>
+		<div id="sw-content">
+		
+		</div>
 		<div class="half-left">
-			<span><b>Acesse com o facebook</b></span> <span><b>Nãodesejo
-					me cadastrar.</b><br />
-			<a href="/" class="adtm-noticia-6-voltar-para-home">Voltar
-					parahome.</a> </span>
+			<span><b>Acesse com o facebook</b></span> 
+			<span><b>Não desejo me cadastrar.</b><br/><a href="/" class="adtm-noticia-6-voltar-para-home">Voltar para home.</a> </span>
 		</div>
 		<div class="half-right">
 			<div id="social-links">
-				<fb:login-button scope="public_profile,email,user_photos"
-					onlogin="checkLoginState();" data-show-faces="false"
-					login_text="Acesse com o Facebook" data-auto-logout-link="true"></fb:login-button>
+				<fb:login-button scope="public_profile,email,user_photos" onlogin="checkLoginState();" data-show-faces="false" login_text="Acesse com o Facebook" data-auto-logout-link="true"></fb:login-button>
 			</div>
 		</div>
 	</div>
-</body>
+
+  </body>
 </html>

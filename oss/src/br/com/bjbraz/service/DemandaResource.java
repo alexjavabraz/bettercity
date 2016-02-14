@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 
 import br.com.bjbraz.entity.Demanda;
 import br.com.bjbraz.entity.HSQLDao;
+import br.com.bjbraz.util.UtilFunction;
 
 
 @Path("/demanda/ins")
@@ -33,19 +34,48 @@ public class DemandaResource {
     		@FormParam("latitude") String latitude, 
     		@FormParam("longitude") String longitude) {
 		
-		Demanda d = new Demanda();
-		d.setDescricao(descricao);
-		d.setTitulo(titulo);
-		d.setEndereco(endereco);
-		d.setLatitude(latitude);
-		d.setLongitude(longitude);
-		HSQLDao dao = new HSQLDao();
-		dao.adicionaDemanda(d);
+		if(validarInformacoesBasicasAberturaDaDemanda(titulo, descricao, endereco, latitude, longitude)){
+			Demanda d = new Demanda();
+			d.setDescricao(descricao);
+			d.setTitulo(titulo);
+			d.setEndereco(endereco);
+			d.setLatitude(latitude);
+			d.setLongitude(longitude);
+			HSQLDao dao = new HSQLDao();
+			dao.adicionaDemanda(d);
+			return "ok";
+		}
 		
 		
-        return "ok";
+        return "nok";
     }
 	
+	private boolean validarInformacoesBasicasAberturaDaDemanda(String titulo, String descricao, String endereco,
+			String latitude, String longitude) {
+		
+		if(UtilFunction.isBlankOrNull(titulo)){
+			return false;
+		}
+		
+		if(UtilFunction.isBlankOrNull(descricao)){
+			return false;
+		}
+		
+		if(UtilFunction.isBlankOrNull(endereco)){
+			return false;
+		}
+		
+		if(UtilFunction.isBlankOrNull(latitude)){
+			return false;
+		}
+		
+		if(UtilFunction.isBlankOrNull(longitude)){
+			return false;
+		}		
+		
+		return true;
+	}
+
 	/**
 	 * 
 	 * @param lon

@@ -203,7 +203,7 @@ public class HSQLDao {
 		return retorno;
 	}
 	
-	public void adicionaCliente(ContatoCliente c) {
+	public void insereContatoDeCliente(ContatoCliente c) {
 		PreparedStatement stmt;
 		try {
 			Connection conn = getConnection();

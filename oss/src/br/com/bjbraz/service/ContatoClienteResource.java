@@ -28,15 +28,17 @@ public class ContatoClienteResource {
     		@FormParam("lat") String lat,
     		@FormParam("lon") String longi) {
 		
-		ContatoCliente c = new ContatoCliente();
-		c.setEmail(email);
-		c.setDescricao(descricao);
-		c.setNome(nome);
-		c.setLatitude(lat);
-		c.setLongitude(longi);
-				
-		HSQLDao dao = new HSQLDao();
-		dao.adicionaCliente(c);
+		if((null != nome) && (null != descricao)){
+			ContatoCliente c = new ContatoCliente();
+			c.setEmail(email);
+			c.setDescricao(descricao);
+			c.setNome(nome);
+			c.setLatitude(lat);
+			c.setLongitude(longi);
+					
+			HSQLDao dao = new HSQLDao();
+			dao.insereContatoDeCliente(c);
+		}
 		
         return "ok";
     }

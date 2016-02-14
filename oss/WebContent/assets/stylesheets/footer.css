@@ -33,6 +33,19 @@ footer{
 	overflow: hidden;
 }
 
+.footer-distributed-index{
+ 	background-color: #61A1BC;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+	box-sizing: border-box;
+	width: 100%;
+	font: bold 16px Arial;
+	text-align: left;
+	padding: 5px 5px 5px;
+	margin-top: 80px;
+	overflow: hidden;
+	position: relative;
+}
+
 /* Footer left */
 
 .footer-distributed .footer-left{
