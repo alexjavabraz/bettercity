@@ -1,0 +1,1 @@
+Sistema web, contendo o mapa para localização das ocorrências, assim como todos os serviços JSON.
