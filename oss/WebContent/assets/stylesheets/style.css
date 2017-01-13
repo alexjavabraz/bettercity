@@ -470,7 +470,7 @@ section p {
 }
 
 #pw-mask{
-    background: url("http://www.melhorarminhacidade.com.br/assets/images/icos/overlay-preto.png") repeat;
+    background: url("http://localhost:8080/oss/assets/images/icos/overlay-preto.png") repeat;
     display: none;
     left: 0;
     min-height: 3000px;
